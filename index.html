@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>True Vanilla – Page d'accueil</title>
+  <meta name="description" content="Le premier SMP Français 90% Vanilla !" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --text:#f5f7ff;
+      --shadow: 0 10px 30px rgba(20,24,50,0.6);
+      --active:#4facff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,sans-serif;overflow-x:hidden;background:#000;}
+
+    .bg-video{
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      object-fit:cover; z-index:-3;
+      filter: brightness(0.9) contrast(1.05);
+      transition: filter 0.4s ease, transform 0.6s ease;
+    }
+    .bg-video.slow{filter: blur(12px) brightness(0.85); transform: scale(1.05)}
+
+    /* --- HEADER FIXE --- */
+    header{
+      position:fixed;
+      top:0; left:0; width:100%;
+      z-index:100;
+      background:rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:10px 30px;
+    }
+    .logo{ height:60px; margin-bottom:10px; }
+    nav{ display:flex; gap:20px; }
+    nav a{
+      text-decoration:none;
+      font-weight:600;
+      color:var(--text);
+      padding:8px 16px;
+      border-radius:999px;
+      transition: background 0.3s, color 0.3s;
+    }
+    nav a:hover{ background:rgba(255,255,255,0.15); }
+    nav a.active{
+      background:var(--active);
+      color:#fff;
+      box-shadow:0 0 10px var(--active);
+    }
+
+    .hero{ height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:var(--text); padding:0 20px; }
+    .hero h1{ font-size: clamp(42px, 6vw, 90px); text-shadow: var(--shadow); margin-bottom:20px; }
+    .hero p{ font-size: clamp(20px, 2.5vw, 28px); max-width:70ch; text-shadow: var(--shadow); }
+
+    /* === ZONES SPLIT SCREEN === */
+    .zone{
+      height:100vh;
+      display:flex;
+      flex-wrap:wrap;
+      overflow:hidden;
+      scroll-margin-top:120px; /* évite que le texte passe sous le header */
+    }
+    .zone .image, .zone .zone-text{
+      flex:1 1 50%;
+      min-width:50%;
+      height:100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+    }
+    .zone .image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    .zone .zone-text{
+      padding:40px;
+      font-size: clamp(20px, 2.5vw, 34px);
+      font-weight:600;
+      color:var(--text);
+      text-shadow: var(--shadow);
+      background:linear-gradient(135deg, rgba(124,198,255,0.8), rgba(122,92,255,0.8));
+    }
+    /* inversion */
+    .zone.reverse{ flex-direction: row-reverse; }
+
+    footer{ text-align:center; color:#eef2ffcc; padding: 40px 0; font-size:14px; background:#0008; }
+  </style>
+</head>
+<body>
+  <video class="bg-video" id="bgVideo" autoplay muted loop playsinline>
+    <source src="fond.mp4" type="video/mp4">
+  </video>
+
+  <!-- HEADER FIXE -->
+  <header>
+    <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
+    <nav>
+      <a href="#home" class="active">Accueil</a>
+      <a href="#join">Rejoindre</a>
+      <a href="#shop">Boutique</a>
+      <a href="#infos">Infos</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <h1>Venez revivre l’âge d’or de Minecraft !</h1>
+      <p>Une expérience multijoueur soignée, un monde vivant et une communauté accueillante ! ✨</p>
+    </section>
+
+    <!-- Zone 1 : Image gauche / Texte droite -->
+    <section id="join" class="zone">
+      <div class="image">
+        <img src="https://placehold.co/1920x1080/png" alt="Image 1">
+      </div>
+      <div class="zone-text">
+        Rejoignez notre serveur dès aujourd’hui !  
+        Whitelist, règles simples et communauté active.
+      </div>
+    </section>
+
+    <!-- Zone 2 : Texte gauche / Image droite -->
+    <section id="shop" class="zone reverse">
+      <div class="image">
+        <img src="https://placehold.co/1920x1080/png" alt="Image 2">
+      </div>
+      <div class="zone-text">
+        Découvrez notre boutique :  
+        rangs, cosmétiques et bonus exclusifs ✨
+      </div>
+    </section>
+
+    <!-- Zone 3 : Image gauche / Texte droite -->
+    <section id="infos" class="zone">
+      <div class="image">
+        <img src="https://placehold.co/1920x1080/png" alt="Image 3">
+      </div>
+      <div class="zone-text">
+        Infos pratiques : adresse IP, version supportée, packs conseillés.
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Votre Serveur — Tous droits réservés.
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth scroll
+    document.querySelectorAll('nav a').forEach(link=>{
+      link.addEventListener('click', e=>{
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        target.scrollIntoView({ behavior:'smooth' });
+      });
+    });
+
+    // Effet vidéo
+    const bgVideo = document.getElementById('bgVideo');
+    let ticking = false;
+    const onScroll = () => {
+      if(window.scrollY > 50){ bgVideo.classList.add('slow'); }
+      else{ bgVideo.classList.remove('slow'); }
+      ticking=false;
+    };
+    document.addEventListener('scroll',()=>{ 
+      if(!ticking){ requestAnimationFrame(onScroll); ticking=true; }
+    },{ passive:true });
+  </script>
+</body>
+</html>
