@@ -14,7 +14,7 @@
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:Inter,system-ui,sans-serif;overflow-x:hidden;background:#000;}
-
+    
     .bg-video{
       position:fixed; inset:0;
       width:100%; height:100%;
@@ -22,9 +22,8 @@
       filter: brightness(0.9) contrast(1.05);
       transition: filter 0.4s ease, transform 0.6s ease;
     }
-    .bg-video.slow{filter: blur(12px) brightness(0.85); transform: scale(1.05)}
+    .bg-video.slow{filter: blur(12px) brightness(0.85); transform: scale(1.05);}
 
-    /* --- HEADER FIXE --- */
     header{
       position:fixed;
       top:0; left:0; width:100%;
@@ -36,7 +35,39 @@
       align-items:center;
       padding:10px 30px;
     }
-    .logo{ height:60px; margin-bottom:10px; }
+
+    header .header-content {
+      display: flex;
+      align-items: center;    
+      justify-content: space-between;
+      width: 100%;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .header-left, .header-right {
+      color: var(--text);
+      display: flex;
+      align-items: center;   
+      justify-content: center; 
+      height: 100px;            
+      font-weight: 600;
+      font-size: 18px;
+      text-shadow: var(--shadow);
+    }
+
+    .header-right a {
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .header-right a:hover {
+      transform: scale(1.1);
+      text-shadow: 0 0 10px #4facff, 0 0 20px #4facff, 0 0 30px #4facff;
+    }
+
+    .logo{ height:100px; margin:0 auto; text-align: center;}
     nav{ display:flex; gap:20px; }
     nav a{
       text-decoration:none;
@@ -53,44 +84,124 @@
       box-shadow:0 0 10px var(--active);
     }
 
-    .hero{ height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:var(--text); padding:0 20px; }
-    .hero h1{ font-size: clamp(42px, 6vw, 90px); text-shadow: var(--shadow); margin-bottom:20px; }
-    .hero p{ font-size: clamp(20px, 2.5vw, 28px); max-width:70ch; text-shadow: var(--shadow); }
 
-    /* === ZONES SPLIT SCREEN === */
+    .hero {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10%;
+      text-align: left;
+      height: 100vh;
+      color: var(--text);
+    }
+
+    .hero-text {
+      flex: 1;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(42px, 6vw, 90px);
+      text-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      font-size: clamp(20px, 2.5vw, 28px);
+      max-width: 50ch;
+      text-shadow: var(--shadow);
+    }
+
+    .hero-video {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .hero-video iframe {
+      width: 100%;
+      max-width: 560px;
+      height: 315px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
     .zone{
-      height:100vh;
       display:flex;
-      flex-wrap:wrap;
-      overflow:hidden;
-      scroll-margin-top:120px; /* évite que le texte passe sous le header */
+      align-items:center;
+      justify-content:center;
+      padding:80px 10%;
+      gap:40px;
+      scroll-margin-top:120px;
     }
     .zone .image, .zone .zone-text{
-      flex:1 1 50%;
-      min-width:50%;
-      height:100%;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      position:relative;
+      flex:1;
+      min-width:300px;
     }
     .zone .image img{
       width:100%;
-      height:100%;
-      object-fit:cover;
+      border-radius:20px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.4);
+      transition: transform 0.6s ease;
     }
+    .zone .image img:hover{ transform: scale(1.05); }
+
     .zone .zone-text{
-      padding:40px;
-      font-size: clamp(20px, 2.5vw, 34px);
-      font-weight:600;
-      color:var(--text);
-      text-shadow: var(--shadow);
-      background:linear-gradient(135deg, rgba(124,198,255,0.8), rgba(122,92,255,0.8));
+      color:#fff;
+      font-size:clamp(18px,2vw,24px);
+      font-weight:500;
+      line-height:1.6;
+      opacity:0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
     }
-    /* inversion */
-    .zone.reverse{ flex-direction: row-reverse; }
+    .zone .zone-text.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .zone.one{ background: linear-gradient(135deg,#4facfe,#00f2fe); }
+    .zone.two{ background: linear-gradient(135deg,#43e97b,#38f9d7); }
+    .zone.three{ background: linear-gradient(135deg,#667eea,#764ba2); }
+    .zone.reverse{ flex-direction:row-reverse; }
+
+    .zone.final{
+      background: linear-gradient(135deg,#89f7fe,#66a6ff);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      padding:100px 20px;
+      text-align:center;
+      gap:30px;
+    }
+    .zone.final h2{ color:#fff; font-size:clamp(28px,4vw,48px); text-shadow: var(--shadow); }
+    .join-button{
+      padding:18px 40px;
+      font-size:20px;
+      font-weight:700;
+      color:#fff;
+      background: rgba(0,0,0,0.2);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius:40px;
+      cursor:pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 8px rgba(255,255,255,0.2);
+      text-decoration:none;
+    }
+    .join-button:hover{
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(255,255,255,0.3), 0 0 25px rgba(0,255,255,0.2);
+    }
 
     footer{ text-align:center; color:#eef2ffcc; padding: 40px 0; font-size:14px; background:#0008; }
+
+    @media (max-width: 900px) {
+      .hero { flex-direction: column; text-align: center; padding: 50px 10%; }
+      .hero-video { justify-content: center; margin-top: 30px; }
+      header .header-content { flex-direction: column; gap: 10px; }
+      .logo { margin: 0; }
+    }
   </style>
 </head>
 <body>
@@ -98,51 +209,71 @@
     <source src="fond.mp4" type="video/mp4">
   </video>
 
-  <!-- HEADER FIXE -->
+
   <header>
-    <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
+    <div class="header-content">
+      <div class="header-left">Chapitre 1 - Saison 4</div>
+      <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
+      <div class="header-right">
+        <a href="minecraft://play.true-vanilla.fr" target="_blank">play.true-vanilla.fr</a>
+      </div>
+    </div>
     <nav>
-      <a href="#home" class="active">Accueil</a>
-      <a href="#join">Rejoindre</a>
-      <a href="#shop">Boutique</a>
-      <a href="#infos">Infos</a>
+      <a href="index.html" class="active">Accueil</a>
+      <a href="join.html">Rejoindre</a>
+      <a href="shop.html">Boutique</a>
+      <a href="infos.html">Infos</a>
     </nav>
   </header>
 
   <main>
     <section id="home" class="hero">
-      <h1>Venez revivre l’âge d’or de Minecraft !</h1>
-      <p>Une expérience multijoueur soignée, un monde vivant et une communauté accueillante ! ✨</p>
-    </section>
-
-    <!-- Zone 1 : Image gauche / Texte droite -->
-    <section id="join" class="zone">
-      <div class="image">
-        <img src="https://placehold.co/1920x1080/png" alt="Image 1">
+      <div class="hero-text">
+        <h1>Venez revivre l’âge d’or de Minecraft !</h1>
+        <p>Une expérience multijoueur soignée, un monde vivant et une communauté accueillante ! ✨</p>
       </div>
-      <div class="zone-text">
-        Placeholder 1
-      </div>
-    </section>
-
-    <!-- Zone 2 : Texte gauche / Image droite -->
-    <section id="shop" class="zone reverse">
-      <div class="image">
-        <img src="https://placehold.co/1920x1080/png" alt="Image 2">
-      </div>
-      <div class="zone-text">
-        Placeholder 2
+      <div class="hero-video">
+        <iframe width="560" height="315" 
+          src="https://www.youtube.com/embed/_0uGdVSuE6A?si=r7jhFcvRTUhcm84d" 
+          title="YouTube video player" frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen></iframe>
       </div>
     </section>
 
-    <!-- Zone 3 : Image gauche / Texte droite -->
-    <section id="infos" class="zone">
+    <section class="zone one">
       <div class="image">
-        <img src="https://placehold.co/1920x1080/png" alt="Image 3">
+        <img src="https://placehold.co/800x600/png" alt="Image 1">
       </div>
       <div class="zone-text">
-        Placeholder 3
+        <h2>Rejoignez l'aventure</h2>
+        <p>Plongez dans un monde immersif, construit par et pour la communauté. Ici, pas de règles artificielles : seulement l'esprit Minecraft pur. (ingame screen)</p>
       </div>
+    </section>
+
+    <section class="zone two reverse">
+      <div class="image">
+        <img src="https://placehold.co/800x600/png" alt="Image 2">
+      </div>
+      <div class="zone-text">
+        <h2>Boutique équitable</h2>
+        <p>Nos cosmétiques sont là pour embellir votre expérience, sans déséquilibrer le gameplay. Soutenez le serveur et profitez d’options exclusives ! (boutique)</p>
+      </div>
+    </section>
+
+    <section class="zone three">
+      <div class="image">
+        <img src="https://placehold.co/800x600/png" alt="Image 3">
+      </div>
+      <div class="zone-text">
+        <h2>Des infos claires</h2>
+        <p>Consultez toutes les règles, événements et actualités du serveur en un seul endroit. Transparence et accessibilité sont nos maîtres mots. (discord)</p>
+      </div>
+    </section>
+
+    <section class="zone final">
+      <h2>Prêt à nous rejoindre ?</h2>
+      <a href="https://discord.gg/HefFTCS4cp" target="_blank" class="join-button">Rejoindre le serveur !</a>
     </section>
 
     <footer>
@@ -152,17 +283,6 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Smooth scroll
-    document.querySelectorAll('nav a').forEach(link=>{
-      link.addEventListener('click', e=>{
-        e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        target.scrollIntoView({ behavior:'smooth' });
-      });
-    });
-
-    // Effet vidéo
     const bgVideo = document.getElementById('bgVideo');
     let ticking = false;
     const onScroll = () => {
@@ -173,7 +293,14 @@
     document.addEventListener('scroll',()=>{ 
       if(!ticking){ requestAnimationFrame(onScroll); ticking=true; }
     },{ passive:true });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){ entry.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.zone .zone-text').forEach(el => { observer.observe(el); });
   </script>
 </body>
 </html>
-

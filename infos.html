@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rejoindre True Vanilla</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --text:#f5f7ff;
+      --active:#4facff;
+      --shadow: 0 10px 30px rgba(20,24,50,0.6);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,system-ui,sans-serif;
+      min-height:100vh;
+      color:var(--text);
+      padding-top:120px;
+      overflow-x:hidden;
+      background: linear-gradient(-45deg, #1e3c72, #2a5298, #1e3c72, #2a5298);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+    }
+    @keyframes gradientMove {
+      0%{ background-position:0% 50%; }
+      50%{ background-position:100% 50%; }
+      100%{ background-position:0% 50%; }
+    }
+
+    header{
+      position:fixed; top:0; left:0; width:100%; z-index:100;
+      background:rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+      display:flex; flex-direction:column; align-items:center; padding:10px 30px;
+    }
+    .logo{ height:100px; margin-bottom:10px; text-align:center; }
+    nav{ display:flex; gap:20px; }
+    nav a{ text-decoration:none; font-weight:600; color:var(--text); padding:8px 16px; border-radius:999px; transition: background 0.3s, color 0.3s; }
+    nav a:hover{ background:rgba(255,255,255,0.15); }
+    nav a.active{ background:var(--active); color:#fff; box-shadow:0 0 10px var(--active); }
+
+    main{ max-width:900px; margin:0 auto; padding:20px; text-align:left; }
+
+    h1{ font-size:2.5rem; margin-bottom:20px; text-align:center; }
+    h2{ font-size:2rem; margin-top:20px; margin-bottom:15px; }
+    p, ul{ font-size:1.2rem; line-height:1.6; margin-bottom:15px; }
+    li{ margin-left:20px; margin-bottom:8px; }
+    code{ display:block; background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; margin:10px 0; font-family: monospace; }
+    .discord-btn{ display:block; margin:15px auto; padding:12px 25px; background:#46bafd; color:#fff; font-weight:600; border-radius:999px; text-decoration:none; transition: background 0.3s, transform 0.3s; text-align:center; }
+    .discord-btn:hover{ background:#0079b1; transform:scale(1.05); }
+    .prerequisites, .step{ background: rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.2); padding:15px 20px; border-radius:12px; margin-bottom:20px; }
+    .sub-step{ background: rgba(255,255,255,0.05); padding:15px; border-radius:10px; margin:10px 0; }
+
+    .sub-step img{
+      display:block;
+      margin:15px auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="join.html">Rejoindre</a>
+      <a href="shop.html">Boutique</a>
+      <a href="infos.html" class="active">Infos</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Tutoriel pour rejoindre True Vanilla</h1>
+
+    <div class="prerequisites">
+      <h2>Prérequis :</h2>
+      <ul>
+        <li>Un Launcher capable de lancer Minecraft: Java</li>
+        <li>Version du jeu : 1.21.4</li>
+        <li>Connexion Internet stable (VPN Interdit)</li>
+        <li>Un compte Discord</li>
+        <li>IP du Serveur : play.true-vanilla.fr</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <h2>Étape 1 : Lier votre compte Minecraft à votre compte Discord</h2>
+      <div class="sub-step">
+        <p>Rejoignez le Discord pour pouvoir lier votre compte Minecraft à votre compte Discord.</p>
+        <a href="https://discord.gg/HefFTCS4cp" class="discord-btn" target="_blank">Rejoindre le Discord</a>
+      </div>
+      <div class="sub-step">
+        <p>Rejoignez le serveur Minecraft pour recevoir votre code qui vous permettra de lier vos comptes.</p>
+        <img src="https://i.imgur.com/ybLQMso.png" alt="Exemple de code">
+      </div>
+      <div class="sub-step">
+        <p>Envoyez le code au bot du serveur Discord "True Vanilla V3".</p>
+        <img src="BOTt.gif" height="270px" width="480px" alt="Où trouver le bot">
+      </div>
+    </div>
+
+    <div class="step">
+      <h2>Étape 2 : Se connecter au serveur</h2>
+      <div class="sub-step">
+        <p>Une fois vos comptes liés, créez un compte sur le serveur en utilisant :</p>
+        <code>/register motdepasse motdepasse</code>
+      </div>
+      <div class="sub-step">
+        <p>Pour vous connecter ensuite :</p>
+        <code>/login motdepasse</code>
+      </div>
+      <div class="sub-step">
+        <p><strong>⚠️ Attention !</strong> Remplacez "motdepasse" par votre mot de passe personnel (minimum 4 caractères).</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
