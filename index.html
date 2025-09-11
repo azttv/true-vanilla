@@ -50,9 +50,9 @@
       display: flex;
       align-items: center;   
       justify-content: center; 
-      height: 100px;            
+      height: 50px;            
       font-weight: 600;
-      font-size: 18px;
+      font-size: 28px;
       text-shadow: var(--shadow);
     }
 
@@ -67,23 +67,12 @@
       text-shadow: 0 0 10px #4facff, 0 0 20px #4facff, 0 0 30px #4facff;
     }
 
-    .logo{ height:100px; margin:0 auto; text-align: center;}
+    .logo{ height:100px; margin-bottom:10px; text-align:center; }
     nav{ display:flex; gap:20px; }
-    nav a{
-      text-decoration:none;
-      font-weight:600;
-      color:var(--text);
-      padding:8px 16px;
-      border-radius:999px;
-      transition: background 0.3s, color 0.3s;
-    }
+    nav a{ text-decoration:none; font-weight:600; color:var(--text); padding:8px 16px; border-radius:999px; transition: background 0.3s, color 0.3s; }
     nav a:hover{ background:rgba(255,255,255,0.15); }
-    nav a.active{
-      background:var(--active);
-      color:#fff;
-      box-shadow:0 0 10px var(--active);
+    nav a.active{ background:var(--active); color:#fff; box-shadow:0 0 10px var(--active);
     }
-
 
     .hero {
       display: flex;
@@ -118,10 +107,24 @@
       justify-content: flex-end;
     }
 
+    /* Nouveau cadre pour la vidéo */
+    .video-frame {
+      border: 4px solid #4facff;
+      border-radius: 20px;
+      padding: 12px;
+      height: 435px;
+      width: 600px;
+      display: inline-block;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.4);
+    }
+
     .hero-video iframe {
       width: 100%;
       max-width: 560px;
-      height: 315px;
+      height: 400px;
+      width: 600px;
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
@@ -209,7 +212,6 @@
     <source src="fond.mp4" type="video/mp4">
   </video>
 
-
   <header>
     <div class="header-content">
       <div class="header-left">Chapitre 1 - Saison 4</div>
@@ -233,41 +235,43 @@
         <p>Une expérience multijoueur soignée, un monde vivant et une communauté accueillante ! ✨</p>
       </div>
       <div class="hero-video">
-        <iframe width="560" height="315" 
-          src="https://www.youtube.com/embed/_0uGdVSuE6A?si=r7jhFcvRTUhcm84d" 
-          title="YouTube video player" frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen></iframe>
+        <div class="video-frame">
+          <iframe width="560" height="315" 
+            src="https://www.youtube.com/embed/_0uGdVSuE6A?si=r7jhFcvRTUhcm84d" 
+            title="YouTube video player" frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen></iframe>
+        </div>
       </div>
     </section>
 
     <section class="zone one">
       <div class="image">
-        <img src="https://placehold.co/800x600/png" alt="Image 1">
+        <img src="screen.gif" alt="Image 1">
       </div>
       <div class="zone-text">
-        <h2>Rejoignez l'aventure</h2>
-        <p>Plongez dans un monde immersif, construit par et pour la communauté. Ici, pas de règles artificielles : seulement l'esprit Minecraft pur. (ingame screen)</p>
+        <h2>🗡️ Rejoignez l'aventure</h2>
+        <p>Plongez dans un monde immersif, construit par et pour la communauté. Ici, pas de règles artificielles : seulement l'esprit Minecraft pur.</p>
       </div>
     </section>
 
     <section class="zone two reverse">
       <div class="image">
-        <img src="https://placehold.co/800x600/png" alt="Image 2">
+        <img src="shop.png" alt="Boutique">
       </div>
       <div class="zone-text">
-        <h2>Boutique équitable</h2>
-        <p>Nos cosmétiques sont là pour embellir votre expérience, sans déséquilibrer le gameplay. Soutenez le serveur et profitez d’options exclusives ! (boutique)</p>
+        <h2>🛒 Boutique équitable</h2>
+        <p>Nos cosmétiques sont là pour embellir votre expérience, sans déséquilibrer le gameplay. Soutenez le serveur et profitez d’options exclusives !</p>
       </div>
     </section>
 
     <section class="zone three">
       <div class="image">
-        <img src="https://placehold.co/800x600/png" alt="Image 3">
+        <img src="discord.png" alt="Image 3">
       </div>
       <div class="zone-text">
-        <h2>Des infos claires</h2>
-        <p>Consultez toutes les règles, événements et actualités du serveur en un seul endroit. Transparence et accessibilité sont nos maîtres mots. (discord)</p>
+        <h2>📢 Des infos claires</h2>
+        <p>Consultez toutes les règles, événements et actualités du serveur en un seul endroit. Transparence et accessibilité sont nos maîtres mots.</p>
       </div>
     </section>
 
