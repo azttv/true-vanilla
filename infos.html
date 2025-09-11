@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rejoindre True Vanilla</title>
+  <title>True Vanilla – Informations</title>
+  <meta name="description" content="Le premier SMP Français 90% Vanilla !" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root{
       --text:#f5f7ff;
@@ -20,7 +22,7 @@
       overflow-x:hidden;
       background: linear-gradient(-45deg, #1e3c72, #2a5298, #1e3c72, #2a5298);
       background-size: 400% 400%;
-      animation: gradientMove 15s ease infinite;
+      animation: gradientMove 12s ease infinite;
     }
     @keyframes gradientMove {
       0%{ background-position:0% 50%; }
@@ -29,9 +31,42 @@
     }
 
     header{
-      position:fixed; top:0; left:0; width:100%; z-index:100;
-      background:rgba(0,0,0,0.6); backdrop-filter: blur(8px);
-      display:flex; flex-direction:column; align-items:center; padding:10px 30px;
+      position:fixed;
+      top:0; left:0; width:100%;
+      z-index:100;
+      background:rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:10px 30px;
+    }
+    header .header-content {
+      display: flex;
+      align-items: center;    
+      justify-content: space-between;
+      width: 100%;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .header-left, .header-right {
+      color: var(--text);
+      display: flex;
+      align-items: center;   
+      justify-content: center; 
+      height: 50px;            
+      font-weight: 600;
+      font-size: 28px;
+      text-shadow: var(--shadow);
+    }
+    .header-right a {
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 0.3s ease, text-shadow 0.3s ease;
+    }
+    .header-right a:hover {
+      transform: scale(1.1);
+      text-shadow: 0 0 10px #4facff, 0 0 20px #4facff, 0 0 30px #4facff;
     }
     .logo{ height:100px; margin-bottom:10px; text-align:center; }
     nav{ display:flex; gap:20px; }
@@ -41,25 +76,78 @@
 
     main{ max-width:900px; margin:0 auto; padding:20px; text-align:left; }
 
-    h1{ font-size:2.5rem; margin-bottom:20px; text-align:center; }
-    h2{ font-size:2rem; margin-top:20px; margin-bottom:15px; }
+    h1{ font-size:2.5rem; margin-bottom:30px; text-align:center; text-shadow: var(--shadow);}
+    h2{ font-size:1.8rem; margin-bottom:15px; display:flex; align-items:center; gap:10px; transition: 0.3s;}
+    h2:hover{ text-shadow: 0 0 15px #4facff, 0 0 25px #4facff;}
+
     p, ul{ font-size:1.2rem; line-height:1.6; margin-bottom:15px; }
     li{ margin-left:20px; margin-bottom:8px; }
     code{ display:block; background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; margin:10px 0; font-family: monospace; }
+
     .discord-btn{ display:block; margin:15px auto; padding:12px 25px; background:#46bafd; color:#fff; font-weight:600; border-radius:999px; text-decoration:none; transition: background 0.3s, transform 0.3s; text-align:center; }
     .discord-btn:hover{ background:#0079b1; transform:scale(1.05); }
-    .prerequisites, .step{ background: rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.2); padding:15px 20px; border-radius:12px; margin-bottom:20px; }
-    .sub-step{ background: rgba(255,255,255,0.05); padding:15px; border-radius:10px; margin:10px 0; }
 
-    .sub-step img{
-      display:block;
-      margin:15px auto;
+    .card{
+      background: linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.35));
+      border-radius:15px;
+      padding:20px;
+      margin-bottom:25px;
+      transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+      box-shadow: var(--shadow);
     }
+    .card:hover{
+      transform: translateY(-5px);
+      background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.5));
+      box-shadow: 0 15px 40px rgba(20,24,50,0.8);
+    }
+
+    .card ul{ margin-left:20px; }
+    .card a{ color:#46bafd; text-decoration:none; }
+    .card a:hover{ text-decoration:underline; }
+
+    .card-icon{
+      font-size:1.5rem;
+      color:#4facff;
+      animation: icon-bounce 2s infinite;
+    }
+
+    @keyframes icon-bounce{
+      0%, 100%{ transform: translateY(0); }
+      50%{ transform: translateY(-5px); }
+    }
+
+    .stats{
+      display:flex;
+      justify-content: space-around;
+      flex-wrap:wrap;
+      gap:20px;
+      margin-top:15px;
+    }
+    .stat{
+      background: rgba(70,175,255,0.2);
+      padding:15px 25px;
+      border-radius:15px;
+      min-width:120px;
+      text-align:center;
+      font-weight:600;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .stat:hover{
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(70,175,255,0.5);
+    }
+    .stat-number{ font-size:1.5rem; color:#4facff; }
   </style>
 </head>
 <body>
   <header>
-    <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
+    <div class="header-content">
+      <div class="header-left">Chapitre 1 - Saison 4</div>
+      <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
+      <div class="header-right">
+        <a href="minecraft://play.true-vanilla.fr" target="_blank">play.true-vanilla.fr</a>
+      </div>
+    </div>
     <nav>
       <a href="index.html">Accueil</a>
       <a href="join.html">Rejoindre</a>
@@ -69,50 +157,80 @@
   </header>
 
   <main>
-    <h1>Tutoriel pour rejoindre True Vanilla</h1>
-
-    <div class="prerequisites">
-      <h2>Prérequis :</h2>
+    <p>⠀</p>
+    <p>⠀</p>
+    <div class="card">
+      <h2><i class="fas fa-server card-icon"></i> À propos du serveur</h2>
+      <p>True Vanilla est un serveur SMP français 90% Vanilla, offrant une expérience proche de Minecraft original tout en ajoutant quelques fonctionnalités pratiques pour la communauté.</p>
       <ul>
-        <li>MONTRE PAS ICI</li>
-        <li>JAI PAS FINIII</li>
-        <li>Connexion Internet stable (VPN Interdit)</li>
-        <li>Un compte Discord</li>
-        <li>IP du Serveur : play.true-vanilla.fr</li>
+        <li>Version Minecraft : 1.20.1</li>
+        <li>Type : SMP Vanilla</li>
+        <li>Monde généré : Vanilla classique</li>
+        <li>Spawn avec protection temporaire pour les nouveaux joueurs</li>
+        <li>Économie simple via /trade et /shop</li>
       </ul>
     </div>
 
-    <div class="step">
-      <h2>Étape 1 : Lier votre compte Minecraft à votre compte Discord</h2>
-      <div class="sub-step">
-        <p>Rejoignez le Discord pour pouvoir lier votre compte Minecraft à votre compte Discord.</p>
-        <a href="https://discord.gg/HefFTCS4cp" class="discord-btn" target="_blank">Rejoindre le Discord</a>
-      </div>
-      <div class="sub-step">
-        <p>Rejoignez le serveur Minecraft pour recevoir votre code qui vous permettra de lier vos comptes.</p>
-        <img src="https://i.imgur.com/ybLQMso.png" alt="Exemple de code">
-      </div>
-      <div class="sub-step">
-        <p>Envoyez le code au bot du serveur Discord "True Vanilla V3".</p>
-        <img src="BOTt.gif" height="270px" width="480px" alt="Où trouver le bot">
+    <div class="card">
+      <h2><i class="fas fa-gavel card-icon"></i> Règles principales</h2>
+      <ul>
+        <li>Pas de grief sur les constructions des autres joueurs.</li>
+        <li>Pas de triche ou d’utilisation de mods interdits.</li>
+        <li>Respectez tous les joueurs et le staff.</li>
+        <li>Les arnaques et spam dans le chat sont interdits.</li>
+        <li>Lisez les annonces sur Discord pour ne rien manquer.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-play card-icon"></i> Comment rejoindre</h2>
+      <ul>
+        <li>Téléchargez la version compatible de Minecraft (1.20.1).</li>
+        <li>Connectez-vous au serveur : <code>play.true-vanilla.fr</code></li>
+        <li>Rejoignez notre Discord pour guides et annonces :
+          <a href="https://discord.gg/truevanilla" target="_blank">Discord officiel</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-star card-icon"></i> Fonctionnalités spéciales</h2>
+      <ul>
+        <li>Événements communautaires hebdomadaires (constructions, mini-jeux, concours).</li>
+        <li>Système de quêtes pour les nouveaux joueurs.</li>
+        <li>Rareté d’objets personnalisés très limitée pour conserver l’expérience Vanilla.</li>
+        <li>Support actif via Discord et en jeu par l’équipe du staff.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-chart-bar card-icon"></i> Statistiques du serveur</h2>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-number">187</div>
+          Joueurs uniques
+        </div>
+        <div class="stat">
+          <div class="stat-number">10/08/25</div>
+          Date d'ouverture
+        </div>
+        <div class="stat">
+          <div class="stat-number">370</div>
+          Membres sur le Discord
+        </div>
       </div>
     </div>
 
-    <div class="step">
-      <h2>Étape 2 : Se connecter au serveur</h2>
-      <div class="sub-step">
-        <p>Une fois vos comptes liés, créez un compte sur le serveur en utilisant :</p>
-        <code>/register motdepasse motdepasse</code>
-      </div>
-      <div class="sub-step">
-        <p>Pour vous connecter ensuite :</p>
-        <code>/login motdepasse</code>
-      </div>
-      <div class="sub-step">
-        <p><strong>⚠️ Attention !</strong> Remplacez "motdepasse" par votre mot de passe personnel (minimum 4 caractères).</p>
-      </div>
+    <div class="card">
+      <h2><i class="fas fa-link card-icon"></i> Liens utiles</h2>
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="join.html">Rejoindre le serveur</a></li>
+        <li><a href="shop.html">Boutique</a></li>
+        <li><a href="https://discord.gg/truevanilla" target="_blank">Discord officiel</a></li>
+      </ul>
     </div>
+
   </main>
 </body>
 </html>
-
