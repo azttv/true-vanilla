@@ -99,6 +99,55 @@
       font-size: clamp(20px, 2.5vw, 28px);
       max-width: 50ch;
       text-shadow: var(--shadow);
+      margin-bottom: 30px;
+    }
+
+    /* === Nouveau bouton stylisé === */
+    .hero-text .join-button {
+      display: inline-block;
+      padding: 18px 40px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(270deg, #4facff, #00f2fe, #4facff);
+      background-size: 400% 400%;
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(79, 172, 255, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      animation: gradientMove 6s ease infinite;
+    }
+
+    .hero-text .join-button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.6), transparent);
+      transform: skewX(-25deg);
+      transition: left 0.75s ease;
+    }
+
+    .hero-text .join-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(79, 172, 255, 0.8), 0 0 40px rgba(0, 242, 254, 0.5);
+    }
+
+    .hero-text .join-button:hover::before {
+      left: 130%;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .hero-video {
@@ -106,8 +155,6 @@
       display: flex;
       justify-content: flex-end;
     }
-
-    /* Nouveau cadre pour la vidéo */
     .video-frame {
       border: 4px solid #4facff;
       border-radius: 20px;
@@ -119,7 +166,6 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       background: rgba(0,0,0,0.4);
     }
-
     .hero-video iframe {
       width: 100%;
       max-width: 560px;
@@ -233,6 +279,8 @@
       <div class="hero-text">
         <h1>Venez revivre l’âge d’or de Minecraft !</h1>
         <p>Une expérience multijoueur soignée, un monde vivant et une communauté accueillante ! ✨</p>
+        <!-- Nouveau bouton -->
+        <a href="https://discord.gg/HefFTCS4cp" target="_blank" class="join-button">Rejoindre le serveur</a>
       </div>
       <div class="hero-video">
         <div class="video-frame">
@@ -308,4 +356,3 @@
   </script>
 </body>
 </html>
-
