@@ -6,6 +6,7 @@
   <title>True Vanilla – Rejoindre</title>
   <meta name="description" content="Le premier SMP Français 90% Vanilla !" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root{
       --text:#f5f7ff;
@@ -21,7 +22,7 @@
       overflow-x:hidden;
       background: linear-gradient(-45deg, #1e3c72, #2a5298, #1e3c72, #2a5298);
       background-size: 400% 400%;
-      animation: gradientMove 15s ease infinite;
+      animation: gradientMove 12s ease infinite;
     }
     @keyframes gradientMove {
       0%{ background-position:0% 50%; }
@@ -40,7 +41,6 @@
       align-items:center;
       padding:10px 30px;
     }
-
     header .header-content {
       display: flex;
       align-items: center;    
@@ -49,7 +49,6 @@
       flex-wrap: wrap;
       margin-bottom: 10px;
     }
-
     .header-left, .header-right {
       color: var(--text);
       display: flex;
@@ -60,13 +59,11 @@
       font-size: 28px;
       text-shadow: var(--shadow);
     }
-
     .header-right a {
       color: var(--text);
       text-decoration: none;
       transition: transform 0.3s ease, text-shadow 0.3s ease;
     }
-
     .header-right a:hover {
       transform: scale(1.1);
       text-shadow: 0 0 10px #4facff, 0 0 20px #4facff, 0 0 30px #4facff;
@@ -77,22 +74,46 @@
     nav a:hover{ background:rgba(255,255,255,0.15); }
     nav a.active{ background:var(--active); color:#fff; box-shadow:0 0 10px var(--active); }
 
-    main{ max-width:850px; margin:0 auto; padding:20px; text-align:left; }
+    main{ max-width:900px; margin:0 auto; padding:20px; text-align:left; }
 
-    h1{ font-size:2.5rem; margin-bottom:280px; text-align:center; }
-    h2{ font-size:2rem; margin-top:10px; margin-bottom:15px; }
+    h1{ font-size:2.5rem; margin-bottom:30px; text-align:center; text-shadow: var(--shadow);}
+    h2{ font-size:1.8rem; margin-bottom:15px; display:flex; align-items:center; gap:10px; transition: 0.3s;}
+    h2:hover{ text-shadow: 0 0 15px #4facff, 0 0 25px #4facff;}
+
     p, ul{ font-size:1.2rem; line-height:1.6; margin-bottom:15px; }
     li{ margin-left:20px; margin-bottom:8px; }
     code{ display:block; background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; margin:10px 0; font-family: monospace; }
-    .discord-btn{ display:block; margin:15px auto; padding:12px 25px; background:#46bafd; color:#fff; font-weight:600; border-radius:999px; text-decoration:none; transition: background 0.3s, transform 0.3s; text-align:center; }
+
+    .discord-btn{ display:block; margin:15px auto; padding:12px 25px; background:#ffffff; color:#fff; font-weight:600; border-radius:999px; text-decoration:none; transition: background 0.3s, transform 0.3s; text-align:center; }
     .discord-btn:hover{ background:#0079b1; transform:scale(1.05); }
-    .prerequisites, .step{ background: rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.2); padding:15px 20px; border-radius:12px; margin-bottom:35px; }
-    .sub-step{ background: rgba(255,255,255,0.05); padding:15px; border-radius:10px; margin:20px 0; }
 
+    .card{
+      background: linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.35));
+      border-radius:15px;
+      padding:20px;
+      margin-bottom:25px;
+      transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+      box-shadow: var(--shadow);
+    }
+    .card:hover{
+      transform: translateY(-5px);
+      background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.5));
+      box-shadow: 0 15px 40px rgba(20,24,50,0.8);
+    }
 
-    .sub-step img{
-      display:block;
-      margin:15px auto;
+    .card ul{ margin-left:20px; }
+    .card a{ color:#46bafd; text-decoration:none; }
+    .card a:hover{ text-decoration:underline; }
+
+    .card-icon{
+      font-size:1.5rem;
+      color:#4facff;
+      animation: icon-bounce 2s infinite;
+    }
+
+    @keyframes icon-bounce{
+      0%, 100%{ transform: translateY(0); }
+      50%{ transform: translateY(-5px); }
     }
   </style>
 </head>
@@ -116,8 +137,9 @@
   <main>
     <p>⠀</p>
     <p>⠀</p>
-    <div class="prerequisites">
-      <h2>Prérequis :</h2>
+
+    <div class="card">
+      <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
       <ul>
         <li>Un Launcher capable de lancer Minecraft: Java</li>
         <li>Version du jeu : 1.21.4</li>
@@ -127,36 +149,25 @@
       </ul>
     </div>
 
-    <div class="step">
-      <h2>Étape 1 : Lier votre compte Minecraft à votre compte Discord</h2>
-      <div class="sub-step">
-        <p>Rejoignez le Discord pour pouvoir lier votre compte Minecraft à votre compte Discord.</p>
-        <a href="https://discord.gg/HefFTCS4cp" class="discord-btn" target="_blank">Rejoindre le Discord</a>
-      </div>
-      <div class="sub-step">
-        <p>Rejoignez le serveur Minecraft pour recevoir votre code qui vous permettra de lier vos comptes.</p>
-        <img src="https://i.imgur.com/ybLQMso.png" alt="Exemple de code">
-      </div>
-      <div class="sub-step">
-        <p>Envoyez le code au bot du serveur Discord "True Vanilla V3".</p>
-        <img src="BOTt.gif" height="270px" width="480px" alt="Où trouver le bot">
-      </div>
+    <div class="card">
+      <h2><i class="fas fa-link card-icon"></i> Étape 1 : Lier votre compte Minecraft à votre compte Discord</h2>
+      <p>Rejoignez le Discord pour pouvoir lier votre compte Minecraft à votre compte Discord.</p>
+      <a href="https://discord.gg/HefFTCS4cp" class="discord-btn" target="_blank">Rejoindre le Discord</a>
+      <p>Rejoignez le serveur Minecraft pour recevoir votre code qui vous permettra de lier vos comptes.</p>
+      <img src="https://i.imgur.com/ybLQMso.png" alt="Exemple de code">
+      <p>Envoyez le code au bot du serveur Discord "True Vanilla V3".</p>
+      <img src="BOTt.gif" height="270px" width="480px" alt="Où trouver le bot">
     </div>
 
-    <div class="step">
-      <h2>Étape 2 : Se connecter au serveur</h2>
-      <div class="sub-step">
-        <p>Une fois vos comptes liés, créez un compte sur le serveur en utilisant :</p>
-        <code>/register motdepasse motdepasse</code>
-      </div>
-      <div class="sub-step">
-        <p>Pour vous connecter ensuite :</p>
-        <code>/login motdepasse</code>
-      </div>
-      <div class="sub-step">
-        <p><strong>⚠️ Attention !</strong> Remplacez "motdepasse" par votre mot de passe personnel (minimum 4 caractères).</p>
-      </div>
+    <div class="card">
+      <h2><i class="fas fa-play card-icon"></i> Étape 2 : Se connecter au serveur</h2>
+      <p>Une fois vos comptes liés, créez un compte sur le serveur en utilisant :</p>
+      <code>/register motdepasse motdepasse</code>
+      <p>Connectez-vous en utilisant :</p>
+      <code>/login motdepasse</code>
+      <p><strong>⚠️ Attention !</strong> Remplacez "motdepasse" par votre mot de passe personnel (minimum 4 caractères).</p>
     </div>
+
   </main>
 </body>
 </html>
