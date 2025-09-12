@@ -30,7 +30,30 @@
     #mainHeader { position: fixed; top: 0; left: 0; width: 100%; z-index: 200; display: flex; justify-content: center; align-items: center; }
     #mainHeader .header-bg { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); z-index: -1; }
     .header-content { width: 100%; max-width: 1400px; display: flex; align-items: center; justify-content: center; padding: 15px 40px; gap: 20px; color: var(--text); font-weight: 600; position: relative; }
-    .logo-container { display: flex; justify-content: center; align-items: center; margin: 0 40px; }
+.logo-container {
+  display: flex;
+  flex-direction: column; /* pour mettre le texte sous le logo */
+  justify-content: center;
+  align-items: center;
+  margin: 0 40px;
+}
+
+.logo-subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+  margin-top: 8px;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 0.2s; /* petit délai après le logo */
+  text-shadow: var(--hdr-shadow);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(-15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
     .logo { height: 100px; }
     .nav-left, .nav-right { display: flex; gap: 12px; align-items: center; }
     .nav-left a, .nav-right a {
@@ -48,7 +71,74 @@
     .nav-left a.active, .nav-right a.active { background: var(--active); color: #fff; box-shadow: 0 0 15px var(--active), 0 0 30px rgba(79,172,255,0.5); }
     .server-ip { position: absolute; right: 20px; font-weight: 600; padding: 6px 12px; border-radius: 12px; box-shadow: 0 0 5px #4facff; cursor: pointer; transition: all 0.3s ease, transform 0.3s ease; }
     .server-ip:hover { transform: scale(1.1); text-shadow: 0 0 15px #4facff; }
-    .chapter { position: absolute; left: 20px; font-size: 16px; text-shadow: 0 0 5px #4facff; }
+    .chapter {
+      position: absolute;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .chapter-number {
+      font-size: 26px;
+      position: relative;
+      color: #fff;
+    }
+    .chapter-number::after {
+      content: "Chapitre 1";
+      position: absolute;
+      left: 115%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #fff;
+      filter: blur(1.5px);
+      opacity: 1;
+      white-space: nowrap;
+    }
+    .chapter-number::before {
+      content: "Chapitre 1";
+      position: absolute;
+      right: 115%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #fff;
+      filter: blur(1.5px);
+      opacity: 1;
+      white-space: nowrap;
+    }
+    .chapter-season {
+      font-size: 22px;
+      position: relative;
+      color: #fff;
+    }
+    .chapter-season::before {
+      content: "Saison 3";
+      position: absolute;
+      right: 148%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #fff;
+      filter: blur(1.5px);
+      opacity: 1;
+      white-space: nowrap;
+    }
+    .chapter-season::after {
+      content: "Saison 5";
+      position: absolute;
+      left: 148%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #fff;
+      filter: blur(1.5px);
+      opacity: 1;
+      white-space: nowrap;
+    }
     .copy-bubble { position: absolute; top: -30px; right: 0; background: #4facff; color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 8px; opacity: 0; pointer-events: none; transform: translateY(10px); transition: all 0.3s ease; }
     .copy-bubble.show { opacity: 1; transform: translateY(0); }
 
@@ -155,13 +245,17 @@
   <header id="mainHeader">
     <div class="header-bg"></div>
     <div class="header-content">
-      <div class="chapter">Chapitre 1 - Saison 4</div>
+      <div class="chapter">
+        <div class="chapter-number">Chapitre 1</div>
+        <div class="chapter-season">Saison 4</div>
+      </div>
       <div class="nav-left">
         <a href="index.html">Accueil</a>
         <a href="join.html">Rejoindre</a>
       </div>
       <div class="logo-container">
         <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
+        <div class="logo-subtitle">Le premier SMP 90% Vanilla !</div>
       </div>
       <div class="nav-right">
         <a href="shop.html" class="active">Boutique</a>
@@ -229,7 +323,7 @@
         <ul>
           <li><img src="https://mc-heads.net/avatar/Yoyoparrain" alt="Yoyoparrain"> 🥇 Yoyoparrain – 50€</li>
           <li><img src="https://mc-heads.net/avatar/Tuberculord" alt="Tuberculord"> 🥈 Tuberculord – 12.99€</li>
-          <li><img src="https://mc-heads.net/avatar/Antonio_Shadow" alt="Antonio_Shadow"> 🥉 Antonio_Shadow – 5.99€</li>
+          <li><img src="https://mc-heads.net/avatar/Antonio_Shadow" alt="Antonio_Shadow"> 🥉 Antonio_Shadow – 90€</li>
         </ul>
       </div>
 
@@ -280,5 +374,3 @@
   </script>
 </body>
 </html>
-
-
