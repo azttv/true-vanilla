@@ -30,160 +30,46 @@
       100%{ background-position:0% 50%; }
     }
 
-    /* Header */
-    #mainHeader {
-      position: fixed;
-      top: 0; left: 0; width: 100%;
-      z-index: 200;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #mainHeader .header-bg {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-      z-index: -1;
-    }
-    .header-content {
-      width: 100%;
-      max-width: 1400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 15px 40px;
-      gap: 20px;
-      color: var(--text);
-      font-weight: 600;
-      position: relative;
-    }
-.logo-container {
-  display: flex;
-  flex-direction: column; /* pour mettre le texte sous le logo */
-  justify-content: center;
-  align-items: center;
-  margin: 0 40px;
+header{position:fixed;top:0;width:100%;z-index:200;display:flex;justify-content:center;align-items:center}
+header .header-bg{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);z-index:-1;opacity:0;transition:.4s}
+header.scrolled .header-bg{opacity:1}
+.header-content{width:100%;max-width:1400px;display:flex;align-items:center;justify-content:center;padding:15px 40px;gap:20px;position:relative;text-shadow:0 2px 8px rgba(0,0,0,.9)}
+.logo {height: 100px; position: relative; cursor: pointer; overflow: hidden;}
+.logo::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,.6), transparent);
+  transform: skewX(-25deg);
 }
-
-.logo-subtitle {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--text);
-  margin-top: 8px;
-  opacity: 0;
-  transform: translateY(15px);
-  animation: fadeUp 1s ease forwards;
-  animation-delay: 0.2s; /* petit délai après le logo */
-  text-shadow: var(--hdr-shadow);
+.logo:hover::after {
+  animation: shine 1s forwards;
 }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(-15px); }
-  to   { opacity: 1; transform: translateY(0); }
+@keyframes shine {
+  100% { left: 125%; }
 }
-    .logo { height: 100px; }
-    .nav-left, .nav-right { display: flex; gap: 12px; align-items: center; }
-    .nav-left a, .nav-right a {
-      text-decoration: none; font-weight: 500; color: var(--text);
-      padding: 8px 14px; border-radius: 12px; position: relative;
-      box-shadow: 0 0 5px rgba(79,172,255,0.3);
-      transition: all 0.3s ease; cursor: pointer;
-    }
-    .nav-left a::before, .nav-right a::before {
-      content:''; position:absolute; inset:0; border-radius:12px;
-      box-shadow:0 0 5px #4facff,0 0 10px #00f2fe; opacity:0;
-      transition: all 0.3s ease;
-    }
-    .nav-left a:hover::before, .nav-right a:hover::before { opacity:1; }
-    .nav-left a.active, .nav-right a.active {
-      background: var(--active);
-      color: #fff;
-      box-shadow: 0 0 15px var(--active), 0 0 30px rgba(79,172,255,0.5);
-    }
-    .server-ip {
-      position: absolute; right: 20px;
-      font-weight: 600; padding: 6px 12px;
-      border-radius: 12px; box-shadow: 0 0 5px #4facff;
-      cursor: pointer; transition: all 0.3s ease, transform 0.3s ease;
-    }
-    .server-ip:hover { transform: scale(1.1); text-shadow: 0 0 15px #4facff; }
-    .chapter {
-      position: absolute;
-      left: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      font-weight: 600;
-      text-align: center;
-    }
-    .chapter-number {
-      font-size: 26px;
-      position: relative;
-      color: #fff;
-    }
-    .chapter-number::after {
-      content: "Chapitre 1";
-      position: absolute;
-      left: 115%;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 16px;
-      color: #fff;
-      filter: blur(1.5px);
-      opacity: 1;
-      white-space: nowrap;
-    }
-    .chapter-number::before {
-      content: "Chapitre 1";
-      position: absolute;
-      right: 115%;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 16px;
-      color: #fff;
-      filter: blur(1.5px);
-      opacity: 1;
-      white-space: nowrap;
-    }
-    .chapter-season {
-      font-size: 22px;
-      position: relative;
-      color: #fff;
-    }
-    .chapter-season::before {
-      content: "Saison 3";
-      position: absolute;
-      right: 148%;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 14px;
-      color: #fff;
-      filter: blur(1.5px);
-      opacity: 1;
-      white-space: nowrap;
-    }
-    .chapter-season::after {
-      content: "Saison 5";
-      position: absolute;
-      left: 148%;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 14px;
-      color: #fff;
-      filter: blur(1.5px);
-      opacity: 1;
-      white-space: nowrap;
-    }
-    .copy-bubble {
-      position: absolute; top: -30px; right: 0;
-      background: #4facff; color: #fff; font-size: 12px;
-      padding: 4px 10px; border-radius: 8px;
-      opacity: 0; pointer-events: none;
-      transform: translateY(10px); transition: all 0.3s ease;
-    }
-    .copy-bubble.show { opacity: 1; transform: translateY(0); }
+.logo-subtitle{font:400 14px Inter;margin-top:8px;opacity:0;transform:translateY(15px);animation:fadeDown 1s ease forwards .2s;text-shadow:0 2px 8px rgba(0,0,0,.9)}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-15px)}to{opacity:1;transform:translateY(0)}}
+.nav-left,.nav-right{display:flex;gap:12px;align-items:center}
+.nav-left a,.nav-right a{text-decoration:none;font-weight:500;color:var(--text);padding:8px 14px;border-radius:12px;position:relative;box-shadow:0 5px 15px rgba(79,172,255,.4);transition:.3s;cursor:pointer}
+header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgba(0,0,0,.3)}
+.nav-left a::before,.nav-right a::before{content:'';position:absolute;inset:0;border-radius:12px;box-shadow:0 0 5px #4facff,0 0 10px #00f2fe;opacity:0;transition:.3s}
+.nav-left a:hover::before,.nav-right a:hover::before{opacity:1}
+.nav-left a.active{background:var(--active);color:#fff;box-shadow:0 0 15px var(--active),0 0 30px rgba(79,172,255,.5)}
+.server-ip{position:absolute;right:20px;font-weight:600;padding:10px 16px;border-radius:16px;box-shadow:0 0 10px #4facff;cursor:pointer;transition:.3s,transform .3s;font-size:18px}
+.server-ip:hover{transform:scale(1.15);text-shadow:0 0 20px #4facff}
+.copy-bubble{position:absolute;top:-30px;right:0;background:#4facff;color:#fff;font-size:12px;padding:4px 10px;border-radius:8px;opacity:0;pointer-events:none;transform:translateY(10px);transition:.3s}
+.copy-bubble.show{opacity:1;transform:translateY(0)}
+.chapter{position:absolute;left:5px;display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:700;text-align:center}
+.chapter-number{color:#fff;font-size:34px;position:relative;text-shadow:0 0 5px #4facff,0 0 10px #00f2fe;animation:glow 2s infinite alternate}
+@keyframes glow{0%{text-shadow:0 0 5px #4facff,0 0 10px #00f2fe}50%{text-shadow:0 0 15px #4facff,0 0 30px #00f2fe}100%{text-shadow:0 0 5px #4facff,0 0 10px #00f2fe}}
+.chapter-season{color:#fff;font-size:30px;position:relative}
+.chapter-number::before,.chapter-number::after,.chapter-season::before,.chapter-season::after{content:"";position:absolute;font-size:18px;color:#fff;filter:blur(1.5px);opacity:1;white-space:nowrap}
+.chapter-season::before{content:"Saison 3";right:148%;top:53%;transform:translateY(-50%)}
+.chapter-season::after{content:"Saison 5";left:148%;top:53%;transform:translateY(-50%)}
 
     main{ max-width:900px; margin:0 auto; padding:20px; text-align:left; }
     h1{ font-size:2.5rem; margin-bottom:30px; text-align:center; text-shadow: var(--shadow);}
@@ -219,31 +105,103 @@
       animation: fadeInUp 0.8s ease forwards;
     }
     .links-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
-  margin-top: 10px;
-}
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 10px;
+    }
 
-.link-btn {
-  display: inline-block;
-  padding: 10px 22px;
-  border-radius: 12px;
-  background: rgba(79,172,255,0.15);
-  color: #fff;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(79,172,255,0.2);
-}
+    .link-btn {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 12px;
+      background: rgba(79,172,255,0.15);
+      color: #fff;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(79,172,255,0.2);
+    }
 
-.link-btn:hover {
-  background: rgba(79,172,255,0.35);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(79,172,255,0.5);
-}
+    .link-btn:hover {
+      background: rgba(79,172,255,0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(79,172,255,0.5);
+    }
 
+    /* --- STAFF --- */
+    .staff-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .staff-member {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.3s;
+    }
+
+    .staff-member:hover { transform: translateY(-5px); }
+
+    .staff-name {
+      background: #2a2a2a;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #fff;
+      text-align: center;
+      min-width: 100px;
+    }
+
+    .staff-member img {
+      border-radius: 8px;
+      border: 2px solid #fff;
+      width: 100px;
+      height: 100px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .staff-member img:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 20px rgba(79,172,255,0.6);
+    }
+
+    .staff-role {
+      margin-top: 5px;
+      padding: 5px 12px;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 600;
+      text-align: center;
+      min-width: 80px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .staff-role:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 15px rgba(255,255,255,0.4);
+    }
+
+    .role-founder {
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      box-shadow: 0 0 10px #a855f7, 0 0 20px #7c3aed;
+    }
+
+    .role-staff {
+      background: linear-gradient(135deg, #f87171, #ef4444);
+      box-shadow: 0 0 10px #f87171, 0 0 20px #ef4444;
+    }
+
+    .role-host {
+      background: linear-gradient(135deg, #000000, #333333);
+      box-shadow: 0 0 10px #000000, 0 0 20px #333333;
+    }
   </style>
 </head>
 <body>
@@ -296,6 +254,28 @@
       </ul>
     </div>
 
+    <!-- --- ÉQUIPE DU STAFF --- -->
+    <div class="card reveal">
+      <h2><i class="fas fa-users card-icon"></i> Équipe du staff</h2>
+      <div class="staff-container">
+        <div class="staff-member">
+          <div class="staff-name">az_ttv</div>
+          <img src="https://minotar.net/helm/az_ttv/100.png" alt="az_ttv">
+          <div class="staff-role role-founder">Fondateur</div>
+        </div>
+        <div class="staff-member">
+          <div class="staff-name">Asolka</div>
+          <img src="https://minotar.net/helm/Asolka/100.png" alt="Asolka">
+          <div class="staff-role role-staff">Staff</div>
+        </div>
+        <div class="staff-member">
+          <div class="staff-name">Lachimeur</div>
+          <img src="https://minotar.net/helm/Lachimeur/100.png" alt="Lachimeur">
+          <div class="staff-role role-host">Hebergeur</div>
+        </div>
+      </div>
+    </div>
+
     <div class="card reveal">
       <h2><i class="fas fa-star card-icon"></i> Fonctionnalités spéciales</h2>
       <ul>
@@ -332,8 +312,6 @@
         <a href="https://discord.gg/HefFTCS4cp" target="_blank" class="link-btn">Discord</a>
       </div>
     </div>
-
-
   </main>
 
   <script>
@@ -358,6 +336,9 @@
     }, { threshold: 0.1 });
 
     revealElements.forEach(el => observer.observe(el));
+window.addEventListener("scroll", () => {
+  document.getElementById("mainHeader").classList.toggle("scrolled", window.scrollY>50);
+});
   </script>
 </body>
 </html>
