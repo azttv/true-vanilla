@@ -6,6 +6,7 @@
   <title>True Vanilla – Boutique</title>
   <meta name="description" content="Le premier SMP Français 90% Vanilla !" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root{ 
       --text:#f5f7ff; 
@@ -57,6 +58,11 @@ header.scrolled .header-bg{opacity:1}
 header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgba(0,0,0,.3)}
 .nav-left a::before,.nav-right a::before{content:'';position:absolute;inset:0;border-radius:12px;box-shadow:0 0 5px #4facff,0 0 10px #00f2fe;opacity:0;transition:.3s}
 .nav-left a:hover::before,.nav-right a:hover::before{opacity:1}
+.nav-right a.active {
+  background: var(--active);
+  color: #fff;
+  box-shadow: 0 0 15px var(--active), 0 0 30px rgba(79,172,255,.5);
+}
 .nav-left a.active{background:var(--active);color:#fff;box-shadow:0 0 15px var(--active),0 0 30px rgba(79,172,255,.5)}
 .server-ip{position:absolute;right:20px;font-weight:600;padding:10px 16px;border-radius:16px;box-shadow:0 0 10px #4facff;cursor:pointer;transition:.3s,transform .3s;font-size:18px}
 .server-ip:hover{transform:scale(1.15);text-shadow:0 0 20px #4facff}
@@ -69,6 +75,7 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 .chapter-number::before,.chapter-number::after,.chapter-season::before,.chapter-season::after{content:"";position:absolute;font-size:18px;color:#fff;filter:blur(1.5px);opacity:1;white-space:nowrap}
 .chapter-season::before{content:"Saison 3";right:148%;top:53%;transform:translateY(-50%)}
 .chapter-season::after{content:"Saison 5";left:148%;top:53%;transform:translateY(-50%)}
+footer{text-align:center;color:#eef2ffcc;padding:40px 0;font-size:14px;background:#0008}
 
     main{ max-width:1400px; margin:0 auto; padding:20px; display:flex; gap:20px; }
     .left-col{ flex:2; display:grid; grid-template-columns: 1fr; gap:20px; }
@@ -92,12 +99,12 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
     .buy-btn:hover{ background:#00f2fe; transform:scale(1.05); }
 
     /* Sticky cartes droite */
-    .vip-benefits, .vip-warning {
-      position: sticky;
-      top: 160px;
-      z-index: 50;
-      opacity:0;
-    }
+.vip-benefits, .vip-warning {
+  position: relative;
+  top: auto; /* au lieu de 160px */
+  z-index: auto;
+  opacity: 0;
+}
 
     .top-donateurs, .vip-benefits, .vip-warning{
       background: var(--card-bg);
@@ -108,8 +115,27 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
     }
     .top-donateurs h2, .vip-benefits h3{ margin-bottom:15px; font-size:1.5rem; }
     .top-donateurs ul, .vip-benefits ul{ list-style:none; padding:0; }
-    .top-donateurs ul li, .vip-benefits ul li{ margin:8px 0; font-weight:500; display:flex; align-items:center; }
-    .top-donateurs ul li img{ border-radius:50%; margin-right:10px; width:32px; height:32px; }
+    .vip-benefits ul li{ margin:8px 0; font-weight:500; display:flex; align-items:center; }
+.top-donateurs ul li img {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+.donateur-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+    .top-donateurs ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  font-weight: 500;
+}
+.montant {
+  font-weight: 700;
+}
 
     /* VIP group */
     .vip-group{ display:flex; flex-direction:column; gap:15px; padding:20px; border-radius:16px; box-shadow: var(--shadow); background: var(--card-bg); position:relative; overflow:hidden; opacity:0; }
@@ -167,33 +193,167 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
       0% { opacity: 0; transform: translateX(50px); }
       100% { opacity: 1; transform: translateX(0); }
     }
+    .burger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: var(--text);
+  cursor: pointer;
+  position: absolute;
+  left: 20px;
+  z-index: 1001;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70%;
+  height: 100vh;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  flex-direction: column;
+  padding-top: 80px;
+  gap: 20px;
+  transition: transform 0.3s ease;
+  z-index: 1001;
+  transform: translateX(-100%);
+}
+
+.mobile-menu.active {
+  transform: translateX(0);
+}
+
+/* Overlay */
+img:not(.logo img):not(.logo) {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  border-radius: 22px
+}
+
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 99;
+}
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Liens du menu burger */
+.mobile-menu a {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--text);
+  padding: 14px 20px;
+  margin: 0 20px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.05);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+
+.mobile-menu a:hover {
+  background: rgba(79,172,255,0.15);
+  box-shadow: 0 0 12px rgba(79,172,255,0.4);
+  transform: translateX(5px);
+}
+
+/* Page active */
+.mobile-menu a.active {
+  background: linear-gradient(90deg, #4facff, #00f2fe);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(79,172,255,0.8), 0 0 25px rgba(0,242,254,0.6);
+}
+    @media(max-width: 768px) {
+  main {
+    flex-direction: column; /* une seule colonne */
+  }
+
+  .left-col, .right-col {
+    width: 100%;
+    display: contents; /* 👈 fusionne les enfants dans le flux */
+  }
+  .vip-warning { order: 0; }  /* tout en haut */
+  .card.don { order: 2; }      /* Don après */
+  .vip-group { order: 3; }     /* Packs VIP */
+  .card.seconde { order: 4; }  /* Seconde chance */
+  .vip-benefits { order: 1; }  /* Avantages VIP */
+  .top-donateurs { order: 5; } /* Top donateurs */
+  .logo-subtitle {display: none !important;}
+  .logo-container {display: flex; justify-content: center; width: 100%;}
+  .nav-left, .nav-right, .server-ip, .chapter {display: none !important;}
+  .burger {display: block;}
+  .logo {height: 60px;}
+  .header-content {justify-content: center;padding: 10px 20px;}
+  .carousel-wrapper {display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch};
+  .zone {position: relative; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 70vh; padding: 40px 20px; color: #fff}
+  .zone .image {display: none;}
+  .zone {background-size: cover; background-position: center; background-repeat: repeat}
+  .zone.one {background-image: url("screen.gif")}
+  .zone.two {background-image: url("shop.png")}
+  .zone.three {background-image: url("discord.png")}
+  .zone::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(8px); /* <<< flou appliqué ici */
+    transform: scale(1.1); /* éviter les bords nets après flou */
+    z-index: 0;
+  }
+}
+  
   </style>
 </head>
 <body>
-  <header id="mainHeader">
-    <div class="header-bg"></div>
-    <div class="header-content">
-      <div class="chapter">
-        <div class="chapter-number">Chapitre 1</div>
-        <div class="chapter-season">Saison 4</div>
-      </div>
-      <div class="nav-left">
-        <a href="index.html">Accueil</a>
-        <a href="join.html">Rejoindre</a>
-      </div>
-      <div class="logo-container">
-        <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
-        <div class="logo-subtitle">Le premier SMP 90% Vanilla !</div>
-      </div>
-      <div class="nav-right">
-        <a href="shop.html" class="active">Boutique</a>
-        <a href="infos.html">Infos</a>
-      </div>
-      <div class="server-ip" id="copyIP">play.true-vanilla.fr
-        <span class="copy-bubble" id="copyBubble">Copié !</span>
-      </div>
+<header id="mainHeader">
+  <div class="header-bg"></div>
+  <div class="header-content">
+    <button class="burger" id="burgerBtn"><i class="fas fa-bars"></i></button>
+    <div class="chapter">
+      <div class="chapter-number">Chapitre 1</div>
+      <div class="chapter-season">Saison 4</div>
     </div>
-  </header>
+    <div class="nav-left">
+      <a href="index.html">Accueil</a>
+      <a href="join.html">Rejoindre</a>
+    </div>
+    <div class="logo-container">
+      <a href="join.html#top"><img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo"></a>
+      <div class="logo-subtitle">⠀⠀Le premier SMP 90% Vanilla !</div>
+    </div>
+    <nav class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Accueil</a>
+      <a href="join.html">Rejoindre</a>
+      <a href="shop.html" class="active">Boutique</a>
+      <a href="infos.html">Infos</a>
+      <p align="center">⠀</p>
+      <p align="center">Le premier SMP 90% Vanilla !</p>
+            <p align="center">⠀</p>
+      <img align="center" src="logospin.gif" height="150px" width="150px" alt="True Vanilla">
+    </nav>
+    <div class="nav-right">
+      <a href="shop.html" class="active">Boutique</a>
+      <a href="infos.html">Infos</a>
+    </div>
+    <div class="server-ip" id="copyIP">play.true-vanilla.fr
+      <span class="copy-bubble" id="copyBubble">Copié !</span>
+    </div>
+  </div>
+</header>
+<div class="overlay" id="overlay"></div>
 
   <main>
     <div class="left-col">
@@ -249,10 +409,30 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
       <div class="top-donateurs">
         <h2>Top Donateurs</h2>
         <ul>
-          <li><img src="https://mc-heads.net/avatar/Yoyoparrain" alt="Yoyoparrain"> 🥇 Yoyoparrain – 50€</li>
-          <li><img src="https://mc-heads.net/avatar/Tuberculord" alt="Tuberculord"> 🥈 Tuberculord – 12.99€</li>
-          <li><img src="https://mc-heads.net/avatar/Antonio_Shadow" alt="Antonio_Shadow"> 🥉 Antonio_Shadow – 5.99€</li>
-        </ul>
+<li>
+  <div class="donateur-left">
+    <img src="https://mc-heads.net/avatar/Yoyoparrain" alt="Yoyoparrain">
+    <span class="medaille">🥇</span>
+    <span class="pseudo">Yoyoparrain</span>
+  </div>
+  <span class="montant">50€</span>
+</li>
+<li>
+  <div class="donateur-left">
+    <img src="https://mc-heads.net/avatar/Tuberculord" alt="Tuberculord">
+    <span class="medaille">🥈</span>
+    <span class="pseudo">Tuberculord</span>
+  </div>
+  <span class="montant">12.99</span>
+</li>
+<li>
+  <div class="donateur-left">
+    <img src="https://mc-heads.net/avatar/Antonio_Shadow" alt="Antonio_Shadow">
+    <span class="medaille">🥉</span>
+    <span class="pseudo">Antonio_Shadow</span>
+  </div>
+  <span class="montant">5.99€</span>
+</li>
       </div>
 
       <!-- Avantages VIP -->
@@ -273,7 +453,7 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
       </div>
     </div>
   </main>
-
+ <footer>© <span id="year"></span> True Vanilla — Tous droits réservés.</footer>
   <script>
     // Copy IP
     const copyIP = document.getElementById('copyIP');
@@ -302,7 +482,31 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 window.addEventListener("scroll", () => {
   document.getElementById("mainHeader").classList.toggle("scrolled", window.scrollY>50);
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const burgerBtn = document.getElementById("burgerBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const overlay = document.getElementById("overlay");
+
+  function toggleMenu(){
+    overlay.classList.toggle("active");
+    mobileMenu.classList.toggle("active");
+  }
+
+  if (burgerBtn && mobileMenu && overlay) {
+    overlay.addEventListener("click", toggleMenu);
+    burgerBtn.addEventListener("click", toggleMenu);
+
+
+    document.querySelectorAll(".mobile-menu a").forEach(link => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+        overlay.classList.remove("active");
+      });
+    });
+  } else {
+    console.error("Élément manquant");
+  }
+});
   </script>
 </body>
 </html>
-
