@@ -7,7 +7,6 @@
   <meta name="description" content="Le premier SMP Français 90% Vanilla !" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
- <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root{
       --text:#f5f7ff;
@@ -221,9 +220,32 @@ img:not(.logo img):not(.logo) {
     background-repeat: no-repeat;
     filter: blur(8px); /* <<< flou appliqué ici */
     transform: scale(1.1); /* éviter les bords nets après flou */
-    z-index: 0;
-  }
+    z-index: 0;}
+    }
+  .header-btn.ban-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  margin-left: 15px;
+  border-radius: 50%;
+  border: 2px solid #ff2b2b;
+  color: #ff2b2b;
+  background: transparent;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow:0 0 10px #ff0000
 }
+
+.header-btn.ban-btn:hover {
+  background: #ff2b2b;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(255, 43, 43, 0.8);
+  transform:scale(1.25);
+  text-shadow:0 0 20px #ff0000;}
+
   </style>
 </head>
 <body>
@@ -243,14 +265,16 @@ img:not(.logo img):not(.logo) {
       <a href="join.html#top"><img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo"></a>
       <div class="logo-subtitle">⠀⠀Le premier SMP 90% Vanilla !</div>
     </div>
+    
     <nav class="mobile-menu" id="mobileMenu">
       <a href="index.html"">Accueil</a>
       <a href="join.html" class="active">Rejoindre</a>
       <a href="shop.html">Boutique</a>
       <a href="infos.html">Infos</a>
+      <a href="ban.html">Mur de la honte</a>
       <p align="center">⠀</p>
       <p align="center">Le premier SMP 90% Vanilla !</p>
-            <p align="center">⠀</p>
+      <p align="center">⠀</p>
       <img align="center" src="logospin.gif" height="150px" width="150px" alt="True Vanilla">
     </nav>
     <div class="nav-right">
@@ -261,6 +285,9 @@ img:not(.logo img):not(.logo) {
       <span class="copy-bubble" id="copyBubble">Copié !</span>
     </div>
   </div>
+        <a href="ban.html" class="header-btn ban-btn" title="Mur de la honte">
+  <i class="fa-solid fa-ban"></i>
+</a>
 </header>
 <div class="overlay" id="overlay"></div>
   <main>
@@ -354,4 +381,3 @@ document.addEventListener("DOMContentLoaded", () => {
   </script>
 </body>
 </html>
-

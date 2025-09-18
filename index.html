@@ -501,6 +501,30 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
   .video-frame{position:relative;width:75%;max-width:700px;aspect-ratio:16/9;background:rgba(0,0,0,0.3);border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.55);border:3px solid rgba(79,172,255,0.4);display:flex;align-items:center;justify-content:center}
   .video-frame iframe{width:100%;height:100%;border:none;border-radius:18px}
 .hero-text{margin-top: 50px;  flex:1;text-shadow:0 2px 8px rgba(0,0,0,.9)}}
+.header-btn.ban-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  margin-left: 15px;
+  border-radius: 50%;
+  border: 2px solid #ff2b2b;
+  color: #ff2b2b;
+  background: transparent;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow:0 0 10px #ff0000
+}
+
+.header-btn.ban-btn:hover {
+  background: #ff2b2b;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(255, 43, 43, 0.8);
+  transform:scale(1.25);
+  text-shadow:0 0 20px #ff0000;
+}
 </style>
 </head>
 <body>
@@ -528,6 +552,7 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
       <a href="join.html">Rejoindre</a>
       <a href="shop.html">Boutique</a>
       <a href="infos.html">Infos</a>
+      <a href="ban.html">Mur de la honte</a>
       <p align="center">⠀</p>
       <p align="center">Le premier SMP 90% Vanilla !</p>
             <p align="center">⠀</p>
@@ -537,10 +562,15 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
       <a href="shop.html">Boutique</a>
       <a href="infos.html">Infos</a>
     </div>
+
     <div class="server-ip" id="copyIP">play.true-vanilla.fr
       <span class="copy-bubble" id="copyBubble">Copié !</span>
     </div>
+  
   </div>
+      <a href="ban.html" class="header-btn ban-btn" title="Mur de la honte">
+  <i class="fa-solid fa-ban"></i>
+</a>
 </header>
 <div class="overlay" id="overlay"></div>
 <main>
@@ -637,6 +667,13 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 <div class="pseudo">Yoyolacroze</div>
 <img alt="skin" class="skin" src="https://mc-heads.net/avatar/Yoyolacroze/100"/>
 </div>
+<div class="review five-stars">
+<div class="stars"><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span></div>
+<p>« Très bon serveur et plutôt originale mais il y a un manque de joueurs, le serv reste très bien quand même. »</p>
+<div class="date">18 Septembre 2025</div>
+<div class="pseudo">Hazartexx_</div>
+<img alt="skin" class="skin" src="https://mc-heads.net/avatar/Hazartexx_/100"/>
+</div>
 </div>
 <a class="review-button" href="https://forms.gle/Xk9KmfdTJaAH6p947" id="reviewBtn">Laisser un avis</a>
 <div class="carousel-controls">
@@ -690,7 +727,7 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 <img alt="S4 Screen 3" src="V.png"/>
 <img alt="S4 Screen 4" src="V.png"/>
 </div>
-<p><strong>Particularité :</strong> Retour à l’âge d’or de Minecraft, survie pure 90% vanilla.</p>
+<p><strong>Particularité :</strong> Survie pure 90% vanilla.</p>
 <p><strong>Dates :</strong> Janvier 2024 – en cours</p>
 </div>
 <div class="season-block upcoming">
@@ -821,18 +858,32 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 }
 
 </style>
-<section class="livre-dor breathing">
+<section class="livre-dor breathinggg">
 <h2><span class="emoji">📖</span> Le livre d'or</h2>
 <div class="livre-dor-container">
   <div class="livre-dor-help-float" id="helpWidget">
   <button id="helpToggle">?</button>
-  <div id="helpText">
-    <p>
-      <strong>Comment les points sont-ils calculés dans le classement final ?</strong><br>
+<div id="helpText">
+  <p>
+    <strong>Comment les points du classement final sont-ils calculés ?</strong><br><br>
+    <strong>📌 Principe :</strong><br>
+    ➤ On additionne des <em>positions</em> (plus petit total = meilleur).<br><br>
 
-J'vais expliqué ça un jour ici quand j'arriverais à formuler ma phrase d'explication
-    </p>
-  </div>
+    <strong>📊 Sens des catégories :</strong><br>
+    ✅ <u>Plus c’est mieux</u> (on garde la position telle quelle) :<br>
+    <span style="margin-left:15px;">⚔️ Nombre de kills, ⏳ Heures de jeu, 🏃 Distance parcourue, 🏹 Distance volée, 🗝️ Coffres ouverts, 🐾 Mobs tués, 💥 Dégâts causés.</span><br><br>
+
+    ❌ <u>Plus c’est pire</u> (on inverse la position) :<br>
+    <span style="margin-left:15px;">💀 Nombre de morts, 🛡️ Dégâts reçus — ici la personne en tête (beaucoup de morts / dégâts reçus) est considérée comme pire.</span><br><br>
+
+    <strong>📖 Traitement des absences (pas dans un top 10) :</strong><br>
+    ➤ Pour <u>plus c’est mieux</u> : absence → position <strong>11</strong> (pénalisé).<br>
+    ➤ Pour <u>plus c’est pire</u> : absence → position <strong>1</strong> (meilleur que ceux du top 10 des pires).<br><br>
+
+    <strong>⚖️ Tie-break :</strong><br>
+    ➤ Si égalité sur la somme des positions → départage par les catégories <strong>positives</strong> (préférence à celui qui est le plus fort dans ce qui compte).
+  </p>
+</div>
 </div>
 <div class="livre-dor-main">
   
@@ -990,11 +1041,38 @@ font-weight: 800;
 margin-bottom: 60px;
 color: #ffd700;
 text-shadow: 0 0 10px #ffd700, 0 0 20px #ffec8b, 0 0 30px #ffd700;
-animation: breathing 3s ease-in-out infinite;
+animation: breathinggg 3s ease-in-out infinite;
 }
-@keyframes breathing {
+@keyframes breathinggg {
   0%, 100% { text-shadow: 0 0 8px #ffee00, 0 0 16px #feae00; transform: scale(1); }
   50% { text-shadow: 0 0 20px #ffee00, 0 0 40px #feae00; transform: scale(1.05); }
+}
+.shiny-text {
+  color: #b5b5b5a4; /* Adjust this color to change intensity/style */
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  display: inline-block;
+  animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: -100%;
+  }
+}
+
+.shiny-text.disabled {
+  animation: none;
 }
 .livre-dor h2 .emoji {
 color: white;
@@ -1007,7 +1085,7 @@ animation: breathing 3s ease-in-out infinite;
 
 /* Leaderboard principal */
 .livre-dor-main {min-height: 550px; flex: 1;background: rgba(0,0,0,0.5);border-radius: 20px;padding: 30px;box-shadow: 0 0 20px rgba(0,0,0,0.7);}
-.livre-dor-main h3 {font-family: Inter;font-size: 28px;margin-bottom: 20px;color: #fff;text-align: center;}
+.livre-dor-main h3 {font-family: Inter;font-size: 28px;margin-bottom: 20px;color: #ffd000;text-align: center; animation: breathingg 3s ease-in-out infinite;}
 .livre-dor-main ol {list-style: none;padding: 0;margin: 0;}
 .livre-dor-main li {font-family: 'Minecraftia', sans-serif;font-size: 20px;display: flex;justify-content: space-between;margin: 12px 0;padding: 10px 15px;border-radius: 12px;}
 .livre-dor-main li:nth-child(1){color:#ffd700;text-shadow:0 0 10px #ffd700,0 0 20px #ffd700;}
@@ -1101,7 +1179,7 @@ animation: breathing 3s ease-in-out infinite;
   background: rgba(20,20,20,0.95);
   color: #fff;
   padding: 18px;
-  width: 450px;
+  width: 1600px;
   border-radius: 16px;
   font-size: 24px;
   text-align: left;
@@ -1263,6 +1341,7 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 }); // dès que 10% visible
 
 observer.observe(livreDorSection);
+
 
 </script>
 <div class="lightbox" id="lightbox">
