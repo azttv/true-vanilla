@@ -1,7 +1,0 @@
-title: True Vanilla
-description: Le premier SMP 90% Vanilla !
-baseurl: "" # laisse vide si c'est à la racine du repo
-url: "https://www.true-vanilla.fr/" # ton site GitHub Pages
-
-# Permet d'avoir des URLs propres
-permalink: pretty
