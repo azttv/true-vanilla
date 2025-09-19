@@ -142,8 +142,8 @@ footer{text-align:center;color:#eef2ffcc;padding:40px 0;font-size:14px;backgroun
 @keyframes glow{0%{text-shadow:0 0 5px #4facff,0 0 10px #00f2fe}50%{text-shadow:0 0 15px #4facff,0 0 30px #00f2fe}100%{text-shadow:0 0 5px #4facff,0 0 10px #00f2fe}}
 .chapter-season{color:#fff;font-size:30px;position:relative}
 .chapter-number::before,.chapter-number::after,.chapter-season::before,.chapter-season::after{content:"";position:absolute;font-size:18px;color:#fff;filter:blur(1.5px);opacity:1;white-space:nowrap}
-.chapter-season::before{content:"Saison 3";right:148%;top:53%;transform:translateY(-50%)}
-.chapter-season::after{content:"Saison 5";left:148%;top:53%;transform:translateY(-50%)}
+.chapter-season::before{content:"Saison 2";right:148%;top:53%;transform:translateY(-50%)}
+.chapter-season::after{content:"Saison 4";left:148%;top:53%;transform:translateY(-50%)}
 /* TRANSITIONS CHAPITRES */
 /* OVERRIDE pour wrapper fixe */
 
@@ -537,7 +537,7 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
     <button class="burger" id="burgerBtn"><i class="fas fa-bars"></i></button>
     <div class="chapter">
       <div class="chapter-number">Chapitre 1</div>
-      <div class="chapter-season">Saison 4</div>
+      <div class="chapter-season">Saison 3</div>
     </div>
     <div class="nav-left">
       <a href="index.html" class="active">Accueil</a>
@@ -708,7 +708,7 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 <p><strong>Particularité :</strong> Netherite pas enchantable.</p>
 <p><strong>Dates :</strong> 6 Juillet 2025 – 10 Août 2025</p>
 </div>
-<div class="season-block">
+<div class="season-block glow">
 <h3>Saison 3</h3>
 <div class="season-gallery">
 <img alt="S3 Screen 1" src="1S3.png"/>
@@ -719,16 +719,8 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 <p><strong>Particularité :</strong> 3 Elytras par joueurs.</p>
 <p><strong>Dates :</strong> 10 Août 2025 – ???</p>
 </div>
-<div class="season-block glow">
-<h3>Saison 4</h3>
-<div class="season-gallery">
-<img alt="S4 Screen 1" src="V.png"/>
-<img alt="S4 Screen 2" src="V.png"/>
-<img alt="S4 Screen 3" src="V.png"/>
-<img alt="S4 Screen 4" src="V.png"/>
-</div>
-<p><strong>Particularité :</strong> Survie pure 90% vanilla.</p>
-<p><strong>Dates :</strong> Janvier 2024 – en cours</p>
+<div class="season-block upcoming">
+<p class="upcoming-text"><em style="color:grey;">Prochainement...</em></p>
 </div>
 <div class="season-block upcoming">
 <p class="upcoming-text"><em style="color:grey;">Prochainement...</em></p>
@@ -889,12 +881,14 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
   
 <h3>🏆 Classement Final</h3>
 <ol>
-<li><span>🥇 - TomZyark862</span><span>35 pts</span></li>
+<li><span>🥇 - TomZyark862</span><span>34 pts</span></li>
 <li><span>🥈 - Gerard2pardegato</span><span>42 pts</span></li>
-<li><span>🥉 - 0verMiine</span><span>42 pts</span></li>
-<li><span>4 - CerberusX101</span><span>48 pts</span></li>
-<li><span>5 - Coro_Blue</span><span>52 pts</span></li>
+<li><span>🥉 - CerberusX101</span><span>47 pts</span></li>
+<li><span>4 - Coro_Blue</span><span>51 pts</span></li>
+<li><span>5 - ACOX27</span><span>63 pts</span></li>
 </ol>
+<div class="show-more" id="showMoreBtn">▼ Afficher tout le monde ▼</div>
+<div class="show-less" id="showLessBtn" style="display:none;">▲ Cacher tout le monde ▲</div>
 </div>
 <div class="livre-dor-carousel">
 <div class="livre-dor-track" id="livreDorTrack">
@@ -926,16 +920,16 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
   </ol>
 </div>
 <div class="livre-dor-category"><h4>⌛ Heures de jeux</h4>
-  <ol><li><span>🥇 - Gerard2pardegato</span><span>202h</span></li>
-  <li><span>🥈 - 0verMiine</span><span>128h</span></li>
-  <li><span>🥉 - Coro_Blue</span><span>123h</span></li>
-  <li><span>4 - CerberusX101</span><span>109h</span></li>
-  <li><span>5 - Gluxcon</span><span>94h</span></li>
-  <li><span>6 - TomZyark862</span><span>88h</span></li>
-  <li><span>7 - ACOX27</span><span>86h</span></li>
-  <li><span>8 - Tornade6</span><span>79h</span></li>
-  <li><span>9 - goudaps</span><span>78h</span></li>
-  <li><span>10 - Jules_sp</span><span>60h</span></li>
+  <ol><li><span>🥇 - Gerard2pardegato</span><span>182h</span></li>
+  <li><span>🥈 - Coro_Blue</span><span>98h</span></li>
+  <li><span>🥉 - CerberusX101</span><span>98h</span></li>
+  <li><span>4 - Gluxcon</span><span>92h</span></li>
+  <li><span>5 - TomZyark862</span><span>87h</span></li>
+  <li><span>6 - 0verMiine</span><span>82h</span></li>
+  <li><span>7 - ACOX27</span><span>82h</span></li>
+  <li><span>8 - goudaps</span><span>75h</span></li>
+  <li><span>9 - Tornade6</span><span>72h</span></li>
+  <li><span>10 - Jules_sp</span><span>54h</span></li>
   </ol>
 </div>
 <div class="livre-dor-category"><h4>​🚶​ Distance parcourue</h4>
@@ -1028,6 +1022,34 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 </div>
 
 <style>
+  .show-less {
+  margin-top: 20px;
+  font-family: 'Minecraftia', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+.show-less:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+}
+  .livre-dor-main.expanded {
+  min-height: 1200px; /* zone agrandie */
+  transition: min-height 0.6s ease;
+}
+  .show-more {
+  margin-top: 20px;
+  font-family: 'Minecraftia', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+.show-more:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+}
 .livre-dor {
 background: linear-gradient(135deg, #8b0000, #400000);
 padding: 100px 20px;
@@ -1342,7 +1364,65 @@ const observer = new IntersectionObserver((entries) => {
 
 observer.observe(livreDorSection);
 
+// Bouton "Afficher tout le monde"
+document.getElementById("showMoreBtn").addEventListener("click", () => {
+  const ranking = document.querySelector(".livre-dor-main ol");
+  const container = document.querySelector(".livre-dor-main");
 
+  // 24 pseudos supplémentaires
+  const extras = [
+    { pseudo: "6 - 0verMiine", points: 64 },
+    { pseudo: "7 - Gluxcon", points: 65 },
+    { pseudo: "8 - goudaps", points: 67 },
+    { pseudo: "9 - pixelmw", points: 75 },
+    { pseudo: "10 - Tornade6", points: 76 },
+    { pseudo: "11 - Tuberculord", points: 82 },
+    { pseudo: "12 - Jules_sp", points: 86 },
+    { pseudo: "13 - frantoi_mou", points: 88 },
+    { pseudo: "14 - skibidiNOUTO11", points: 88 },
+    { pseudo: "15 - tom140613", points: 88 },
+    { pseudo: "16 - Wano", points: 88 },
+    { pseudo: "17 - Xxazox", points: 88 },
+    { pseudo: "18 - Ryomen_sukuna201", points: 89 },
+    { pseudo: "19 - az_ttv", points: 93 },
+    { pseudo: "20 - 0_jd", points: 94 },
+    { pseudo: "21 - xonix5444", points: 96 },
+    { pseudo: "22 - DarkViandor", points: 96 },
+    { pseudo: "23 - benignooo", points: 96 },
+  ];
+
+
+  extras.forEach(player => {
+    const li = document.createElement("li");
+    li.classList.add("extra-player"); // important pour les supprimer après
+    li.innerHTML = `<span>${player.pseudo}</span><span>${player.points} pts</span>`;
+    li.style.color = "#fff";
+    li.style.textShadow = "0 0 6px #000";
+    ranking.appendChild(li);
+  });
+
+  // animation zone
+  container.classList.add("expanded");
+  showMoreBtn.style.display = "none";
+  showLessBtn.style.display = "block";
+
+  // cacher le bouton
+   document.getElementById("showMoreBtn").style.display = "none";
+  document.getElementById("showLessBtn").style.display = "block";
+});
+document.getElementById("showLessBtn").addEventListener("click", () => {
+  const container = document.querySelector(".livre-dor-main");
+
+  // Supprimer les joueurs supplémentaires
+  document.querySelectorAll(".extra-player").forEach(el => el.remove());
+
+  // réduire la zone
+  container.classList.remove("expanded");
+
+  // basculer boutons
+  document.getElementById("showLessBtn").style.display = "none";
+  document.getElementById("showMoreBtn").style.display = "block";
+});
 </script>
 <div class="lightbox" id="lightbox">
 <img alt="Zoom" src=""/>
