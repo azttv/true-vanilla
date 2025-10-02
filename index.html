@@ -541,6 +541,31 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
   box-shadow: 0 0 15px rgba(79,172,255,0.6);
   transform: scale(1.08);
 }
+      .pl,
+    .pl__worm{
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+    }
+    .pl{
+        animation-name: bump;
+        animation-timing-function: linear;
+        width: 8em;
+        height: 8em;
+    }
+    .pl__ring{
+        stroke: hsla(var(--hue),10%,10%,0.1);
+        transition: stroke 0.3s;
+    }
+    .pl__worm{
+        animation-name: worm;
+        animation-timing-function: cubic-bezier(0.42,0.17,0.75,0.83);
+    }
+
+    @keyframes worm{
+        from { stroke-dashoffset: 10; }
+        25% { stroke-dashoffset: 295; }
+        to { stroke-dashoffset: 1165; }
+    }
 </style>
 </head>
 <body>
@@ -1482,7 +1507,16 @@ document.getElementById("showLessBtn").addEventListener("click", () => {
 </script>
 <!-- Loader -->
 <div id="loader">
-  <div class="spinner"></div>
+ <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px">
+        <defs>
+            <linearGradient id="pl-grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="hsl(193,90%,55%)" />
+                <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+            </linearGradient>
+        </defs>
+        <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke-width="16" stroke-linecap="round" />
+        <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10" />
+    </svg>
 </div>
 <style>
   #loader {
@@ -1523,6 +1557,7 @@ document.getElementById("showLessBtn").addEventListener("click", () => {
 </main></body>
 
 </html>
+
 
 
 
