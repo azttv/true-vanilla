@@ -7,7 +7,6 @@
   <meta name="description" content="Le premier SMP Français 90% Vanilla !" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root{
       --text:#f5f7ff;
@@ -95,6 +94,14 @@ footer{text-align:center;color:#eef2ffcc;padding:40px 0;font-size:14px;backgroun
     .stat{ background: rgba(70,175,255,0.2); padding:15px 25px; border-radius:15px; min-width:120px; text-align:center; font-weight:600; transition: transform 0.3s, box-shadow 0.3s;}
     .stat:hover{ transform: translateY(-5px); box-shadow: 0 10px 25px rgba(70,175,255,0.5);}
     .stat-number{ font-size:1.5rem; color:#4facff; }
+
+    .status-online {
+      color: #10b981 !important;
+    }
+
+    .status-offline {
+      color: #ef4444 !important;
+    }
 
     /* --- FADE-IN AU SCROLL --- */
     @keyframes fadeInUp {
@@ -311,8 +318,8 @@ img:not(.logo img):not(.logo) {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(8px); /* <<< flou appliqué ici */
-    transform: scale(1.1); /* éviter les bords nets après flou */
+    filter: blur(8px);
+    transform: scale(1.1);
     z-index: 0;}
   }
   .header-btn.ban-btn {
@@ -358,7 +365,7 @@ img:not(.logo img):not(.logo) {
     </div>
     <div class="logo-container">
       <a href="infos.html#top"><img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo"></a>
-      <div class="logo-subtitle">⠀⠀Le premier SMP 90% Vanilla !</div>
+      <div class="logo-subtitle">   Le premier SMP 90% Vanilla !</div>
     </div>
     <nav class="mobile-menu" id="mobileMenu">
       <a href="index.html">Accueil</a>
@@ -366,9 +373,9 @@ img:not(.logo img):not(.logo) {
       <a href="boutique.html">Boutique</a>
       <a href="infos.html" class="active">Infos</a>
       <a href="murdelahonte.html">Mur de la honte</a>
-      <p align="center">⠀</p>
+      <p align="center"> </p>
       <p align="center">Le premier SMP 90% Vanilla !</p>
-      <p align="center">⠀</p>
+      <p align="center"> </p>
       <img align="center" src="logospin.gif" height="150px" width="150px" alt="True Vanilla">
     </nav>
     <div class="nav-right">
@@ -414,17 +421,17 @@ img:not(.logo img):not(.logo) {
       <div class="staff-container">
         <div class="staff-member">
           <div class="staff-name">az_ttv</div>
-          <img src="https://mc-heads.net/avatar/az_ttv/100.png" alt="az_ttv">
+          <img src="https://minotar.net/helm/az_ttv/100.png" alt="az_ttv">
           <div class="staff-role role-founder">Fondateur</div>
         </div>
         <div class="staff-member">
           <div class="staff-name">Asolka</div>
-          <img src="https://mc-heads.net/avatar/Asolka/100.png" alt="Asolka">
+          <img src="https://minotar.net/helm/Asolka/100.png" alt="Asolka">
           <div class="staff-role role-staff">Staff</div>
         </div>
         <div class="staff-member">
           <div class="staff-name">Lachimeur</div>
-          <img src="https://mc-heads.net/avatar/Lachimeur/100.png" alt="Lachimeur">
+          <img src="https://minotar.net/helm/Lachimeur/100.png" alt="Lachimeur">
           <div class="staff-role role-host">Hebergeur</div>
         </div>
       </div>
@@ -436,12 +443,40 @@ img:not(.logo img):not(.logo) {
         <li>Événements communautaires hebdomadaires (constructions, mini-jeux, concours).</li>
         <li>Chat de proximité inclus dans le serveur.</li>
         <li>Liaison casi-parfaite entre le serveur Minecraft et Discord.</li>
-        <li>Support actif via Discord et en jeu par l’équipe du staff.</li>
+        <li>Support actif via Discord et en jeu par l'équipe du staff.</li>
       </ul>
     </div>
 
     <div class="card reveal">
       <h2><i class="fas fa-chart-bar card-icon"></i> Statistiques du serveur</h2>
+      
+      <!-- Statut en temps réel -->
+      <h3 style="font-size: 1.4rem; margin-top: 20px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-signal" style="color: #4facff; font-size: 1.2rem;"></i>
+        Statut en temps réel
+      </h3>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-number" id="serverStatus">
+            <i class="fas fa-circle-notch fa-spin"></i>
+          </div>
+          Statut
+        </div>
+        <div class="stat">
+          <div class="stat-number" id="playersOnline">-</div>
+          Joueurs en ligne
+        </div>
+        <div class="stat">
+          <div class="stat-number" id="maxPlayers">-</div>
+          Places max
+        </div>
+      </div>
+
+      <!-- Statistiques générales -->
+      <h3 style="font-size: 1.4rem; margin-top: 30px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-trophy" style="color: #4facff; font-size: 1.2rem;"></i>
+        Statistiques générales
+      </h3>
       <div class="stats">
         <div class="stat">
           <div class="stat-number">204</div>
@@ -467,7 +502,7 @@ img:not(.logo img):not(.logo) {
       </div>
     </div>
   </main>
-<footer>© <span id="year"></span> True Vanilla — Tous droits réservés.</footer>
+<footer>© <span id="year"></span> True Vanilla – Tous droits réservés.</footer>
 <div id="loader">
   <div class="spinner"></div>
 </div>
@@ -574,9 +609,40 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("load", () => {
     document.getElementById("loader").classList.remove("active");
   });
+
+  // Vérifier le statut du serveur Minecraft
+  async function checkServerStatus() {
+    const statusEl = document.getElementById('serverStatus');
+    const playersEl = document.getElementById('playersOnline');
+    const maxPlayersEl = document.getElementById('maxPlayers');
+    
+    try {
+      const response = await fetch('https://api.mcsrvstat.us/3/play.true-vanilla.fr');
+      const data = await response.json();
+      
+      if (data.online) {
+        statusEl.innerHTML = '<i class="fas fa-circle status-online"></i> En ligne';
+        statusEl.classList.add('status-online');
+        playersEl.textContent = data.players.online || '0';
+        maxPlayersEl.textContent = data.players.max || '0';
+      } else {
+        statusEl.innerHTML = '<i class="fas fa-circle status-offline"></i> Hors ligne';
+        statusEl.classList.add('status-offline');
+        playersEl.textContent = '-';
+        maxPlayersEl.textContent = '-';
+      }
+    } catch (error) {
+      statusEl.innerHTML = '<i class="fas fa-exclamation-triangle status-offline"></i> Erreur';
+      statusEl.classList.add('status-offline');
+      console.error('Erreur lors de la récupération du statut:', error);
+    }
+  }
+
+  // Vérifier le statut au chargement
+  checkServerStatus();
+  
+  // Rafraîchir toutes les 30 secondes
+  setInterval(checkServerStatus, 30000);
   </script>
 </body>
 </html>
-
-
-
