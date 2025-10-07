@@ -487,7 +487,9 @@ img:not(.logo img):not(.logo) {
           Date d'ouverture
         </div>
         <div class="stat">
-          <div class="stat-number">382</div>
+          <div class="stat-number" id="discordMembers">
+            <i class="fas fa-circle-notch fa-spin"></i>
+          </div>
           Membres sur le Discord
         </div>
       </div>
@@ -638,11 +640,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Récupérer le nombre de membres Discord
+  async function getDiscordMembers() {
+    const discordEl = document.getElementById('discordMembers');
+    
+    try {
+      const response = await fetch('https://discord.com/api/v10/invites/HefFTCS4cp?with_counts=true');
+      const data = await response.json();
+      
+      if (data.approximate_member_count) {
+        discordEl.textContent = data.approximate_member_count;
+      } else {
+        discordEl.textContent = '382';
+      }
+    } catch (error) {
+      discordEl.textContent = '382';
+      console.error('Erreur lors de la récupération des membres Discord:', error);
+    }
+  }
+
   // Vérifier le statut au chargement
   checkServerStatus();
+  getDiscordMembers();
   
   // Rafraîchir toutes les 30 secondes
   setInterval(checkServerStatus, 30000);
+  setInterval(getDiscordMembers, 60000); // Discord toutes les 60 secondes
   </script>
 </body>
 </html>
