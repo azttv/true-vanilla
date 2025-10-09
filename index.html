@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-<link rel="icon" type="image/png" href="favicon.png">
 <style>
 :root{--text:#f5f7ff;--active:#4facff}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -541,31 +540,6 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
   box-shadow: 0 0 15px rgba(79,172,255,0.6);
   transform: scale(1.08);
 }
-      .pl,
-    .pl__worm{
-        animation-duration: 3s;
-        animation-iteration-count: infinite;
-    }
-    .pl{
-        animation-name: bump;
-        animation-timing-function: linear;
-        width: 8em;
-        height: 8em;
-    }
-    .pl__ring{
-        stroke: hsla(var(--hue),10%,10%,0.1);
-        transition: stroke 0.3s;
-    }
-    .pl__worm{
-        animation-name: worm;
-        animation-timing-function: cubic-bezier(0.42,0.17,0.75,0.83);
-    }
-
-    @keyframes worm{
-        from { stroke-dashoffset: 10; }
-        25% { stroke-dashoffset: 295; }
-        to { stroke-dashoffset: 1165; }
-    }
 </style>
 </head>
 <body>
@@ -621,7 +595,7 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 </div>
 <div class="hero-video">
 <div class="video-frame">
-<iframe allowfullscreen="" src="https://www.youtube.com/embed/Oi-was94CtI?si=hhgg-RN8D-tK1a5t" title="YouTube video player"></iframe>
+<iframe allowfullscreen="" src="https://www.youtube.com/embed/_0uGdVSuE6A?si=r7jhFcvRTUhcm84d" title="YouTube video player"></iframe>
 </div>
 </div>
 </section>
@@ -647,87 +621,336 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 </div>
 </section>
 <section class="zone reviews" style="background:#1a1a1a;flex-direction:column;gap:40px;text-align:center;padding:100px 20px;position:relative;">
-<h2 style="font-size:clamp(28px,4vw,48px);margin-bottom:20px">⭐ Avis des joueurs</h2>
-<div class="carousel-container">
-<div class="carousel-wrapper">
-<div class="review">
-<div class="stars"><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-empty">★</span></div>
-<p>« Le serveur est très complet, avec des modos très à l'écoute des joueurs. Les saisons sont très sympas, avec de bonnes seeds recherchées par les modos. En tout cas, c’est le serveur que je surkiffe le plus. Merci à vous, merci Az et Asolka. ^^ »</p>
-<div class="date">13 Septembre 2025</div>
-<div class="pseudo">TomZyark862</div>
-<img alt="skin" class="skin" src="https://mc-heads.net/avatar/TomZyark862/100"/>
-</div>
-<div class="review">
-<div class="stars"><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-empty">★</span></div>
-<p>« Assez bon serveur, mais il n'y a pas assez de joueurs. »</p>
-<div class="date">13 Septembre 2025</div>
-<div class="pseudo">ACOX27</div>
-<img alt="skin" class="skin" src="https://mc-heads.net/avatar/ACOX27/100"/>
-</div>
-<div class="review">
-<div class="stars"><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-empty">★</span></div>
-<p>« Un serveur très soudé, avec des rencontres très fun. Le staff est très sympa et essaie d’apporter de nouvelles idées chaque saison. Très bon serveur. »</p>
-<div class="date">13 Septembre 2025</div>
-<div class="pseudo">pixlemw</div>
-<img alt="skin" class="skin" src="https://mc-heads.net/avatar/pixlemw/100"/>
-</div>
-<div class="review five-stars">
-<div class="stars"><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span></div>
-<p>« Serveur simple mais incroyable, bonne commu malgré quelques cheaters. Le seul problème à mes yeux est le manque d’élytras. »</p>
-<div class="date">13 Septembre 2025</div>
-<div class="pseudo">Gerard2pardegato</div>
-<img alt="skin" class="skin" src="https://mc-heads.net/avatar/Gerard2pardegato/100"/>
-</div>
-<div class="review">
-<div class="stars"><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-empty">★</span><span class="star-empty">★</span></div>
-<p>« Il est bien, voire très bien, mais le manque de personnes est assez chiant. »</p>
-<div class="date">13 Septembre 2025</div>
-<div class="pseudo">goudaps</div>
-<img alt="skin" class="skin" src="https://mc-heads.net/avatar/goudaps/100"/>
-</div>
-<div class="review">
-<div class="stars"><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-empty">★</span><span class="star-empty">★</span><span class="star-empty">★</span></div>
-<p>« Le serveur est pas mal, même s’il n’a plus sa “hype” comme en V1 ou au début de la V3. Il manque de nouvelles fonctionnalités, même si c’est censé être 90 % vanilla. »</p>
-<div class="date">14 Septembre 2025</div>
-<div class="pseudo">Coro_Blue</div>
-<img alt="skin" class="skin" src="https://mc-heads.net/avatar/Coro_Blue/100"/>
-</div>
-<div class="review five-stars">
-<div class="stars"><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span></div>
-<p>« Actif et super accueillant, il manquait ce concept en France ! Je conseille ce serveur à toutes et à tous. »</p>
-<div class="date">15 Septembre 2025</div>
-<div class="pseudo">Anto</div>
-<img alt="skin" class="skin" src="https://mc-heads.net/avatar/Anto/100"/>
-</div>
-<div class="review">
-<div class="stars"><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-empty">★</span></div>
-<p>« Bien, mais ce serait cool si tu pouvais faire un serveur définitif et un avec les mises à jour. »</p>
-<div class="date">16 Septembre 2025</div>
-<div class="pseudo">Yoyolacroze</div>
-<img alt="skin" class="skin" src="https://mc-heads.net/avatar/Yoyolacroze/100"/>
-</div>
-<div class="review five-stars">
-<div class="stars"><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span></div>
-<p>« Très bon serveur et plutôt originale mais il y a un manque de joueurs, le serv reste très bien quand même. »</p>
-<div class="date">18 Septembre 2025</div>
-<div class="pseudo">Hazartexx_</div>
-<img alt="skin" class="skin" src="https://mc-heads.net/avatar/Hazartexx_/100"/>
-</div>
-<div class="review five-stars">
-<div class="stars"><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span></div>
-<p>« J’aime beaucoup le serveur car je peux enfin trouver un SMP Java en France en plus de ça avec le voice chat ce qui est vraiment sympa. Le staff est très accueillant et sympathique. »</p>
-<div class="date">21 Septembre 2025</div>
-<div class="pseudo">RDLNTKT</div>
-<img alt="skin" class="skin" src="https://mc-heads.net/avatar/RDLNTKT/100"/>
-</div>
-</div>
-<a class="review-button" href="https://forms.gle/Xk9KmfdTJaAH6p947" id="reviewBtn">Laisser un avis</a>
-<div class="carousel-controls">
-<button id="prevReview">❮</button>
-<button id="nextReview">❯</button>
-</div>
-</div>
+  <h2 style="font-size:clamp(28px,4vw,48px);margin-bottom:20px">⭐ Avis des joueurs</h2>
+  
+  <div class="reviews-carousel">
+    <button class="reviews-nav reviews-prev" id="reviewsPrev">❮</button>
+    
+    <div class="reviews-viewport">
+      <div class="reviews-track" id="reviewsTrack">
+        
+        <div class="review-card" data-stars="4">
+          <div class="stars">
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-empty">★</span>
+          </div>
+          <p>« Le serveur est très complet, avec des modos très à l'écoute des joueurs. Les saisons sont très sympas, avec de bonnes seeds recherchées par les modos. En tout cas, c'est le serveur que je surkiffe le plus. Merci à vous, merci Az et Asolka. ^^ »</p>
+          <div class="date">13 Septembre 2025</div>
+          <div class="pseudo">TomZyark862</div>
+          <img alt="skin" class="skin" src="https://mc-heads.net/avatar/TomZyark862/100"/>
+        </div>
+
+        <div class="review-card" data-stars="4">
+          <div class="stars">
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-empty">★</span>
+          </div>
+          <p>« Assez bon serveur, mais il n'y a pas assez de joueurs. »</p>
+          <div class="date">13 Septembre 2025</div>
+          <div class="pseudo">ACOX27</div>
+          <img alt="skin" class="skin" src="https://mc-heads.net/avatar/ACOX27/100"/>
+        </div>
+
+        <div class="review-card" data-stars="4">
+          <div class="stars">
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-empty">★</span>
+          </div>
+          <p>« Un serveur très soudé, avec des rencontres très fun. Le staff est très sympa et essaie d'apporter de nouvelles idées chaque saison. Très bon serveur. »</p>
+          <div class="date">13 Septembre 2025</div>
+          <div class="pseudo">pixlemw</div>
+          <img alt="skin" class="skin" src="https://mc-heads.net/avatar/pixlemw/100"/>
+        </div>
+
+        <div class="review-card five-stars" data-stars="5">
+          <div class="stars">
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+          </div>
+          <p>« Serveur simple mais incroyable, bonne commu malgré quelques cheaters. Le seul problème à mes yeux est le manque d'élytras. »</p>
+          <div class="date">13 Septembre 2025</div>
+          <div class="pseudo">Gerard2pardegato</div>
+          <img alt="skin" class="skin" src="https://mc-heads.net/avatar/Gerard2pardegato/100"/>
+        </div>
+
+        <div class="review-card" data-stars="3">
+          <div class="stars">
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-empty">★</span>
+            <span class="star-empty">★</span>
+          </div>
+          <p>« Il est bien, voire très bien, mais le manque de personnes est assez chiant. »</p>
+          <div class="date">13 Septembre 2025</div>
+          <div class="pseudo">goudaps</div>
+          <img alt="skin" class="skin" src="https://mc-heads.net/avatar/goudaps/100"/>
+        </div>
+
+        <div class="review-card" data-stars="2">
+          <div class="stars">
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-empty">★</span>
+            <span class="star-empty">★</span>
+            <span class="star-empty">★</span>
+          </div>
+          <p>« Le serveur est pas mal, même s'il n'a plus sa "hype" comme en V1 ou au début de la V3. Il manque de nouvelles fonctionnalités, même si c'est censé être 90 % vanilla. »</p>
+          <div class="date">14 Septembre 2025</div>
+          <div class="pseudo">Coro_Blue</div>
+          <img alt="skin" class="skin" src="https://mc-heads.net/avatar/Coro_Blue/100"/>
+        </div>
+
+        <div class="review-card five-stars" data-stars="5">
+          <div class="stars">
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+          </div>
+          <p>« Actif et super accueillant, il manquait ce concept en France ! Je conseille ce serveur à toutes et à tous. »</p>
+          <div class="date">15 Septembre 2025</div>
+          <div class="pseudo">Anto</div>
+          <img alt="skin" class="skin" src="https://mc-heads.net/avatar/Anto/100"/>
+        </div>
+
+        <div class="review-card" data-stars="4">
+          <div class="stars">
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-empty">★</span>
+          </div>
+          <p>« Bien, mais ce serait cool si tu pouvais faire un serveur définitif et un avec les mises à jour. »</p>
+          <div class="date">16 Septembre 2025</div>
+          <div class="pseudo">Yoyolacroze</div>
+          <img alt="skin" class="skin" src="https://mc-heads.net/avatar/Yoyolacroze/100"/>
+        </div>
+
+        <div class="review-card five-stars" data-stars="5">
+          <div class="stars">
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+          </div>
+          <p>« Très bon serveur et plutôt originale mais il y a un manque de joueurs, le serv reste très bien quand même. »</p>
+          <div class="date">18 Septembre 2025</div>
+          <div class="pseudo">Hazartexx_</div>
+          <img alt="skin" class="skin" src="https://mc-heads.net/avatar/Hazartexx_/100"/>
+        </div>
+
+      </div>
+    </div>
+    
+    <button class="reviews-nav reviews-next" id="reviewsNext">❯</button>
+  </div>
+
+  <a class="review-button" href="https://forms.gle/Xk9KmfdTJaAH6p947" id="reviewBtn">Laisser un avis</a>
 </section>
+<style>
+/* Reviews Carousel */
+.reviews-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.reviews-viewport {
+  flex: 1;
+  overflow: hidden;
+  padding: 40px 0;
+}
+
+.reviews-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 30px;
+}
+
+.review-card {
+  flex: 0 0 500px;
+  background: #2a2a2a;
+  border-radius: 20px;
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.5);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.4;
+  transform: scale(0.75);
+  filter: blur(4px);
+  position: relative;
+  overflow: visible;
+}
+
+.review-card.active {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+  box-shadow: 0 12px 40px rgba(79,172,255,0.4);
+}
+
+/* Five stars gold glow effect */
+.review-card.five-stars {
+  border: 2px solid #ffd700;
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+}
+
+.review-card.five-stars.active {
+  animation: neonGlow 3s infinite alternate;
+  box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 12px 40px rgba(255,215,0,0.3);
+}
+
+@keyframes neonGlow {
+  0% { box-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700, 0 8px 25px rgba(255,215,0,0.2); }
+  50% { box-shadow: 0 0 8px #ffd700, 0 0 16px #ffd700, 0 12px 35px rgba(255,215,0,0.4); }
+  100% { box-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700, 0 8px 25px rgba(255,215,0,0.2); }
+}
+
+.review-card.five-stars .star-filled {
+  text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700;
+}
+
+.review-card.five-stars::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  border-radius: 20px;
+  background: radial-gradient(circle, rgba(255,255,0,0.1) 0%, transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.review-card.five-stars.active::before {
+  opacity: 1;
+  animation: particles 2s infinite linear;
+}
+
+@keyframes particles {
+  0% { transform: translate(0,0) scale(1); opacity: 0.5; }
+  50% { transform: translate(5px,-5px) scale(1.02); opacity: 0.2; }
+  100% { transform: translate(0,0) scale(1); opacity: 0.5; }
+}
+
+.review-card .stars {
+  font-size: 24px;
+  text-shadow: 2px 2px 5px rgba(0,0,0,.7);
+}
+
+.review-card .star-filled {
+  color: #ffcc00;
+  text-shadow: 2px 2px 5px rgba(0,0,0,.7);
+}
+
+.review-card .star-empty {
+  color: #555;
+}
+
+.review-card p {
+  text-align: center;
+  line-height: 1.5;
+  font-size: 16px;
+  color: #f5f7ff;
+}
+
+.review-card .skin {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,.6);
+}
+
+.review-card .pseudo {
+  font-family: 'Minecraftia', sans-serif;
+  background: #444;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-top: 6px;
+  font-size: 18px;
+}
+
+.review-card .date {
+  font-size: 14px;
+  color: #ccc;
+  margin-top: 4px;
+  font-style: italic;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.reviews-nav {
+  flex: 0 0 auto;
+  background: rgba(0,0,0,0.6);
+  border: 2px solid rgba(79,172,255,0.3);
+  color: #fff;
+  font-size: 32px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  user-select: none;
+  z-index: 10;
+}
+
+.reviews-nav:hover {
+  background: #4facff;
+  border-color: #4facff;
+  transform: scale(1.15);
+  box-shadow: 0 6px 20px rgba(79,172,255,0.6);
+}
+
+.reviews-nav:active {
+  transform: scale(1.05);
+}
+
+/* Mobile responsiveness */
+@media(max-width: 768px) {
+  .review-card {
+    flex: 0 0 85vw;
+  }
+  
+  .reviews-nav {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+  
+  .reviews-carousel {
+    gap: 10px;
+  }
+}
+</style>
+
 <section class="seasons-timeline chapter-section active" id="chapitre1">
 <h2>📜 Chronologie des saisons</h2>
 <div class="chapter-title breathing">Chapitre 1</div>
@@ -742,7 +965,7 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 </div>
 <p><strong>Particularité :</strong> 3 masses dans <strong>TOUT</strong> le serveur.</p>
 <p><strong>Dates :</strong> 20 Mai 2025 – 6 Juillet 2025</p>
-<a class="download-button" href="https://www.dropbox.com/scl/fi/2fe3iigmj6knp16cngkgv/True-Vanilla-V1.zip?rlkey=32f6hl6i8nhk1jnw3epi94ny3&st=vqjfdfbe&dl=1" target="_blank">📥 Télécharger la map</a>
+<a class="download-button" href="rien.html" target="_blank">📥 Télécharger la map</a>
 </div>
 <div class="season-block">
 <h3>Saison 2</h3>
@@ -766,7 +989,7 @@ header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgb
 </div>
 <p><strong>Particularité :</strong> 3 Elytras par joueurs.</p>
 <p><strong>Dates :</strong> 10 Août 2025 – ???</p>
-<a class="download-button" href="404.html" target="_blank">📥 Télécharger la map</a>
+<a class="download-button" href="rien.html" target="_blank">📥 Télécharger la map</a>
 </div>
 <div class="season-block">
 <h3>Saison 4</h3>
@@ -1305,26 +1528,71 @@ window.addEventListener("scroll", () => {
   document.getElementById("mainHeader").classList.toggle("scrolled", window.scrollY>50);
 });
 
+const reviewsTrack = document.getElementById('reviewsTrack');
+const reviewCards = document.querySelectorAll('.review-card');
+const reviewsPrevBtn = document.getElementById('reviewsPrev');
+const reviewsNextBtn = document.getElementById('reviewsNext');
+let currentReviewIndex = 0;
+let reviewAutoRotateInterval;
 
-const wrapper = document.querySelector('.carousel-wrapper');
-const reviews = document.querySelectorAll('.review');
-let currentIndex = 0;
-function updateCarousel(){
-  const review = reviews[currentIndex];
-  const containerWidth = document.querySelector('.carousel-container').offsetWidth;
-  const reviewWidth = review.offsetWidth;
-  const offset = (containerWidth - reviewWidth) / 2;
-  let totalOffset = 0;
-  for (let i=0;i<currentIndex;i++) totalOffset += reviews[i].offsetWidth + 30;
-  wrapper.style.transform = `translateX(${-totalOffset + offset}px)`;
-  reviews.forEach((r,i)=>r.classList.toggle('active', i===currentIndex));
+function updateReviewsCarousel() {
+  if (!reviewCards.length) return;
+  
+  reviewCards.forEach((card, index) => {
+    card.classList.remove('active');
+    if (index === currentReviewIndex) {
+      card.classList.add('active');
+    }
+  });
+  
+  const cardWidth = reviewCards[0].offsetWidth;
+  const gap = 30;
+  const viewportWidth = document.querySelector('.reviews-viewport').offsetWidth;
+  const offset = (viewportWidth / 2) - (cardWidth / 2) - (currentReviewIndex * (cardWidth + gap));
+  
+  reviewsTrack.style.transform = `translateX(${offset}px)`;
 }
-document.getElementById('nextReview').addEventListener('click', ()=>{currentIndex=(currentIndex+1)%reviews.length; updateCarousel();});
-document.getElementById('prevReview').addEventListener('click', ()=>{currentIndex=(currentIndex-1+reviews.length)%reviews.length; updateCarousel();});
-setInterval(()=>{currentIndex=(currentIndex+1)%reviews.length; updateCarousel();}, 8000);
-updateCarousel();
 
+function startReviewAutoRotate() {
+  stopReviewAutoRotate();
+  reviewAutoRotateInterval = setInterval(() => {
+    currentReviewIndex = (currentReviewIndex + 1) % reviewCards.length;
+    updateReviewsCarousel();
+  }, 8000);
+}
 
+function stopReviewAutoRotate() {
+  if (reviewAutoRotateInterval) {
+    clearInterval(reviewAutoRotateInterval);
+  }
+}
+
+if (reviewsNextBtn && reviewsPrevBtn) {
+  reviewsNextBtn.addEventListener('click', () => {
+    stopReviewAutoRotate();
+    currentReviewIndex = (currentReviewIndex + 1) % reviewCards.length;
+    updateReviewsCarousel();
+    startReviewAutoRotate();
+  });
+
+  reviewsPrevBtn.addEventListener('click', () => {
+    stopReviewAutoRotate();
+    currentReviewIndex = (currentReviewIndex - 1 + reviewCards.length) % reviewCards.length;
+    updateReviewsCarousel();
+    startReviewAutoRotate();
+  });
+
+  // Initialize - IMPORTANT: attendre que la page soit chargée
+  window.addEventListener('load', () => {
+    updateReviewsCarousel();
+    startReviewAutoRotate();
+  });
+
+  // Update on window resize
+  window.addEventListener('resize', updateReviewsCarousel);
+}
+
+// Keep existing thumb animation for review button
 const reviewBtn = document.getElementById('reviewBtn');
 reviewBtn.addEventListener('mouseenter', e => {
   const rect = reviewBtn.getBoundingClientRect();
@@ -1507,16 +1775,7 @@ document.getElementById("showLessBtn").addEventListener("click", () => {
 </script>
 <!-- Loader -->
 <div id="loader">
- <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px">
-        <defs>
-            <linearGradient id="pl-grad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="hsl(193,90%,55%)" />
-                <stop offset="100%" stop-color="hsl(223,90%,55%)" />
-            </linearGradient>
-        </defs>
-        <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke-width="16" stroke-linecap="round" />
-        <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10" />
-    </svg>
+  <div class="spinner"></div>
 </div>
 <style>
   #loader {
@@ -1554,17 +1813,6 @@ document.getElementById("showLessBtn").addEventListener("click", () => {
 <div class="lightbox" id="lightbox">
 <img alt="Zoom" src=""/>
 </div>
-</main></body>
-
+</main>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
