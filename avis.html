@@ -797,7 +797,9 @@
           el.disabled = true;
           el.style.pointerEvents = 'none';
         });
-        
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 4000);
         setTimeout(() => {
           successMessage.classList.remove('show');
         }, 5000);
@@ -948,3 +950,4 @@
 </script>
 </body>
 </html>
+
