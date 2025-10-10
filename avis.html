@@ -202,7 +202,6 @@
       }
     }
 
-    /* Star Rating */
     .star-rating {
       display: flex;
       justify-content: center;
@@ -238,7 +237,6 @@
       }
     }
 
-    /* Support Button */
     .support-btn {
       position: fixed;
       bottom: 30px;
@@ -616,17 +614,14 @@
   let discordUserData = null;
   let selectedRating = 0;
 
-  // Discord OAuth configuration
   const DISCORD_CLIENT_ID = '1425143639125786724';
   const REDIRECT_URI = window.location.origin + window.location.pathname;
   const DISCORD_OAUTH_URL = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
 
-  // Discord login button
   document.getElementById('discordBtn').addEventListener('click', () => {
     window.location.href = DISCORD_OAUTH_URL;
   });
 
-  // Check for OAuth token in URL
   function checkDiscordAuth() {
     const fragment = new URLSearchParams(window.location.hash.slice(1));
     const accessToken = fragment.get('access_token');
@@ -669,7 +664,6 @@
 
   checkDiscordAuth();
 
-  // Star rating functionality
   const stars = document.querySelectorAll('.star');
   stars.forEach(star => {
     star.addEventListener('click', function() {
@@ -701,7 +695,6 @@
     highlightStars(selectedRating);
   }
 
-  // Character counter
   const reviewTextarea = document.getElementById('review');
   const charCounter = document.getElementById('charCounter');
 
@@ -717,7 +710,6 @@
     }
   });
 
-  // Form submission
   const form = document.getElementById('reviewForm');
   const successMessage = document.getElementById('successMessage');
 
@@ -812,7 +804,6 @@
     }
   });
 
-  // Support panel functionality
   const supportBtn = document.getElementById('supportBtn');
   const supportPanel = document.getElementById('supportPanel');
   const supportOverlay = document.getElementById('supportOverlay');
@@ -950,5 +941,6 @@
 </script>
 </body>
 </html>
+
 
 
