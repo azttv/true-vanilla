@@ -828,19 +828,14 @@
     return code;
   }
 
-  async function sendCodeToDiscord(code) {
+  async function sendCodeToDiscord(code, discordUser) {
     const webhookURL = 'https://discord.com/api/webhooks/1425851102309650434/noYsiIkKywXi4xtvSSnNTQsJhgoBqfIvXYOSvZfdkSXp6wtzJ1tGo3rEvSQJeiZzjA8b';
     
     const webhookData = {
       embeds: [{
         title: "🔑 Code de Réinitialisation Généré",
-        color: 16776960,
+        color: 16776960, // Yellow
         fields: [
-          {
-            name: "👤 Utilisateur Discord",
-            value: `<@${discordUserData.id}> (${discordUserData.tag})`,
-            inline: false
-          },
           {
             name: `\`${code}\``,
             value: "",
@@ -946,6 +941,7 @@
 </script>
 </body>
 </html>
+
 
 
 
