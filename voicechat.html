@@ -51,7 +51,8 @@ code{ display:block; background:rgba(0,0,0,0.3); padding:10px; border-radius:8px
   gap: 20px;
   justify-content: center;
   margin: 30px auto;
-  max-width: 800px;
+  max-width: 831px;
+  flex-wrap: wrap;
 }
 
 .choice-btn {
@@ -163,6 +164,8 @@ img {
           <span class="tag">Conseillé Premium</span>
         </button>
         <button class="choice-btn" data-launcher="curseforge">CurseForge</button>
+        <button class="choice-btn" data-launcher="lunar">Lunar</button>
+        <button class="choice-btn" data-launcher="feather">Feather</button>
       </div>
     </div>
 
@@ -181,11 +184,13 @@ img {
     <div id="tutorial" class="hidden"></div>
   </main>
 
+  <!-- CRITICAL FIX: Wrap everything in DOMContentLoaded to ensure DOM is ready -->
   <script>
-    let selectedLauncher = '';
-    let selectedModloader = '';
+    document.addEventListener('DOMContentLoaded', function() {
+      let selectedLauncher = '';
+      let selectedModloader = '';
 
-    const tutorials = {
+      const tutorials = {
       tlauncher: {
         forge: {
           title: 'Installation de Simple Voice Chat avec TLauncher et Forge',
@@ -1152,34 +1157,196 @@ img {
             </div>
           `
         }
+      },
+      lunar: {
+        fabric: {
+          title: 'Installation de Simple Voice Chat avec Lunar Client',
+          content: `
+            <div class="card">
+              <h2><i class="fas fa-info-circle card-icon"></i> Important</h2>
+              <p>Lunar Client intègre nativement Fabric, ce qui facilite grandement l'installation de mods.</p>
+            </div>
+
+            <div class="card">
+              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
+              <ul>
+                <li>Lunar Client installé sur votre ordinateur</li>
+                <li>Connexion Internet stable</li>
+                <li>Minecraft 1.21.8</li>
+                <li>Un compte Minecraft Premium</li>
+                <li>Fabric API</li>
+                <li>Le mod Simple Voice Chat version 2.5.35</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Télécharger les mods</h2>
+              <div class="step">
+                <h3>1.1 - Télécharger Fabric API</h3>
+                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/fabric-api" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/fabric-api" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
+                <p>Téléchargez <strong>Fabric API</strong> pour <strong>Minecraft 1.21.8</strong>.</p>
+                <div class="attention-box">⚠️ Fabric API est OBLIGATOIRE pour que Simple Voice Chat fonctionne !</div>
+              </div>
+              <div class="step">
+                <h3>1.2 - Télécharger Simple Voice Chat</h3>
+                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
+                <p>Téléchargez <strong>Simple Voice Chat version 2.5.35</strong> pour <strong>Minecraft 1.21.8</strong> et <strong>Fabric</strong>.</p>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2><i class="fas fa-folder-open card-icon"></i> Étape 2 : Installer les mods</h2>
+              <div class="step">
+                <h3>2.1 - Localiser le dossier .lunarclient</h3>
+                <p>Appuyez sur <strong>Windows + R</strong>, tapez <code>%userprofile%\\.lunarclient</code> et appuyez sur Entrée.</p>
+                <p>Naviguez vers le dossier : <code>offline\\multiver\\1.21.8\\mods</code></p>
+                <p>Si le dossier "mods" n'existe pas, créez-le.</p>
+              </div>
+              <div class="step">
+                <h3>2.2 - Placer les mods dans le dossier</h3>
+                <p>Copiez les deux fichiers téléchargés dans le dossier mods :</p>
+                <ul>
+                  <li><strong>fabric-api-[version].jar</strong></li>
+                  <li><strong>voicechat-fabric-1.21.8-2.5.35.jar</strong></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2><i class="fas fa-play card-icon"></i> Étape 3 : Lancer le jeu</h2>
+              <div class="step">
+                <h3>3.1 - Démarrer Lunar Client</h3>
+                <p>Ouvrez Lunar Client et sélectionnez <strong>Minecraft 1.21.8</strong>.</p>
+                <p>Cliquez sur "Launch" pour démarrer le jeu.</p>
+              </div>
+              <div class="step">
+                <h3>3.2 - Vérifier l'installation</h3>
+                <p>Une fois dans le menu principal, appuyez sur la touche <strong>V</strong> pour vérifier que Simple Voice Chat est bien chargé.</p>
+                <p>Vous pouvez aussi vérifier dans le menu des mods si disponible.</p>
+              </div>
+              <div class="step">
+                <h3>3.3 - Configuration du mod</h3>
+                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
+                <p>Configurez votre microphone et vos préférences audio.</p>
+                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
+              </div>
+            </div>
+          `
+        }
+      },
+      feather: {
+        fabric: {
+          title: 'Installation de Simple Voice Chat avec Feather Client',
+          content: `
+            <div class="card">
+              <h2><i class="fas fa-info-circle card-icon"></i> Important</h2>
+              <p>Feather Client supporte les mods Fabric, ce qui permet d'installer facilement Simple Voice Chat.</p>
+            </div>
+
+            <div class="card">
+              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
+              <ul>
+                <li>Feather Client installé sur votre ordinateur</li>
+                <li>Connexion Internet stable</li>
+                <li>Minecraft 1.21.8</li>
+                <li>Un compte Minecraft Premium</li>
+                <li>Fabric API</li>
+                <li>Le mod Simple Voice Chat version 2.5.35</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Télécharger les mods</h2>
+              <div class="step">
+                <h3>1.1 - Télécharger Fabric API</h3>
+                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/fabric-api" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/fabric-api" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
+                <p>Téléchargez <strong>Fabric API</strong> pour <strong>Minecraft 1.21.8</strong>.</p>
+                <div class="attention-box">⚠️ Fabric API est OBLIGATOIRE pour que Simple Voice Chat fonctionne !</div>
+              </div>
+              <div class="step">
+                <h3>1.2 - Télécharger Simple Voice Chat</h3>
+                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
+                <p>Téléchargez <strong>Simple Voice Chat version 2.5.35</strong> pour <strong>Minecraft 1.21.8</strong> et <strong>Fabric</strong>.</p>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2><i class="fas fa-folder-open card-icon"></i> Étape 2 : Installer les mods</h2>
+              <div class="step">
+                <h3>2.1 - Localiser le dossier Feather</h3>
+                <p>Appuyez sur <strong>Windows + R</strong>, tapez <code>%appdata%\.minecraft</code> et appuyez sur Entrée.</p>
+                <p>Naviguez vers le dossier : <code>Feather\\1.21.8\mods</code></p>
+                <p>Si le dossier "mods" n'existe pas, créez-le.</p>
+                <p><strong>Alternative :</strong> Ouvrez Feather Client, allez dans les paramètres et cherchez l'option pour ouvrir le dossier des mods.</p>
+              </div>
+              <div class="step">
+                <h3>2.2 - Placer les mods dans le dossier</h3>
+                <p>Copiez les deux fichiers téléchargés dans le dossier mods :</p>
+                <ul>
+                  <li><strong>fabric-api-[version].jar</strong></li>
+                  <li><strong>voicechat-fabric-1.21.8-2.5.35.jar</strong></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2><i class="fas fa-play card-icon"></i> Étape 3 : Lancer le jeu</h2>
+              <div class="step">
+                <h3>3.1 - Démarrer Feather Client</h3>
+                <p>Ouvrez Feather Client et sélectionnez <strong>Minecraft 1.21.8</strong>.</p>
+                <p>Cliquez sur "Play" pour démarrer le jeu.</p>
+              </div>
+              <div class="step">
+                <h3>3.2 - Vérifier l'installation</h3>
+                <p>Une fois dans le menu principal, appuyez sur la touche <strong>V</strong> pour vérifier que Simple Voice Chat est bien chargé.</p>
+                <p>Vous pouvez aussi accéder au menu des mods dans Feather pour confirmer l'installation.</p>
+              </div>
+              <div class="step">
+                <h3>3.3 - Configuration du mod</h3>
+                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
+                <p>Configurez votre microphone et vos préférences audio.</p>
+                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
+              </div>
+            </div>
+          `
+        }
       }
     };
-
     // Launcher choice
-    document.querySelectorAll('[data-launcher]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        selectedLauncher = btn.dataset.launcher;
-        document.getElementById('launcherChoice').classList.add('hidden');
-        document.getElementById('modloaderChoice').classList.remove('hidden');
-        document.getElementById('modloaderChoice').classList.add('fade-in');
+      document.querySelectorAll('[data-launcher]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          selectedLauncher = this.getAttribute('data-launcher');
+          
+          if (selectedLauncher === 'lunar' || selectedLauncher === 'feather') {
+            const tutorial = tutorials[selectedLauncher].fabric;
+            
+            document.getElementById('launcherChoice').classList.add('hidden');
+            
+            const tutorialDiv = document.getElementById('tutorial');
+            tutorialDiv.innerHTML = '<h1 class="fade-in">' + tutorial.title + '</h1>' + tutorial.content;
+            tutorialDiv.classList.remove('hidden');
+            tutorialDiv.classList.add('fade-in');
+          } else {
+            document.getElementById('launcherChoice').classList.add('hidden');
+            document.getElementById('modloaderChoice').classList.remove('hidden');
+            document.getElementById('modloaderChoice').classList.add('fade-in');
+          }
+        });
       });
-    });
 
-    // Modloader choice
-    document.querySelectorAll('[data-modloader]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        selectedModloader = btn.dataset.modloader;
-        const tutorial = tutorials[selectedLauncher][selectedModloader];
-        
-        document.getElementById('modloaderChoice').classList.add('hidden');
-        
-        const tutorialDiv = document.getElementById('tutorial');
-        tutorialDiv.innerHTML = `
-          <h1 class="fade-in">${tutorial.title}</h1>
-          ${tutorial.content}
-        `;
-        tutorialDiv.classList.remove('hidden');
-        tutorialDiv.classList.add('fade-in');
+      // Modloader choice event listeners
+      document.querySelectorAll('[data-modloader]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          selectedModloader = this.getAttribute('data-modloader');
+          const tutorial = tutorials[selectedLauncher][selectedModloader];
+          
+          document.getElementById('modloaderChoice').classList.add('hidden');
+          
+          const tutorialDiv = document.getElementById('tutorial');
+          tutorialDiv.innerHTML = '<h1 class="fade-in">' + tutorial.title + '</h1>' + tutorial.content;
+          tutorialDiv.classList.remove('hidden');
+          tutorialDiv.classList.add('fade-in');
+        });
       });
     });
   </script>
