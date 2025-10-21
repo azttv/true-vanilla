@@ -187,7 +187,7 @@
 
     .season-btn:nth-child(1):hover {
       background-image: url('https://i.imgur.com/u6kTIRl.png');
-      background-size: 45%;
+      background-size: 35%;
       border-color: #4facff;
       transform: translateY(-3px);
       box-shadow: 0 5px 15px rgba(79, 172, 255, 0.4);
@@ -195,7 +195,7 @@
 
     .season-btn:nth-child(2):hover {
       background-image: url('https://i.imgur.com/IAJC15X.png');
-      background-size: 45%;
+      background-size: 35%;
       border-color: #4facff;
       transform: translateY(-3px);
       box-shadow: 0 5px 15px rgba(79, 172, 255, 0.4);
@@ -203,7 +203,7 @@
 
     .season-btn:nth-child(3):hover {
       background-image: url('https://i.imgur.com/rszeXvy.png');
-      background-size: 45%;
+      background-size: 35%;
       border-color: #4facff;
       transform: translateY(-3px);
       box-shadow: 0 5px 15px rgba(79, 172, 255, 0.4);
@@ -211,7 +211,7 @@
 
     .season-btn:nth-child(4):hover {
       background-image: url('https://i.imgur.com/U9yq2DE.png');
-      background-size: 45%;
+      background-size: 35%;
       border-color: #4facff;
       transform: translateY(-3px);
       box-shadow: 0 5px 15px rgba(79, 172, 255, 0.4);
@@ -576,28 +576,37 @@
 
       try {
         // Send to Discord webhook
-        await fetch(webhookUrl, {
+        const webhookResponse = await fetch(webhookUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(payload)
         });
+
+        if (!webhookResponse.ok) {
+          throw new Error('Webhook failed');
+        }
         
         // Store submission in persistent storage (shared across all users)
-        await window.storage.set(`survey_${userData.discordId}`, JSON.stringify({
-          discordId: userData.discordId,
-          discordUsername: userData.discordUsername,
-          minecraftUsername: userData.minecraftUsername,
-          season: userData.season,
-          timestamp: new Date().toISOString()
-        }), true);
+        try {
+          await window.storage.set(`survey_${userData.discordId}`, JSON.stringify({
+            discordId: userData.discordId,
+            discordUsername: userData.discordUsername,
+            minecraftUsername: userData.minecraftUsername,
+            season: userData.season,
+            timestamp: new Date().toISOString()
+          }), true);
+        } catch (storageError) {
+          console.error('Storage error (non-critical):', storageError);
+          // Continue anyway - webhook succeeded
+        }
         
         // Show success screen
         document.getElementById('recapScreen').classList.add('hidden');
         document.getElementById('successScreen').classList.remove('hidden');
       } catch (error) {
-        console.error('Error sending webhook:', error);
+        console.error('Error submitting form:', error);
         alert('Une erreur est survenue lors de l\'envoi. Veuillez réessayer.');
       }
     }
