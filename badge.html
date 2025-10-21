@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>True Vanilla – Badge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root{
+      --text:#f5f7ff;
+      --shadow: 0 10px 30px rgba(20,24,50,0.6);
+      --active:#4facff;
+      --danger:#ff4c4c;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,system-ui,sans-serif;
+      min-height:100vh;
+      color:var(--text);
+      overflow-x:hidden;
+      background: linear-gradient(-45deg, #1e3c72, #2a5298, #1e3c72, #2a5298);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    @keyframes gradientMove {
+      0%{ background-position:0% 50%; }
+      50%{ background-position:100% 50%; }
+      100%{ background-position:0% 50%; }
+    }
+
+    main {
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.35));
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.5));
+      box-shadow: 0 15px 40px rgba(20,24,50,0.8);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      text-shadow: var(--shadow);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: 0.3s;
+    }
+
+    h2:hover {
+      text-shadow: 0 0 15px #4facff, 0 0 25px #4facff;
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+      color: #4facff;
+      animation: icon-bounce 2s infinite;
+    }
+
+    @keyframes icon-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #aaa;
+      font-style: italic;
+      margin-top: 15px;
+    }
+
+    .discord-btn {
+      display: inline-block;
+      padding: 15px 40px;
+      background: #5865F2;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+    }
+
+    .discord-btn:hover {
+      background: #4752C4;
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(88, 101, 242, 0.6);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      border: 2px solid rgba(79, 172, 255, 0.3);
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text);
+      font-family: Inter, sans-serif;
+      transition: all 0.3s;
+      margin-bottom: 25px;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #4facff;
+      box-shadow: 0 0 15px rgba(79, 172, 255, 0.5);
+    }
+
+    .season-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .season-btn {
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(79, 172, 255, 0.3);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: Inter, sans-serif;
+      position: relative;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .season-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+      z-index: 1;
+    }
+
+    .season-btn span {
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    }
+
+    .season-btn:nth-child(1):hover {
+      background-image: url('https://i.imgur.com/u6kTIRl.png');
+    }
+
+    .season-btn:nth-child(2):hover {
+      background-image: url('https://i.imgur.com/IAJC15X.png');
+    }
+
+    .season-btn:nth-child(3):hover {
+      background-image: url('https://i.imgur.com/rszeXvy.png');
+    }
+
+    .season-btn:nth-child(4):hover {
+      background-image: url('https://i.imgur.com/U9yq2DE.png');
+    }
+
+    .season-btn:hover::before {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .season-btn:hover {
+      border-color: #4facff;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(79, 172, 255, 0.4);
+    }
+
+    .season-btn.selected {
+      background: linear-gradient(135deg, #4facff, #00f2fe);
+      border-color: #4facff;
+      box-shadow: 0 0 20px rgba(79, 172, 255, 0.6);
+    }
+
+    .season-btn.selected::before {
+      background: none;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 15px 35px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: Inter, sans-serif;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(255, 76, 76, 0.4);
+    }
+
+    .btn-danger:hover {
+      background: #d93939;
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(255, 76, 76, 0.6);
+    }
+
+    .btn-primary {
+      background: #4facff;
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(79, 172, 255, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: #3a9ae8;
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(79, 172, 255, 0.6);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .recap {
+      text-align: left;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    .recap-item {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .recap-label {
+      color: #4facff;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .success-icon {
+      font-size: 4rem;
+      color: #4facff;
+      margin-bottom: 20px;
+      animation: successPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes successPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="card fade-in">
+      <h1>Badge Vétéran</h1>
+      <h2><i class="fas fa-medal card-icon"></i> Authentification Discord</h2>
+      <p>Connectez-vous avec Discord pour obtenir votre badge de saison</p>
+      <button class="discord-btn" onclick="loginWithDiscord()">
+        <i class="fab fa-discord"></i> Se connecter avec Discord
+      </button>
+    </div>
+
+    <!-- Question 1: Minecraft Username -->
+    <div id="question1" class="card fade-in hidden">
+      <h2><i class="fas fa-user card-icon"></i> Quel est votre pseudo Minecraft exact ?</h2>
+      <input type="text" id="minecraftUsername" placeholder="Votre pseudo Minecraft" maxlength="16">
+      <button class="btn btn-primary" onclick="nextToQuestion2()">Suivant</button>
+    </div>
+
+    <!-- Question 2: Season -->
+    <div id="question2" class="card fade-in hidden">
+      <h2><i class="fas fa-calendar card-icon"></i> En quelle saison avez-vous commencé à jouer ?</h2>
+      <div class="season-buttons">
+        <button class="season-btn" onclick="selectSeason(1)"><span>Saison 1</span></button>
+        <button class="season-btn" onclick="selectSeason(2)"><span>Saison 2</span></button>
+        <button class="season-btn" onclick="selectSeason(3)"><span>Saison 3</span></button>
+        <button class="season-btn" onclick="selectSeason(4)"><span>Saison 4</span></button>
+      </div>
+      <button class="btn btn-primary" id="nextToRecap" onclick="nextToRecap()" disabled>Suivant</button>
+    </div>
+
+    <!-- Recap Screen -->
+    <div id="recapScreen" class="card fade-in hidden">
+      <h2><i class="fas fa-check-circle card-icon"></i> Tout est bon ?</h2>
+      <div class="recap">
+        <div class="recap-item">
+          <span class="recap-label">Discord:</span>
+          <span id="recapDiscord"></span>
+        </div>
+        <div class="recap-item">
+          <span class="recap-label">Pseudo Minecraft:</span>
+          <span id="recapUsername"></span>
+        </div>
+        <div class="recap-item">
+          <span class="recap-label">Saison de début:</span>
+          <span id="recapSeason"></span>
+        </div>
+      </div>
+      <div class="action-buttons">
+        <button class="btn btn-danger" onclick="resetForm()">Retour au début</button>
+        <button class="btn btn-primary" onclick="submitForm()">Envoyer</button>
+      </div>
+    </div>
+
+    <!-- Success Screen -->
+    <div id="successScreen" class="card fade-in hidden">
+      <i class="fas fa-check-circle success-icon"></i>
+      <h1>Votre demande a bien été prise en compte !</h1>
+      <p class="subtitle">(Vous recevrez votre badge dans un délai maximum de 3 jours.)</p>
+    </div>
+
+    <!-- Already Submitted Screen -->
+    <div id="alreadySubmittedScreen" class="card fade-in hidden">
+      <i class="fas fa-info-circle success-icon"></i>
+      <h1>Tu as déjà fait une demande !</h1>
+      <p class="subtitle">Merci de bien vouloir patienter</p>
+    </div>
+  </main>
+
+  <script>
+    // Discord OAuth Configuration
+    const DISCORD_CLIENT_ID = '1425143639125786724';
+    const REDIRECT_URI = encodeURIComponent(window.location.origin + window.location.pathname);
+    const DISCORD_OAUTH_URL = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=identify`;
+
+    let userData = {
+      discordId: null,
+      discordUsername: null,
+      discordAvatar: null,
+      minecraftUsername: null,
+      season: null
+    };
+
+    // Check for OAuth token on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const fragment = new URLSearchParams(window.location.hash.slice(1));
+      const accessToken = fragment.get('access_token');
+      
+      if (accessToken) {
+        // Clear the hash from URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Fetch user data from Discord
+        fetchDiscordUser(accessToken);
+      }
+    });
+
+    function loginWithDiscord() {
+      // Redirect to Discord OAuth
+      window.location.href = DISCORD_OAUTH_URL;
+    }
+
+    async function fetchDiscordUser(accessToken) {
+      try {
+        const response = await fetch('https://discord.com/api/users/@me', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+        
+        const user = await response.json();
+        
+        // Store user data
+        userData.discordId = user.id;
+        userData.discordUsername = `${user.username}#${user.discriminator}`;
+        if (user.discriminator === '0') {
+          userData.discordUsername = `@${user.username}`;
+        }
+        userData.discordAvatar = user.avatar;
+        
+        // Check if user has already submitted
+        if (await hasAlreadySubmitted(userData.discordId)) {
+          document.getElementById('loginScreen').classList.add('hidden');
+          document.getElementById('alreadySubmittedScreen').classList.remove('hidden');
+          return;
+        }
+        
+        // Show question 1
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('question1').classList.remove('hidden');
+        
+      } catch (error) {
+        console.error('Error fetching Discord user:', error);
+        alert('Erreur lors de la connexion Discord. Veuillez réessayer.');
+      }
+    }
+
+    async function hasAlreadySubmitted(discordId) {
+      try {
+        const result = await window.storage.get(`survey_${discordId}`, true);
+        return result !== null;
+      } catch (error) {
+        // Key doesn't exist or error occurred
+        return false;
+      }
+    }
+
+    function nextToQuestion2() {
+      const username = document.getElementById('minecraftUsername').value.trim();
+      
+      if (!username) {
+        alert('Veuillez entrer votre pseudo Minecraft');
+        return;
+      }
+
+      userData.minecraftUsername = username;
+      
+      // Hide question 1, show question 2
+      document.getElementById('question1').classList.add('hidden');
+      document.getElementById('question2').classList.remove('hidden');
+    }
+
+    function selectSeason(season) {
+      userData.season = season;
+      
+      // Update button states
+      const buttons = document.querySelectorAll('.season-btn');
+      buttons.forEach((btn, index) => {
+        if (index + 1 === season) {
+          btn.classList.add('selected');
+        } else {
+          btn.classList.remove('selected');
+        }
+      });
+      
+      // Enable next button
+      document.getElementById('nextToRecap').disabled = false;
+    }
+
+    function nextToRecap() {
+      if (!userData.season) {
+        alert('Veuillez sélectionner une saison');
+        return;
+      }
+      
+      // Update recap display
+      document.getElementById('recapUsername').textContent = userData.minecraftUsername;
+      document.getElementById('recapSeason').textContent = `Saison ${userData.season}`;
+      document.getElementById('recapDiscord').textContent = userData.discordUsername;
+      
+      // Hide question 2, show recap
+      document.getElementById('question2').classList.add('hidden');
+      document.getElementById('recapScreen').classList.remove('hidden');
+    }
+
+    function resetForm() {
+      // Reset all data
+      userData = {
+        discordId: null,
+        discordUsername: null,
+        minecraftUsername: null,
+        season: null
+      };
+      
+      // Clear inputs
+      document.getElementById('minecraftUsername').value = '';
+      document.querySelectorAll('.season-btn').forEach(btn => btn.classList.remove('selected'));
+      document.getElementById('nextToRecap').disabled = true;
+      
+      // Return to login screen
+      document.getElementById('recapScreen').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+    }
+
+    async function submitForm() {
+      const webhookUrl = 'https://discord.com/api/webhooks/1430332327334117577/MYRolxQTd74Iqx5XLyW0fKjOUNTuUARUlhaJUl1R1VetayOk_xRV8MTyg2wJjKKh94xe';
+      
+      const payload = {
+        embeds: [{
+          title: '🏅 Nouvelle demande de Badge Vétéran',
+          color: 0x4facff,
+          fields: [
+            {
+              name: '👤 Pseudo Minecraft',
+              value: userData.minecraftUsername,
+              inline: true
+            },
+            {
+              name: '',
+              value: '',
+              inline: false
+            }
+            {
+              name: '📅 Saison de début',
+              value: `Saison ${userData.season}`,
+              inline: true
+            },
+            {
+              name: '',
+              value: '',
+              inline: false
+            }
+            {
+              name: '💬 Discord',
+              value: userData.discordUsername,
+              inline: false
+            },
+            {
+              name: '',
+              value: '',
+              inline: false
+            }
+            {
+              name: '🆔 Discord ID',
+              value: userData.discordId,
+              inline: false
+            }
+          ],
+          timestamp: new Date().toISOString(),
+          footer: {
+            text: 'True Vanilla - Badge Vétéran'
+          }
+        }]
+      };
+
+      try {
+        // Send to Discord webhook
+        await fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        
+        // Store submission in persistent storage (shared across all users)
+        await window.storage.set(`survey_${userData.discordId}`, JSON.stringify({
+          discordId: userData.discordId,
+          discordUsername: userData.discordUsername,
+          minecraftUsername: userData.minecraftUsername,
+          season: userData.season,
+          timestamp: new Date().toISOString()
+        }), true);
+        
+        // Show success screen
+        document.getElementById('recapScreen').classList.add('hidden');
+        document.getElementById('successScreen').classList.remove('hidden');
+      } catch (error) {
+        console.error('Error sending webhook:', error);
+        alert('Une erreur est survenue lors de l\'envoi. Veuillez réessayer.');
+      }
+    }
+  </script>
+</body>
+</html>
