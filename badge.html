@@ -155,49 +155,59 @@
       cursor: pointer;
       transition: all 0.3s;
       font-family: Inter, sans-serif;
-      position: relative;
-      overflow: hidden;
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
+      position: relative;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     .season-btn::before {
       content: '';
       position: absolute;
       inset: 0;
+      border-radius: 12px;
       background: rgba(0, 0, 0, 0.3);
       transition: all 0.3s;
-      z-index: 1;
+      z-index: 0;
     }
 
-    .season-btn span {
+    .season-btn:hover::before {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .season-btn {
       position: relative;
-      z-index: 2;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+    }
+
+    .season-btn * {
+      position: relative;
+      z-index: 1;
     }
 
     .season-btn:nth-child(1):hover {
       background-image: url('https://i.imgur.com/u6kTIRl.png');
+      border-color: #4facff;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(79, 172, 255, 0.4);
     }
 
     .season-btn:nth-child(2):hover {
       background-image: url('https://i.imgur.com/IAJC15X.png');
+      border-color: #4facff;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(79, 172, 255, 0.4);
     }
 
     .season-btn:nth-child(3):hover {
       background-image: url('https://i.imgur.com/rszeXvy.png');
+      border-color: #4facff;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(79, 172, 255, 0.4);
     }
 
     .season-btn:nth-child(4):hover {
       background-image: url('https://i.imgur.com/U9yq2DE.png');
-    }
-
-    .season-btn:hover::before {
-      background: rgba(0, 0, 0, 0.5);
-    }
-
-    .season-btn:hover {
       border-color: #4facff;
       transform: translateY(-3px);
       box-shadow: 0 5px 15px rgba(79, 172, 255, 0.4);
@@ -210,7 +220,7 @@
     }
 
     .season-btn.selected::before {
-      background: none;
+      background: rgba(79, 172, 255, 0.3);
     }
 
     .action-buttons {
@@ -312,7 +322,7 @@
     <div id="loginScreen" class="card fade-in">
       <h1>Badge Vétéran</h1>
       <h2><i class="fas fa-medal card-icon"></i> Authentification Discord</h2>
-      <p>Connectez-vous avec Discord pour obtenir votre badge de saison</p>
+      <p>Connectez-vous avec Discord pour obtenir votre badge de saison.</p>
       <button class="discord-btn" onclick="loginWithDiscord()">
         <i class="fab fa-discord"></i> Se connecter avec Discord
       </button>
@@ -329,10 +339,10 @@
     <div id="question2" class="card fade-in hidden">
       <h2><i class="fas fa-calendar card-icon"></i> En quelle saison avez-vous commencé à jouer ?</h2>
       <div class="season-buttons">
-        <button class="season-btn" onclick="selectSeason(1)"><span>Saison 1</span></button>
-        <button class="season-btn" onclick="selectSeason(2)"><span>Saison 2</span></button>
-        <button class="season-btn" onclick="selectSeason(3)"><span>Saison 3</span></button>
-        <button class="season-btn" onclick="selectSeason(4)"><span>Saison 4</span></button>
+        <button class="season-btn" onclick="selectSeason(1)">Saison 1</button>
+        <button class="season-btn" onclick="selectSeason(2)">Saison 2</button>
+        <button class="season-btn" onclick="selectSeason(3)">Saison 3</button>
+        <button class="season-btn" onclick="selectSeason(4)">Saison 4</button>
       </div>
       <button class="btn btn-primary" id="nextToRecap" onclick="nextToRecap()" disabled>Suivant</button>
     </div>
@@ -342,16 +352,16 @@
       <h2><i class="fas fa-check-circle card-icon"></i> Tout est bon ?</h2>
       <div class="recap">
         <div class="recap-item">
-          <span class="recap-label">Discord:</span>
-          <span id="recapDiscord"></span>
-        </div>
-        <div class="recap-item">
           <span class="recap-label">Pseudo Minecraft:</span>
           <span id="recapUsername"></span>
         </div>
         <div class="recap-item">
           <span class="recap-label">Saison de début:</span>
           <span id="recapSeason"></span>
+        </div>
+        <div class="recap-item">
+          <span class="recap-label">Discord:</span>
+          <span id="recapDiscord"></span>
         </div>
       </div>
       <div class="action-buttons">
@@ -529,7 +539,7 @@
       
       const payload = {
         embeds: [{
-          title: '🏅 Nouvelle demande de Badge Vétéran',
+          title: '🏅 Nouvelle demande de Badge',
           color: 0x4facff,
           fields: [
             {
@@ -538,30 +548,15 @@
               inline: true
             },
             {
-              name: '',
-              value: '',
-              inline: false
-            }
-            {
               name: '📅 Saison de début',
               value: `Saison ${userData.season}`,
               inline: true
             },
             {
-              name: '',
-              value: '',
-              inline: false
-            }
-            {
               name: '💬 Discord',
               value: userData.discordUsername,
               inline: false
             },
-            {
-              name: '',
-              value: '',
-              inline: false
-            }
             {
               name: '🆔 Discord ID',
               value: userData.discordId,
@@ -570,7 +565,7 @@
           ],
           timestamp: new Date().toISOString(),
           footer: {
-            text: 'True Vanilla - Badge Vétéran'
+            text: 'True Vanilla - Badge'
           }
         }]
       };
