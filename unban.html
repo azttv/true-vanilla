@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ban - Accès refusé</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1a0000, #4a0000, #8b0000);
+      font-family: "Segoe UI", sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    h1 {
+      font-size: 8rem;
+      font-weight: 800;
+      animation: float 3s ease-in-out infinite;
+      text-shadow: 0 0 20px rgba(255, 50, 50, 0.5);
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin: 20px 0;
+    }
+
+    a {
+      display: inline-block;
+      padding: 12px 25px;
+      border-radius: 30px;
+      background: #dc143c;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    a:hover {
+      background: #ff1744;
+      transform: translateY(-3px);
+    }
+
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      background: rgba(255, 50, 50, 0.2);
+      border-radius: 50%;
+      animation: rise 15s infinite ease-in;
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Et bah non !</h1>
+    <p>Tu as été ban pour une bonne raison !</p>
+    <a href="boutique.html">⬅ Retour à la boutique</a>
+  </div>
+
+  <script>
+    function createBubble() {
+      const bubble = document.createElement("div");
+      const size = Math.random() * 60 + 20; 
+      bubble.classList.add("bubble");
+      bubble.style.width = size + "px";
+      bubble.style.height = size + "px";
+      bubble.style.left = Math.random() * 100 + "vw";
+      bubble.style.animationDuration = (Math.random() * 10 + 10) + "s";
+      document.body.appendChild(bubble);
+
+      setTimeout(() => {
+        bubble.remove();
+      }, 15000);
+    }
+
+    setInterval(createBubble, 800);
+  </script>
+</body>
+</html>
