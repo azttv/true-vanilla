@@ -39,7 +39,7 @@
 .container {
   width: 100%;
   max-width: 700px;
-  background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.5));
+  background: rgba(0,0,0,0.5);
   border-radius: 20px;
   padding: 40px;
   box-shadow: var(--shadow);
@@ -316,6 +316,7 @@ input[type="file"] {
   font-size: 1.5rem;
   margin-bottom: 10px;
   color: white;
+  text-shadow: none;
 }
 
 .preview-images {
@@ -357,7 +358,6 @@ input[type="file"] {
   </style>
 </head>
 <body>
-  <!-- Login Screen -->
   <div class="container" id="loginScreen">
     <div class="logo-container">
       <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
@@ -371,10 +371,6 @@ input[type="file"] {
 </div>
 
 <form id="loginForm">
-  <div class="form-group">
-    <label for="username">Nom d'utilisateur</label>
-    <input type="text" id="username" placeholder="Entrez votre nom d'utilisateur" required>
-  </div>
 
   <div class="form-group">
     <label for="password">Mot de passe</label>
@@ -388,8 +384,6 @@ input[type="file"] {
 ```
 
   </div>
-
-  <!-- Announcement Panel -->
 
   <div class="container hidden" id="announcementPanel">
     <div class="logo-container">
@@ -439,8 +433,6 @@ input[type="file"] {
 
   </div>
 
-  <!-- Preview Screen -->
-
   <div class="container hidden" id="previewScreen">
     <div class="logo-container">
       <h1>Aperçu de l'annonce</h1>
@@ -459,18 +451,16 @@ input[type="file"] {
 </div>
 
 <div class="button-group">
-  <button class="btn btn-danger" id="cancelBtn">
+  <button type="button" class="btn btn-danger" id="cancelBtn">
     <i class="fas fa-times"></i> Annuler
   </button>
-  <button class="btn btn-success" id="confirmBtn">
+  <button type="button" class="btn btn-success" id="confirmBtn">
     <i class="fas fa-check"></i> Valider
   </button>
 </div>
 ```
 
   </div>
-
-  <!-- Success Screen -->
 
   <div class="container hidden" id="successScreen">
     <div class="logo-container">
@@ -479,18 +469,17 @@ input[type="file"] {
     <div class="success-msg">
       <i class="fas fa-check-circle"></i> L'annonce a bien été envoyée !
     </div>
-    <button class="btn btn-primary" id="newAnnouncementBtn" style="margin-top: 20px;">
+    <button type="button" class="btn btn-primary" id="newAnnouncementBtn" style="margin-top: 20px;">
       <i class="fas fa-plus"></i> Nouvelle annonce
     </button>
   </div>
 
   <script>
     const PASSWORD = 'StaffVanilla04';
-    const WEBHOOK_URL = 'https://discord.com/api/webhooks/1425136704796491838/p-801gPLjvGjMQQhOZaAkYEU1L57F_bCC6OeWr8YF8quwB6cea_-IS_EcuX9UDYzsG6C'; // Replace with actual webhook URL
+    const WEBHOOK_URL = 'https://discord.com/api/webhooks/1431983410179604642/89zUIzYTwJJJx9qm1sGbra0uI7uOFcNOqAaK0XW1ivChbY8ntRPr0woEK3JA8sY1shyw';
 
     let uploadedFiles = [];
 
-    // Login handling
     document.getElementById('loginForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const password = document.getElementById('password').value;
@@ -507,7 +496,6 @@ input[type="file"] {
       }
     });
 
-    // File upload handling
     document.getElementById('fileInput').addEventListener('change', (e) => {
       const files = Array.from(e.target.files);
       files.forEach(file => {
@@ -518,7 +506,6 @@ input[type="file"] {
       });
     });
 
-    // Paste from clipboard
     document.addEventListener('paste', (e) => {
       const items = e.clipboardData.items;
       for (let item of items) {
@@ -536,12 +523,16 @@ input[type="file"] {
         const preview = document.getElementById('filePreview');
         const div = document.createElement('div');
         div.className = 'file-item';
-        div.innerHTML = `
-          <img src="${e.target.result}" alt="Preview">
-          <button class="remove-file" onclick="removeFile(${uploadedFiles.length - 1})">
-            <i class="fas fa-times"></i>
-          </button>
-        `;
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.alt = 'Preview';
+        const btn = document.createElement('button');
+        btn.className = 'remove-file';
+        btn.type = 'button';
+        btn.innerHTML = '<i class="fas fa-times"></i>';
+        btn.onclick = () => removeFile(uploadedFiles.length - 1);
+        div.appendChild(img);
+        div.appendChild(btn);
         preview.appendChild(div);
       };
       reader.readAsDataURL(file);
@@ -554,7 +545,6 @@ input[type="file"] {
       uploadedFiles.forEach((file, i) => displayFilePreview(file));
     }
 
-    // Format markdown for Discord preview
     function formatMarkdown(text) {
       return text
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
@@ -564,7 +554,6 @@ input[type="file"] {
         .replace(/\n/g, '<br>');
     }
 
-    // Announcement form submission
     document.getElementById('announcementForm').addEventListener('submit', (e) => {
       e.preventDefault();
       
@@ -572,51 +561,46 @@ input[type="file"] {
       const content = document.getElementById('content').value;
       const author = document.getElementById('author').value || "l'Équipe True Vanilla";
 
-      // Create preview
-      let previewHTML = `<div style="color: #8ea1e1;">||@everyone||</div>`;
-      previewHTML += `<h1># ${title}</h1><br>`;
-      previewHTML += `${formatMarkdown(content)}<br>`;
+      let previewHTML = '<div style="color: #8ea1e1;">||@everyone||</div>';
+      previewHTML += '<h1># ' + title + '</h1><br>';
+      previewHTML += formatMarkdown(content) + '<br>';
       
       if (uploadedFiles.length > 0) {
-        previewHTML += `<div class="preview-images">`;
+        previewHTML += '<div class="preview-images">';
         uploadedFiles.forEach(file => {
           const url = URL.createObjectURL(file);
-          previewHTML += `<img src="${url}" alt="Attachment">`;
+          previewHTML += '<img src="' + url + '" alt="Attachment">';
         });
-        previewHTML += `</div>`;
+        previewHTML += '</div>';
       }
       
-      previewHTML += `<div class="preview-signature">• <u>${author}</u></div>`;
+      previewHTML += '<div class="preview-signature">• <u>' + author + '</u></div>';
 
       document.getElementById('previewContent').innerHTML = previewHTML;
       document.getElementById('announcementPanel').classList.add('hidden');
       document.getElementById('previewScreen').classList.remove('hidden');
     });
 
-    // Cancel button
     document.getElementById('cancelBtn').addEventListener('click', () => {
       document.getElementById('previewScreen').classList.add('hidden');
       document.getElementById('announcementPanel').classList.remove('hidden');
     });
 
-    // Confirm and send
     document.getElementById('confirmBtn').addEventListener('click', async () => {
       const title = document.getElementById('title').value;
       const content = document.getElementById('content').value;
       const author = document.getElementById('author').value || "l'Équipe True Vanilla";
 
-      let message = `||@everyone||\n# ${title}\n\n${content}\n\n• __${author}__`;
+      let message = '||@everyone||\n# ' + title + '\n\n' + content + '\n\n• __' + author + '__';
 
       try {
         const formData = new FormData();
         formData.append('content', message);
 
-        // Add files if any
         uploadedFiles.forEach((file, index) => {
-          formData.append(`file${index}`, file);
+          formData.append('file' + index, file);
         });
 
-        // Note: Replace WEBHOOK_URL with actual Discord webhook
         await fetch(WEBHOOK_URL, {
           method: 'POST',
           body: formData
@@ -629,7 +613,6 @@ input[type="file"] {
       }
     });
 
-    // New announcement button
     document.getElementById('newAnnouncementBtn').addEventListener('click', () => {
       document.getElementById('announcementForm').reset();
       document.getElementById('filePreview').innerHTML = '';
