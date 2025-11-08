@@ -416,13 +416,13 @@
     </div>
 
     <div id="loginError" class="error-msg hidden">
-      Identifiants incorrects
+      Mot de passe incorrect
     </div>
 
     <form id="loginForm">
       <div class="form-group">
-        <label for="password">Mot de passe</label>
-        <input type="password" id="password" placeholder="Entrez votre mot de passe" required>
+        <label for="loginPassword">Mot de passe</label>
+        <input type="password" id="loginPassword" placeholder="Entrez votre mot de passe" required>
       </div>
 
       <button type="submit" class="btn btn-primary">
@@ -508,7 +508,7 @@
       <div class="preview-header">
         <div class="preview-avatar"></div>
         <div>
-          <div class="preview-name">True Vanilla S4<span class="preview-badge">BOT</span></div>
+          <div class="preview-name">True Vanilla S4 <span class="preview-badge">BOT</span></div>
         </div>
       </div>
       <div class="preview-content" id="previewContent"></div>
@@ -546,9 +546,8 @@
     document.getElementById('loginForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const password = document.getElementById('password').value;
-      const username = document.getElementById('username').value;
 
-      if (password === PASSWORD && username) {
+      if (password === PASSWORD) {
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('announcementPanel').classList.remove('hidden');
       } else {
