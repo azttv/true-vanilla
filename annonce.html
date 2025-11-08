@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>True Vanilla – Panel Staff</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root{
+      --text:#f5f7ff;
+      --shadow: 0 10px 30px rgba(20,24,50,0.6);
+      --active:#4facff;
+      --danger:#ff4c4c;
+      --success:#4caf50;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,system-ui,sans-serif;
+      min-height:100vh;
+      color:var(--text);
+      overflow-x:hidden;
+      background: linear-gradient(-45deg, #1e3c72, #2a5298, #1e3c72, #2a5298);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    @keyframes gradientMove {
+      0%{ background-position:0% 50%; }
+      50%{ background-position:100% 50%; }
+      100%{ background-position:0% 50%; }
+    }
+
+```
+.container {
+  width: 100%;
+  max-width: 700px;
+  background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.5));
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: var(--shadow);
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  height: 120px;
+  margin-bottom: 20px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-align: center;
+  text-shadow: 0 0 15px #4facff;
+}
+
+.subtitle {
+  text-align: center;
+  color: rgba(245, 247, 255, 0.7);
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 2px solid rgba(79, 172, 255, 0.3);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--active);
+  box-shadow: 0 0 15px rgba(79, 172, 255, 0.4);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 150px;
+  font-size: 0.95rem;
+}
+
+input[type="text"].small {
+  font-size: 0.9rem;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: rgba(79, 172, 255, 0.2);
+  border: 2px dashed var(--active);
+  border-radius: 10px;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.file-upload-btn:hover {
+  background: rgba(79, 172, 255, 0.3);
+  box-shadow: 0 0 15px rgba(79, 172, 255, 0.4);
+}
+
+.file-preview {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.file-item {
+  position: relative;
+  display: inline-block;
+}
+
+.file-item img {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 8px;
+  border: 2px solid var(--active);
+}
+
+.file-item .remove-file {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.file-item .remove-file:hover {
+  transform: scale(1.2);
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  background: var(--active);
+  color: white;
+  box-shadow: 0 0 20px rgba(79, 172, 255, 0.6);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(79, 172, 255, 0.8);
+}
+
+.btn-success {
+  background: var(--success);
+  color: white;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.6);
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(76, 175, 80, 0.8);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 76, 76, 0.6);
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 76, 76, 0.8);
+}
+
+.spacer {
+  height: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.error-msg {
+  background: var(--danger);
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.success-msg {
+  background: var(--success);
+  color: white;
+  padding: 16px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.preview-container {
+  background: #36393f;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  color: #dcddde;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.preview-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--active);
+}
+
+.preview-name {
+  font-weight: 700;
+  color: white;
+}
+
+.preview-badge {
+  background: #5865f2;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.preview-content {
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.preview-content h1 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.preview-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.preview-images img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 8px;
+}
+
+.preview-signature {
+  margin-top: 15px;
+  font-style: italic;
+  color: #b9bbbe;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.button-group .btn {
+  width: 50%;
+}
+
+.helper-text {
+  font-size: 0.85rem;
+  color: rgba(245, 247, 255, 0.6);
+  margin-top: 5px;
+}
+```
+
+  </style>
+</head>
+<body>
+  <!-- Login Screen -->
+  <div class="container" id="loginScreen">
+    <div class="logo-container">
+      <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
+      <h1>Panel Staff</h1>
+      <div class="subtitle">Connexion requise</div>
+    </div>
+
+```
+<div id="loginError" class="error-msg hidden">
+  Identifiants incorrects
+</div>
+
+<form id="loginForm">
+  <div class="form-group">
+    <label for="username">Nom d'utilisateur</label>
+    <input type="text" id="username" placeholder="Entrez votre nom d'utilisateur" required>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Mot de passe</label>
+    <input type="password" id="password" placeholder="Entrez votre mot de passe" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    <i class="fas fa-sign-in-alt"></i> Se connecter
+  </button>
+</form>
+```
+
+  </div>
+
+  <!-- Announcement Panel -->
+
+  <div class="container hidden" id="announcementPanel">
+    <div class="logo-container">
+      <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
+      <h1>Créer une annonce</h1>
+      <div class="subtitle">Panel de gestion des annonces</div>
+    </div>
+
+```
+<form id="announcementForm">
+  <div class="form-group">
+    <label for="title">Titre de l'annonce</label>
+    <input type="text" id="title" class="small" placeholder="Titre court" required>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="form-group">
+    <label for="content">Contenu</label>
+    <textarea id="content" placeholder="Contenu de l'annonce (supporte le markdown: **gras**, *italique*, etc.)" required></textarea>
+    <div class="helper-text">Utilisez le markdown pour formater votre texte</div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="form-group">
+    <label>Images (optionnel)</label>
+    <label for="fileInput" class="file-upload-btn">
+      <i class="fas fa-image"></i> Ajouter des images
+    </label>
+    <input type="file" id="fileInput" accept="image/*" multiple>
+    <div class="file-preview" id="filePreview"></div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="form-group">
+    <label for="author">Signé par (optionnel)</label>
+    <input type="text" id="author" class="small" placeholder="Laissez vide pour 'l'Équipe True Vanilla'">
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    <i class="fas fa-paper-plane"></i> Envoyer
+  </button>
+</form>
+```
+
+  </div>
+
+  <!-- Preview Screen -->
+
+  <div class="container hidden" id="previewScreen">
+    <div class="logo-container">
+      <h1>Aperçu de l'annonce</h1>
+      <div class="subtitle">Vérifiez votre message avant de l'envoyer</div>
+    </div>
+
+```
+<div class="preview-container">
+  <div class="preview-header">
+    <div class="preview-avatar"></div>
+    <div>
+      <div class="preview-name">True Vanilla Bot <span class="preview-badge">BOT</span></div>
+    </div>
+  </div>
+  <div class="preview-content" id="previewContent"></div>
+</div>
+
+<div class="button-group">
+  <button class="btn btn-danger" id="cancelBtn">
+    <i class="fas fa-times"></i> Annuler
+  </button>
+  <button class="btn btn-success" id="confirmBtn">
+    <i class="fas fa-check"></i> Valider
+  </button>
+</div>
+```
+
+  </div>
+
+  <!-- Success Screen -->
+
+  <div class="container hidden" id="successScreen">
+    <div class="logo-container">
+      <img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo">
+    </div>
+    <div class="success-msg">
+      <i class="fas fa-check-circle"></i> L'annonce a bien été envoyée !
+    </div>
+    <button class="btn btn-primary" id="newAnnouncementBtn" style="margin-top: 20px;">
+      <i class="fas fa-plus"></i> Nouvelle annonce
+    </button>
+  </div>
+
+  <script>
+    const PASSWORD = 'StaffVanilla04';
+    const WEBHOOK_URL = 'https://discord.com/api/webhooks/1425136704796491838/p-801gPLjvGjMQQhOZaAkYEU1L57F_bCC6OeWr8YF8quwB6cea_-IS_EcuX9UDYzsG6C'; // Replace with actual webhook URL
+
+    let uploadedFiles = [];
+
+    // Login handling
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const password = document.getElementById('password').value;
+      const username = document.getElementById('username').value;
+
+      if (password === PASSWORD && username) {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('announcementPanel').classList.remove('hidden');
+      } else {
+        document.getElementById('loginError').classList.remove('hidden');
+        setTimeout(() => {
+          document.getElementById('loginError').classList.add('hidden');
+        }, 3000);
+      }
+    });
+
+    // File upload handling
+    document.getElementById('fileInput').addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      files.forEach(file => {
+        if (file.type.startsWith('image/')) {
+          uploadedFiles.push(file);
+          displayFilePreview(file);
+        }
+      });
+    });
+
+    // Paste from clipboard
+    document.addEventListener('paste', (e) => {
+      const items = e.clipboardData.items;
+      for (let item of items) {
+        if (item.type.startsWith('image/')) {
+          const file = item.getAsFile();
+          uploadedFiles.push(file);
+          displayFilePreview(file);
+        }
+      }
+    });
+
+    function displayFilePreview(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const preview = document.getElementById('filePreview');
+        const div = document.createElement('div');
+        div.className = 'file-item';
+        div.innerHTML = `
+          <img src="${e.target.result}" alt="Preview">
+          <button class="remove-file" onclick="removeFile(${uploadedFiles.length - 1})">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+        preview.appendChild(div);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeFile(index) {
+      uploadedFiles.splice(index, 1);
+      const preview = document.getElementById('filePreview');
+      preview.innerHTML = '';
+      uploadedFiles.forEach((file, i) => displayFilePreview(file));
+    }
+
+    // Format markdown for Discord preview
+    function formatMarkdown(text) {
+      return text
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/__(.+?)__/g, '<u>$1</u>')
+        .replace(/~~(.+?)~~/g, '<del>$1</del>')
+        .replace(/\n/g, '<br>');
+    }
+
+    // Announcement form submission
+    document.getElementById('announcementForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const title = document.getElementById('title').value;
+      const content = document.getElementById('content').value;
+      const author = document.getElementById('author').value || "l'Équipe True Vanilla";
+
+      // Create preview
+      let previewHTML = `<div style="color: #8ea1e1;">||@everyone||</div>`;
+      previewHTML += `<h1># ${title}</h1><br>`;
+      previewHTML += `${formatMarkdown(content)}<br>`;
+      
+      if (uploadedFiles.length > 0) {
+        previewHTML += `<div class="preview-images">`;
+        uploadedFiles.forEach(file => {
+          const url = URL.createObjectURL(file);
+          previewHTML += `<img src="${url}" alt="Attachment">`;
+        });
+        previewHTML += `</div>`;
+      }
+      
+      previewHTML += `<div class="preview-signature">• <u>${author}</u></div>`;
+
+      document.getElementById('previewContent').innerHTML = previewHTML;
+      document.getElementById('announcementPanel').classList.add('hidden');
+      document.getElementById('previewScreen').classList.remove('hidden');
+    });
+
+    // Cancel button
+    document.getElementById('cancelBtn').addEventListener('click', () => {
+      document.getElementById('previewScreen').classList.add('hidden');
+      document.getElementById('announcementPanel').classList.remove('hidden');
+    });
+
+    // Confirm and send
+    document.getElementById('confirmBtn').addEventListener('click', async () => {
+      const title = document.getElementById('title').value;
+      const content = document.getElementById('content').value;
+      const author = document.getElementById('author').value || "l'Équipe True Vanilla";
+
+      let message = `||@everyone||\n# ${title}\n\n${content}\n\n• __${author}__`;
+
+      try {
+        const formData = new FormData();
+        formData.append('content', message);
+
+        // Add files if any
+        uploadedFiles.forEach((file, index) => {
+          formData.append(`file${index}`, file);
+        });
+
+        // Note: Replace WEBHOOK_URL with actual Discord webhook
+        await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          body: formData
+        });
+
+        document.getElementById('previewScreen').classList.add('hidden');
+        document.getElementById('successScreen').classList.remove('hidden');
+      } catch (error) {
+        alert('Erreur lors de l\'envoi de l\'annonce: ' + error.message);
+      }
+    });
+
+    // New announcement button
+    document.getElementById('newAnnouncementBtn').addEventListener('click', () => {
+      document.getElementById('announcementForm').reset();
+      document.getElementById('filePreview').innerHTML = '';
+      uploadedFiles = [];
+      document.getElementById('successScreen').classList.add('hidden');
+      document.getElementById('announcementPanel').classList.remove('hidden');
+    });
+  </script>
+
+</body>
+</html>
