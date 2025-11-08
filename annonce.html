@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
@@ -35,326 +34,377 @@
       100%{ background-position:0% 50%; }
     }
 
-```
-.container {
-  width: 100%;
-  max-width: 700px;
-  background: rgba(0,0,0,0.5);
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: var(--shadow);
-}
+    .container {
+      width: 100%;
+      max-width: 700px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+    }
 
-.logo-container {
-  text-align: center;
-  margin-bottom: 30px;
-}
+    .logo-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-.logo {
-  height: 120px;
-  margin-bottom: 20px;
-  animation: float 3s ease-in-out infinite;
-}
+    .logo {
+      height: 120px;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  text-align: center;
-  text-shadow: 0 0 15px #4facff;
-}
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      text-align: center;
+      text-shadow: 0 0 15px #4facff;
+    }
 
-.subtitle {
-  text-align: center;
-  color: rgba(245, 247, 255, 0.7);
-  margin-bottom: 30px;
-  font-size: 0.9rem;
-}
+    .subtitle {
+      text-align: center;
+      color: rgba(245, 247, 255, 0.7);
+      margin-bottom: 30px;
+      font-size: 0.9rem;
+    }
 
-.form-group {
-  margin-bottom: 20px;
-}
+    .form-group {
+      margin-bottom: 20px;
+    }
 
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: var(--text);
-}
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text);
+    }
 
-input[type="text"],
-input[type="password"],
-textarea {
-  width: 100%;
-  padding: 12px 16px;
-  background: rgba(0,0,0,0.3);
-  border: 2px solid rgba(79, 172, 255, 0.3);
-  border-radius: 10px;
-  color: var(--text);
-  font-family: Inter, system-ui, sans-serif;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
+    input[type="text"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(0,0,0,0.3);
+      border: 2px solid rgba(79, 172, 255, 0.3);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
 
-input[type="text"]:focus,
-input[type="password"]:focus,
-textarea:focus {
-  outline: none;
-  border-color: var(--active);
-  box-shadow: 0 0 15px rgba(79, 172, 255, 0.4);
-}
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--active);
+      box-shadow: 0 0 15px rgba(79, 172, 255, 0.4);
+    }
 
-textarea {
-  resize: vertical;
-  min-height: 150px;
-  font-size: 0.95rem;
-}
+    textarea {
+      resize: vertical;
+      min-height: 150px;
+      font-size: 0.95rem;
+    }
 
-input[type="text"].small {
-  font-size: 0.9rem;
-}
+    input[type="text"].small {
+      font-size: 0.9rem;
+    }
 
-input[type="file"] {
-  display: none;
-}
+    input[type="file"] {
+      display: none;
+    }
 
-.file-upload-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 20px;
-  background: rgba(79, 172, 255, 0.2);
-  border: 2px dashed var(--active);
-  border-radius: 10px;
-  color: var(--text);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-}
+    .file-upload-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      background: rgba(79, 172, 255, 0.2);
+      border: 2px dashed var(--active);
+      border-radius: 10px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
 
-.file-upload-btn:hover {
-  background: rgba(79, 172, 255, 0.3);
-  box-shadow: 0 0 15px rgba(79, 172, 255, 0.4);
-}
+    .file-upload-btn:hover {
+      background: rgba(79, 172, 255, 0.3);
+      box-shadow: 0 0 15px rgba(79, 172, 255, 0.4);
+    }
 
-.file-preview {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+    .file-preview {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-.file-item {
-  position: relative;
-  display: inline-block;
-}
+    .file-item {
+      position: relative;
+      display: inline-block;
+    }
 
-.file-item img {
-  max-width: 100px;
-  max-height: 100px;
-  border-radius: 8px;
-  border: 2px solid var(--active);
-}
+    .file-item img {
+      max-width: 100px;
+      max-height: 100px;
+      border-radius: 8px;
+      border: 2px solid var(--active);
+    }
 
-.file-item .remove-file {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: var(--danger);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s;
-}
+    .file-item .remove-file {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--danger);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
 
-.file-item .remove-file:hover {
-  transform: scale(1.2);
-}
+    .file-item .remove-file:hover {
+      transform: scale(1.2);
+    }
 
-.btn {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
 
-.btn-primary {
-  background: var(--active);
-  color: white;
-  box-shadow: 0 0 20px rgba(79, 172, 255, 0.6);
-}
+    .btn-primary {
+      background: var(--active);
+      color: white;
+      box-shadow: 0 0 20px rgba(79, 172, 255, 0.6);
+    }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(79, 172, 255, 0.8);
-}
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(79, 172, 255, 0.8);
+    }
 
-.btn-success {
-  background: var(--success);
-  color: white;
-  box-shadow: 0 0 20px rgba(76, 175, 80, 0.6);
-}
+    .btn-success {
+      background: var(--success);
+      color: white;
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.6);
+    }
 
-.btn-success:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(76, 175, 80, 0.8);
-}
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(76, 175, 80, 0.8);
+    }
 
-.btn-danger {
-  background: var(--danger);
-  color: white;
-  box-shadow: 0 0 20px rgba(255, 76, 76, 0.6);
-}
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+      box-shadow: 0 0 20px rgba(255, 76, 76, 0.6);
+    }
 
-.btn-danger:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(255, 76, 76, 0.8);
-}
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(255, 76, 76, 0.8);
+    }
 
-.spacer {
-  height: 20px;
-}
+    .spacer {
+      height: 20px;
+    }
 
-.hidden {
-  display: none;
-}
+    .hidden {
+      display: none;
+    }
 
-.error-msg {
-  background: var(--danger);
-  color: white;
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-weight: 600;
-  animation: shake 0.5s;
-}
+    .error-msg {
+      background: var(--danger);
+      color: white;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 600;
+      animation: shake 0.5s;
+    }
 
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  75% { transform: translateX(10px); }
-}
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
 
-.success-msg {
-  background: var(--success);
-  color: white;
-  padding: 16px;
-  border-radius: 10px;
-  text-align: center;
-  font-weight: 600;
-  font-size: 1.1rem;
-  animation: fadeIn 0.5s;
-}
+    .success-msg {
+      background: var(--success);
+      color: white;
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      animation: fadeIn 0.5s;
+    }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
 
-.preview-container {
-  background: #36393f;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  color: #dcddde;
-}
+    .preview-container {
+      background: #36393f;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      color: #dcddde;
+    }
 
-.preview-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
+    .preview-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
 
-.preview-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--active);
-}
+    .preview-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--active);
+    }
 
-.preview-name {
-  font-weight: 700;
-  color: white;
-}
+    .preview-name {
+      font-weight: 700;
+      color: white;
+    }
 
-.preview-badge {
-  background: #5865f2;
-  color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.65rem;
-  font-weight: 700;
-}
+    .preview-badge {
+      background: #5865f2;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
 
-.preview-content {
-  line-height: 1.6;
-  word-wrap: break-word;
-}
+    .preview-content {
+      line-height: 1.6;
+      word-wrap: break-word;
+    }
 
-.preview-content h1 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  color: white;
-  text-shadow: none;
-}
+    .preview-content h1 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: white;
+      text-shadow: none;
+    }
 
-.preview-images {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
+    .preview-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
 
-.preview-images img {
-  max-width: 200px;
-  max-height: 200px;
-  border-radius: 8px;
-}
+    .preview-images img {
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 8px;
+    }
 
-.preview-signature {
-  margin-top: 15px;
-  font-style: italic;
-  color: #b9bbbe;
-}
+    .preview-signature {
+      margin-top: 15px;
+      font-style: italic;
+      color: #b9bbbe;
+    }
 
-.button-group {
-  display: flex;
-  gap: 15px;
-  margin-top: 20px;
-}
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
 
-.button-group .btn {
-  width: 50%;
-}
+    .button-group .btn {
+      width: 50%;
+    }
 
-.helper-text {
-  font-size: 0.85rem;
-  color: rgba(245, 247, 255, 0.6);
-  margin-top: 5px;
-}
-```
+    .helper-text {
+      font-size: 0.85rem;
+      color: rgba(245, 247, 255, 0.6);
+      margin-top: 5px;
+    }
 
+    .channel-selector {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .channel-option {
+      flex: 1;
+      min-width: 200px;
+      cursor: pointer;
+    }
+
+    .channel-option input[type="radio"] {
+      display: none;
+    }
+
+    .channel-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px;
+      background: rgba(0,0,0,0.3);
+      border: 2px solid rgba(79, 172, 255, 0.3);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .channel-card i {
+      font-size: 2rem;
+      color: var(--active);
+    }
+
+    .channel-option input[type="radio"]:checked + .channel-card {
+      background: rgba(79, 172, 255, 0.2);
+      border-color: var(--active);
+      box-shadow: 0 0 20px rgba(79, 172, 255, 0.4);
+    }
+
+    .channel-card:hover {
+      background: rgba(79, 172, 255, 0.15);
+      border-color: var(--active);
+    }
+
+    .channel-option input[type="radio"]:checked + .channel-card i {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
   </style>
 </head>
 <body>
@@ -365,28 +415,20 @@ input[type="file"] {
       <div class="subtitle">Connexion requise</div>
     </div>
 
-```
-<div id="loginError" class="error-msg hidden">
-  Identifiants incorrects
-</div>
+    <div id="loginError" class="error-msg hidden">
+      Identifiants incorrects
+    </div>
 
     <form id="loginForm">
       <div class="form-group">
-        <label for="username">Nom d'utilisateur</label>
-        <input type="text" id="username" placeholder="Entrez votre nom d'utilisateur" required>
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" placeholder="Entrez votre mot de passe" required>
       </div>
 
-  <div class="form-group">
-    <label for="password">Mot de passe</label>
-    <input type="password" id="password" placeholder="Entrez votre mot de passe" required>
-  </div>
-
-  <button type="submit" class="btn btn-primary">
-    <i class="fas fa-sign-in-alt"></i> Se connecter
-  </button>
-</form>
-```
-
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-sign-in-alt"></i> Se connecter
+      </button>
+    </form>
   </div>
 
   <div class="container hidden" id="announcementPanel">
@@ -396,45 +438,64 @@ input[type="file"] {
       <div class="subtitle">Panel de gestion des annonces</div>
     </div>
 
-```
-<form id="announcementForm">
-  <div class="form-group">
-    <label for="title">Titre de l'annonce</label>
-    <input type="text" id="title" class="small" placeholder="Titre court" required>
-  </div>
+    <form id="announcementForm">
+      <div class="form-group">
+        <label for="title">Titre de l'annonce</label>
+        <input type="text" id="title" class="small" placeholder="Titre court" required>
+      </div>
 
-  <div class="spacer"></div>
+      <div class="spacer"></div>
 
-  <div class="form-group">
-    <label for="content">Contenu</label>
-    <textarea id="content" placeholder="Contenu de l'annonce (supporte le markdown: **gras**, *italique*, etc.)" required></textarea>
-    <div class="helper-text">Utilisez le markdown pour formater votre texte</div>
-  </div>
+      <div class="form-group">
+        <label for="content">Contenu</label>
+        <textarea id="content" placeholder="Contenu de l'annonce (supporte le markdown: **gras**, *italique*, etc.)" required></textarea>
+        <div class="helper-text">Utilisez le markdown pour formater votre texte</div>
+      </div>
 
-  <div class="spacer"></div>
+      <div class="spacer"></div>
 
-  <div class="form-group">
-    <label>Images (optionnel)</label>
-    <label for="fileInput" class="file-upload-btn">
-      <i class="fas fa-image"></i> Ajouter des images
-    </label>
-    <input type="file" id="fileInput" accept="image/*" multiple>
-    <div class="file-preview" id="filePreview"></div>
-  </div>
+      <div class="form-group">
+        <label>Images (optionnel)</label>
+        <label for="fileInput" class="file-upload-btn">
+          <i class="fas fa-image"></i> Ajouter des images
+        </label>
+        <input type="file" id="fileInput" accept="image/*" multiple>
+        <div class="file-preview" id="filePreview"></div>
+      </div>
 
-  <div class="spacer"></div>
+      <div class="spacer"></div>
 
-  <div class="form-group">
-    <label for="author">Signé par (optionnel)</label>
-    <input type="text" id="author" class="small" placeholder="Laissez vide pour 'l'Équipe True Vanilla'">
-  </div>
+      <div class="form-group">
+        <label for="author">Signé par (optionnel)</label>
+        <input type="text" id="author" class="small" placeholder="Laissez vide pour 'l'Équipe True Vanilla'">
+      </div>
 
-  <button type="submit" class="btn btn-primary">
-    <i class="fas fa-paper-plane"></i> Envoyer
-  </button>
-</form>
-```
+      <div class="spacer"></div>
 
+      <div class="form-group">
+        <label>Canal de destination</label>
+        <div class="channel-selector">
+          <label class="channel-option">
+            <input type="radio" name="channel" value="general" checked>
+            <span class="channel-card">
+              <i class="fas fa-bullhorn"></i>
+              <strong>Annonce Générale</strong>
+            </span>
+          </label>
+          <label class="channel-option">
+            <input type="radio" name="channel" value="vip">
+            <span class="channel-card">
+              <i class="fas fa-crown"></i>
+              <strong>Annonce VIP</strong>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-paper-plane"></i> Envoyer
+      </button>
+    </form>
   </div>
 
   <div class="container hidden" id="previewScreen">
@@ -443,27 +504,24 @@ input[type="file"] {
       <div class="subtitle">Vérifiez votre message avant de l'envoyer</div>
     </div>
 
-```
-<div class="preview-container">
-  <div class="preview-header">
-    <div class="preview-avatar"></div>
-    <div>
-      <div class="preview-name">True Vanilla Bot <span class="preview-badge">BOT</span></div>
+    <div class="preview-container">
+      <div class="preview-header">
+        <div class="preview-avatar"></div>
+        <div>
+          <div class="preview-name">True Vanilla S4<span class="preview-badge">BOT</span></div>
+        </div>
+      </div>
+      <div class="preview-content" id="previewContent"></div>
     </div>
-  </div>
-  <div class="preview-content" id="previewContent"></div>
-</div>
 
-<div class="button-group">
-  <button type="button" class="btn btn-danger" id="cancelBtn">
-    <i class="fas fa-times"></i> Annuler
-  </button>
-  <button type="button" class="btn btn-success" id="confirmBtn">
-    <i class="fas fa-check"></i> Valider
-  </button>
-</div>
-```
-
+    <div class="button-group">
+      <button type="button" class="btn btn-danger" id="cancelBtn">
+        <i class="fas fa-times"></i> Annuler
+      </button>
+      <button type="button" class="btn btn-success" id="confirmBtn">
+        <i class="fas fa-check"></i> Valider
+      </button>
+    </div>
   </div>
 
   <div class="container hidden" id="successScreen">
@@ -480,7 +538,8 @@ input[type="file"] {
 
   <script>
     const PASSWORD = 'StaffVanilla04';
-    const WEBHOOK_URL = 'https://discord.com/api/webhooks/1431983410179604642/89zUIzYTwJJJx9qm1sGbra0uI7uOFcNOqAaK0XW1ivChbY8ntRPr0woEK3JA8sY1shyw';
+    const WEBHOOK_GENERAL = 'https://discord.com/api/webhooks/1431983410179604642/89zUIzYTwJJJx9qm1sGbra0uI7uOFcNOqAaK0XW1ivChbY8ntRPr0woEK3JA8sY1shyw';
+    const WEBHOOK_VIP = 'https://discord.com/api/webhooks/1436719755578052668/BmHB4Dc40iM9eD9mFc3o7dJZ12pGo9rSH-LEweteHLZII84ncSjh9Sy2M4TNsQv01627';
 
     let uploadedFiles = [];
 
@@ -594,6 +653,8 @@ input[type="file"] {
       const title = document.getElementById('title').value;
       const content = document.getElementById('content').value;
       const author = document.getElementById('author').value || "l'Équipe True Vanilla";
+      const channel = document.querySelector('input[name="channel"]:checked').value;
+      const webhookUrl = channel === 'general' ? WEBHOOK_GENERAL : WEBHOOK_VIP;
 
       let message = '||@everyone||\n# ' + title + '\n\n' + content + '\n\n• __' + author + '__';
 
@@ -605,7 +666,7 @@ input[type="file"] {
           formData.append('file' + index, file);
         });
 
-        await fetch(WEBHOOK_URL, {
+        await fetch(webhookUrl, {
           method: 'POST',
           body: formData
         });
@@ -625,6 +686,5 @@ input[type="file"] {
       document.getElementById('announcementPanel').classList.remove('hidden');
     });
   </script>
-
 </body>
 </html>
