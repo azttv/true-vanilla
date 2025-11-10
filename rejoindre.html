@@ -6,437 +6,541 @@
   <title>True Vanilla – Rejoindre</title>
   <meta name="description" content="Le premier SMP Français 90% Vanilla !" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <style>
     :root{
       --text:#f5f7ff;
-      --shadow: 0 10px 30px rgba(20,24,50,0.6);
       --active:#4facff;
+      --dark:#0a0a0a;
+      --card-bg:#1a1a1a;
+      --spacing: clamp(20px, 5vw, 60px);
       --danger:#ff4c4c;
     }
+
     *{box-sizing:border-box;margin:0;padding:0}
+
     body{
       font-family:Inter,system-ui,sans-serif;
-      min-height:100vh;
-      color:var(--text);
-      padding-top:140px;
       overflow-x:hidden;
-      background: linear-gradient(-45deg, #1e3c72, #2a5298, #1e3c72, #2a5298);
-      background-size: 400% 400%;
-      animation: gradientMove 12s ease infinite;
-    }
-    @keyframes gradientMove {
-      0%{ background-position:0% 50%; }
-      50%{ background-position:100% 50%; }
-      100%{ background-position:0% 50%; }
+      background:#000;
+      color:var(--text);
+      line-height:1.6;
+      padding-top:90px;
     }
 
-header{position:fixed;top:0;width:100%;z-index:200;display:flex;justify-content:center;align-items:center}
-header .header-bg{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);z-index:-1;opacity:0;transition:.4s}
-header.scrolled .header-bg{opacity:1}
-.header-content{width:100%;max-width:1400px;display:flex;align-items:center;justify-content:center;padding:15px 40px;gap:20px;position:relative;text-shadow:0 2px 8px rgba(0,0,0,.9)}
-.logo {height: 100px; position: relative; cursor: pointer; overflow: hidden;}
-.logo::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,.6), transparent);
-  transform: skewX(-25deg);
-}
-.logo:hover::after {
-  animation: shine 1s forwards;
-}
-@keyframes shine {
-  100% { left: 125%; }
-}
-.logo-subtitle{font:400 14px Inter;margin-top:8px;opacity:0;transform:translateY(15px);animation:fadeDown 1s ease forwards .2s;text-shadow:0 2px 8px rgba(0,0,0,.9)}
-@keyframes fadeDown{from{opacity:0;transform:translateY(-15px)}to{opacity:1;transform:translateY(0)}}
-.nav-left,.nav-right{display:flex;gap:12px;align-items:center}
-.nav-left a,.nav-right a{text-decoration:none;font-weight:500;color:var(--text);padding:8px 14px;border-radius:12px;position:relative;box-shadow:0 5px 15px rgba(79,172,255,.4);transition:.3s;cursor:pointer}
-header.scrolled .nav-left a, header.scrolled .nav-right a{box-shadow:0 0 5px rgba(0,0,0,.3)}
-.nav-left a::before,.nav-right a::before{content:'';position:absolute;inset:0;border-radius:12px;box-shadow:0 0 5px #4facff,0 0 10px #00f2fe;opacity:0;transition:.3s}
-.nav-left a:hover::before,.nav-right a:hover::before{opacity:1}
-.nav-left a.active{background:var(--active);color:#fff;box-shadow:0 0 15px var(--active),0 0 30px rgba(79,172,255,.5)}
-.server-ip{position:absolute;right:20px;font-weight:600;padding:10px 16px;border-radius:16px;box-shadow:0 0 10px #4facff;cursor:pointer;transition:.3s,transform .3s;font-size:18px}
-.server-ip:hover{transform:scale(1.15);text-shadow:0 0 20px #4facff}
-.copy-bubble{position:absolute;top:-30px;right:0;background:#4facff;color:#fff;font-size:12px;padding:4px 10px;border-radius:8px;opacity:0;pointer-events:none;transform:translateY(10px);transition:.3s}
-.copy-bubble.show{opacity:1;transform:translateY(0)}
-.chapter{position:absolute;left:5px;display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:700;text-align:center}
-.chapter-number{color:#fff;font-size:34px;position:relative;text-shadow:0 0 5px #4facff,0 0 10px #00f2fe;animation:glow 2s infinite alternate}
-@keyframes glow{0%{text-shadow:0 0 5px #4facff,0 0 10px #00f2fe}50%{text-shadow:0 0 15px #4facff,0 0 30px #00f2fe}100%{text-shadow:0 0 5px #4facff,0 0 10px #00f2fe}}
-.chapter-season{color:#fff;font-size:30px;position:relative}
-.chapter-number::before,.chapter-number::after,.chapter-season::before,.chapter-season::after{content:"";position:absolute;font-size:18px;color:#fff;filter:blur(1.5px);opacity:1;white-space:nowrap}
-.chapter-season::before{content:"Saison 3";right:148%;top:53%;transform:translateY(-50%)}
-.chapter-season::after{content:"Saison 5";left:148%;top:53%;transform:translateY(-50%)}
-footer{text-align:center;color:#eef2ffcc;padding:40px 0;font-size:14px;background:#0008}
-
-    /* === Page content === */
-    main{ max-width:900px; margin:0 auto; padding:20px; text-align:left; }
-    h1{ font-size:2.5rem; margin-bottom:30px; text-align:center; text-shadow: var(--shadow);}
-    h2{ font-size:1.8rem; margin-bottom:15px; display:flex; align-items:center; gap:10px; transition: 0.3s;}
-    h2:hover{ text-shadow: 0 0 15px #4facff, 0 0 25px #4facff;}
-    p, ul{ font-size:1.2rem; line-height:1.6; margin-bottom:15px; }
-    li{ margin-left:20px; margin-bottom:8px; }
-    code{ display:block; background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; margin:10px 0; font-family: monospace; }
-    .discord-btn{ display:block; margin:15px auto; padding:12px 25px; background:#46bafd; color:#fff; font-weight:600; border-radius:999px; text-decoration:none; transition: background 0.3s, transform 0.3s; text-align:center; }
-    .discord-btn:hover{ background:#0079b1; transform:scale(1.05); }
-    .card{ background: linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.35)); border-radius:15px; padding:20px; margin-bottom:25px; transition: transform 0.3s, background 0.3s, box-shadow 0.3s; box-shadow: var(--shadow);}
-    .card:hover{ transform: translateY(-5px); background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.5)); box-shadow: 0 15px 40px rgba(20,24,50,0.8);}
-    .card-icon{ font-size:1.5rem; color:#4facff; animation: icon-bounce 2s infinite;}
-    @keyframes icon-bounce{ 0%, 100%{ transform: translateY(0);} 50%{ transform: translateY(-5px);} }
-
-    /* === Fade-in cascade === */
-    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-    /* === Attention zone === */
-    .attention-box {
-      background-color: var(--danger);
-      color: #fff;
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-weight: 700;
-      text-align: center;
-      box-shadow: 0 0 15px var(--danger), 0 0 30px rgba(255,76,76,0.5);
-      transition: transform 0.2s ease;
-      animation: attention-glow 1.5s infinite alternate;
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-    .attention-box:hover {
-      transform: scale(1.05);
-    }
-    @keyframes attention-glow {
-      0% { box-shadow: 0 0 15px var(--danger), 0 0 30px rgba(255,76,76,0.5); }
-      50% { box-shadow: 0 0 25px var(--danger), 0 0 45px rgba(255,76,76,0.7); }
-      100% { box-shadow: 0 0 15px var(--danger), 0 0 30px rgba(255,76,76,0.5); }
+    .bg-slideshow{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:-3;
     }
 
-    /* MENU BURGER MOBILE */
-.burger {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 28px;
-  color: var(--text);
-  cursor: pointer;
-  position: absolute;
-  left: 20px;
-  z-index: 1001;
-}
-
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 70%;
-  height: 100vh;
-  background: rgba(0,0,0,0.95);
-  display: flex;
-  flex-direction: column;
-  padding-top: 80px;
-  gap: 20px;
-  transition: transform 0.3s ease;
-  z-index: 1001;
-  transform: translateX(-100%);
-}
-
-.mobile-menu.active {
-  transform: translateX(0);
-}
-
-/* Overlay */
-img:not(.logo img):not(.logo) {
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
-  height: auto;
-  border-radius: 22px
-}
-
-.overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 99;
-}
-.overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Liens du menu burger */
-.mobile-menu a {
-  text-decoration: none;
-  font-weight: 600;
-  color: var(--text);
-  padding: 14px 20px;
-  margin: 0 20px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.05);
-  transition: all 0.3s ease;
-  box-shadow: 0 0 8px rgba(0,0,0,0.4);
-}
-
-.mobile-menu a:hover {
-  background: rgba(79,172,255,0.15);
-  box-shadow: 0 0 12px rgba(79,172,255,0.4);
-  transform: translateX(5px);
-}
-
-/* Page active */
-.mobile-menu a.active {
-  background: linear-gradient(90deg, #4facff, #00f2fe);
-  color: #fff;
-  box-shadow: 0 0 15px rgba(79,172,255,0.8), 0 0 25px rgba(0,242,254,0.6);
-}
-    @media(max-width: 768px) {
-  .logo-subtitle {display: none !important;}
-  .logo-container {display: flex; justify-content: center; width: 100%;}
-  .nav-left, .nav-right, .server-ip, .chapter {display: none !important;}
-  .burger {display: block;}
-  .logo {height: 60px;}
-  .header-content {justify-content: center;padding: 10px 20px;}
-  .carousel-wrapper {display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch};
-  .zone {position: relative; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 70vh; padding: 40px 20px; color: #fff}
-  .zone .image {display: none;}
-  .zone {background-size: cover; background-position: center; background-repeat: repeat}
-  .zone.one {background-image: url("screen.gif")}
-  .zone.two {background-image: url("shop.png")}
-  .zone.three {background-image: url("discord.png")}
-  .zone::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(8px); /* <<< flou appliqué ici */
-    transform: scale(1.1); /* éviter les bords nets après flou */
-    z-index: 0;}
+    .bg-slide{
+      position:absolute;
+      inset:0;
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      opacity:0;
+      transition:opacity 1.5s ease-in-out;
+      filter:brightness(0.7) contrast(1.05);
     }
-  .header-btn.ban-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 48px;
-  height: 48px;
-  margin-left: 15px;
-  border-radius: 50%;
-  border: 2px solid #ff2b2b;
-  color: #ff2b2b;
-  background: transparent;
-  font-size: 18px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  box-shadow:0 0 10px #ff0000
-}
 
-.header-btn.ban-btn:hover {
-  background: #ff2b2b;
-  color: #fff;
-  box-shadow: 0 0 12px rgba(255, 43, 43, 0.8);
-  transform:scale(1.25);
-  text-shadow:0 0 20px #ff0000;}
+    .bg-slide.active{
+      opacity:1;
+    }
 
+    /* HEADER */
+    header{
+      position:fixed;
+      top:0;
+      width:100%;
+      z-index:100;
+      background:rgba(0,0,0,0.8);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(79,172,255,0.2);
+    }
+
+    .header-content{
+      max-width:1400px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:15px 30px;
+      gap:20px;
+    }
+
+    .logo{
+      height:60px;
+      cursor:pointer;
+      transition:transform 0.3s;
+    }
+
+    .logo:hover{transform:scale(1.05)}
+
+    nav{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+
+    nav a{
+      text-decoration:none;
+      color:var(--text);
+      padding:8px 16px;
+      border-radius:8px;
+      font-weight:500;
+      font-size:14px;
+      transition:all 0.3s;
+      position:relative;
+    }
+
+    nav a:hover{
+      background:rgba(79,172,255,0.1);
+      color:var(--active);
+    }
+
+    nav a.active{
+      background:var(--active);
+      color:#fff;
+    }
+
+    .server-ip{
+      font-weight:600;
+      padding:8px 16px;
+      border-radius:8px;
+      background:rgba(79,172,255,0.1);
+      border:1px solid rgba(79,172,255,0.3);
+      cursor:pointer;
+      transition:all 0.3s;
+      font-size:14px;
+      position:relative;
+    }
+
+    .server-ip:hover{
+      background:rgba(79,172,255,0.2);
+      transform:scale(1.05);
+    }
+
+    .copy-bubble{
+      position:absolute;
+      top:-35px;
+      left:50%;
+      transform:translateX(-50%) translateY(10px);
+      background:#4facff;
+      color:#fff;
+      font-size:12px;
+      padding:6px 12px;
+      border-radius:8px;
+      opacity:0;
+      pointer-events:none;
+      transition:all 0.3s;
+    }
+
+    .copy-bubble.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    .burger{
+      display:none;
+      background:none;
+      border:none;
+      font-size:24px;
+      color:var(--text);
+      cursor:pointer;
+    }
+
+    .mobile-menu{
+      position:fixed;
+      top:0;
+      left:-100%;
+      width:280px;
+      height:100vh;
+      background:rgba(0,0,0,0.95);
+      backdrop-filter:blur(20px);
+      padding:80px 20px 20px;
+      transition:left 0.3s;
+      z-index:1000;
+      overflow-y:auto;
+    }
+
+    .mobile-menu.active{left:0}
+
+    .mobile-menu a{
+      display:block;
+      text-decoration:none;
+      color:var(--text);
+      padding:12px 16px;
+      margin:8px 0;
+      border-radius:8px;
+      background:rgba(255,255,255,0.05);
+      transition:all 0.3s;
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a.active{
+      background:var(--active);
+      color:#fff;
+    }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.7);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 0.3s;
+      z-index:99;
+    }
+
+    .overlay.active{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    /* MAIN CONTENT */
+    main{
+      max-width:1000px;
+      margin:0 auto;
+      padding:var(--spacing);
+    }
+
+    h1{
+      font-size:clamp(32px,5vw,48px);
+      font-weight:800;
+      margin-bottom:30px;
+      text-align:center;
+      text-shadow:0 4px 20px rgba(0,0,0,0.9);
+    }
+
+    h2{
+      font-size:clamp(24px,4vw,32px);
+      font-weight:700;
+      margin-bottom:20px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .card{
+      background:rgba(26,26,26,0.8);
+      backdrop-filter:blur(10px);
+      border-radius:16px;
+      padding:30px;
+      margin-bottom:30px;
+      border:1px solid rgba(79,172,255,0.2);
+      transition:all 0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+      border-color:rgba(79,172,255,0.5);
+      box-shadow:0 10px 40px rgba(79,172,255,0.2);
+    }
+
+    .card-icon{
+      color:#4facff;
+      font-size:1.5rem;
+    }
+
+    .card p{
+      margin-bottom:15px;
+      font-size:1.1rem;
+    }
+
+    .card ul{
+      list-style:none;
+      padding-left:0;
+    }
+
+    .card li{
+      padding:8px 0;
+      padding-left:25px;
+      position:relative;
+      font-size:1.1rem;
+    }
+
+    .card li:before{
+      content:"▸";
+      position:absolute;
+      left:0;
+      color:#4facff;
+    }
+
+    code{
+      display:block;
+      background:rgba(0,0,0,0.5);
+      padding:15px;
+      border-radius:8px;
+      margin:15px 0;
+      font-family:monospace;
+      border:1px solid rgba(79,172,255,0.3);
+      color:#4facff;
+      font-size:1.1rem;
+    }
+
+    .discord-btn{
+      display:block;
+      width:fit-content;
+      margin:20px auto;
+      padding:14px 32px;
+      font-size:16px;
+      font-weight:600;
+      color:#fff;
+      background:linear-gradient(135deg,#4facff,#00f2fe);
+      border:none;
+      border-radius:30px;
+      cursor:pointer;
+      text-decoration:none;
+      transition:all 0.3s;
+      box-shadow:0 4px 20px rgba(79,172,255,0.4);
+      text-align:center;
+    }
+
+    .discord-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 30px rgba(79,172,255,0.6);
+    }
+
+    .card img{
+      max-width:100%;
+      border-radius:12px;
+      margin:15px 0;
+      border:2px solid rgba(79,172,255,0.3);
+    }
+
+    /* Attention Box */
+    .attention-box{
+      background-color:var(--danger);
+      color:#fff;
+      padding:15px 20px;
+      border-radius:12px;
+      font-weight:700;
+      text-align:center;
+      box-shadow:0 0 15px var(--danger),0 0 30px rgba(255,76,76,0.5);
+      margin:20px 0;
+      animation:attention-glow 1.5s infinite alternate;
+    }
+
+    @keyframes attention-glow{
+      0%{box-shadow:0 0 15px var(--danger),0 0 30px rgba(255,76,76,0.5)}
+      50%{box-shadow:0 0 25px var(--danger),0 0 45px rgba(255,76,76,0.7)}
+      100%{box-shadow:0 0 15px var(--danger),0 0 30px rgba(255,76,76,0.5)}
+    }
+
+    /* Footer */
+    footer{
+      text-align:center;
+      padding:40px var(--spacing);
+      background:rgba(0,0,0,0.8);
+      border-top:1px solid rgba(79,172,255,0.2);
+      margin-top:80px;
+    }
+
+    /* Loader */
+    #loader{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.9);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 0.3s;
+    }
+
+    #loader.active{
+      opacity:1;
+      pointer-events:all;
+    }
+
+    .spinner{
+      width:60px;
+      height:60px;
+      border:4px solid rgba(79,172,255,0.2);
+      border-top:4px solid #4facff;
+      border-radius:50%;
+      animation:spin 1s linear infinite;
+    }
+
+    @keyframes spin{
+      to{transform:rotate(360deg)}
+    }
+
+    /* Responsive */
+    @media(max-width:768px){
+      .header-content{
+        padding:15px 20px;
+      }
+      
+      nav{display:none}
+      
+      .burger{display:block}
+      
+      .server-ip{
+        font-size:12px;
+        padding:6px 12px;
+      }
+
+      main{
+        padding:20px;
+      }
+
+      body{
+        padding-top:80px;
+      }
+    }
   </style>
 </head>
 <body>
+
+<div class="bg-slideshow" id="bgSlideshow">
+  <div class="bg-slide active" style="background-image:url('diaporama/bg1.png')"></div>
+  <div class="bg-slide" style="background-image:url('diaporama/bg2.png')"></div>
+  <div class="bg-slide" style="background-image:url('diaporama/bg3.png')"></div>
+</div>
+
 <header id="mainHeader">
-  <div class="header-bg"></div>
   <div class="header-content">
     <button class="burger" id="burgerBtn"><i class="fas fa-bars"></i></button>
-    <div class="chapter">
-      <div class="chapter-number">Chapitre 1</div>
-      <div class="chapter-season">Saison 4</div>
-    </div>
-    <div class="nav-left">
-      <a href="index.html">Accueil</a>
-      <a href="rejoindre.html" class="active">Rejoindre</a>
-    </div>
-    <div class="logo-container">
-      <a href="rejoindre.html#top"><img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo"></a>
-      <div class="logo-subtitle">⠀⠀Le premier SMP 90% Vanilla !</div>
-    </div>
     
-    <nav class="mobile-menu" id="mobileMenu">
-      <a href="index.html"">Accueil</a>
+    <a href="index.html"><img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo"></a>
+    
+    <nav>
+      <a href="index.html">Accueil</a>
       <a href="rejoindre.html" class="active">Rejoindre</a>
       <a href="boutique.html">Boutique</a>
       <a href="infos.html">Infos</a>
       <a href="murdelahonte.html">Mur de la honte</a>
-      <p align="center">⠀</p>
-      <p align="center">Le premier SMP 90% Vanilla !</p>
-      <p align="center">⠀</p>
-      <img align="center" src="logospin.gif" height="150px" width="150px" alt="True Vanilla">
     </nav>
-    <div class="nav-right">
-      <a href="boutique.html">Boutique</a>
-      <a href="infos.html">Infos</a>
-    </div>
-    <div class="server-ip" id="copyIP">play.true-vanilla.fr
+    
+    <div class="server-ip" id="copyIP">
+      play.true-vanilla.fr
       <span class="copy-bubble" id="copyBubble">Copié !</span>
     </div>
   </div>
-        <a href="murdelahonte.html" class="header-btn ban-btn" title="Mur de la honte">
-  <i class="fa-solid fa-ban"></i>
-</a>
 </header>
+
+<nav class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Accueil</a>
+  <a href="rejoindre.html" class="active">Rejoindre</a>
+  <a href="boutique.html">Boutique</a>
+  <a href="infos.html">Infos</a>
+  <a href="murdelahonte.html">Mur de la honte</a>
+</nav>
+
 <div class="overlay" id="overlay"></div>
-  <main>
-    <div class="card">
-      <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-      <ul>
-        <li>Un Launcher capable de lancer Minecraft: Java</li>
-        <li>Version du jeu : 1.21.8</li>
-        <li>Connexion Internet stable (VPN Interdit)</li>
-        <li>Un compte Discord</li>
-        <li>IP du Serveur : play.true-vanilla.fr</li>
-      </ul>
-    </div>
 
-    <div class="card">
-      <h2><i class="fas fa-link card-icon"></i> Étape 1 : Lier votre compte Minecraft à votre compte Discord</h2>
-      <p>Rejoignez le Discord pour pouvoir lier votre compte Minecraft à votre compte Discord.</p>
-      <a href="https://discord.gg/HefFTCS4cp" class="discord-btn" target="_blank">Rejoindre le Discord</a>
-      <p>Rejoignez le serveur Minecraft pour recevoir votre code qui vous permettra de lier vos comptes.</p>
-      <img src="https://i.imgur.com/ybLQMso.png" alt="Exemple de code">
-      <p>Envoyez le code au bot du serveur Discord "True Vanilla S4" qui se trouve tout en haut de la liste des membres du Discord.</p>
-      <img src="BOTt.gif" height="270px" width="480px" alt="Où trouver le bot">
-    </div>
+<main>
+  <h1>🎮 Comment rejoindre le serveur</h1>
 
-    <div class="card">
-      <h2><i class="fas fa-play card-icon"></i> Étape 2 : Se connecter au serveur</h2>
-      <p>Une fois vos comptes liés, créez un compte sur le serveur en utilisant :</p>
-      <code>/register motdepasse motdepasse</code>
-      <p>Connectez-vous en utilisant :</p>
-      <code>/login motdepasse</code>
-      <a>⠀</a>
-      <div class="attention-box">⚠️ Attention ! Remplacez "motdepasse" par votre mot de passe personnel (minimum 4 caractères)</div>
+  <div class="card">
+    <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
+    <ul>
+      <li>Un Launcher capable de lancer Minecraft: Java</li>
+      <li>Version du jeu : 1.21.4</li>
+      <li>Connexion Internet stable (VPN Interdit)</li>
+      <li>Un compte Discord</li>
+      <li>IP du Serveur : play.true-vanilla.fr</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2><i class="fas fa-link card-icon"></i> Étape 1 : Lier votre compte Minecraft à votre compte Discord</h2>
+    <p>Rejoignez le Discord pour pouvoir lier votre compte Minecraft à votre compte Discord.</p>
+    <a href="https://discord.gg/HefFTCS4cp" class="discord-btn" target="_blank">
+      <i class="fab fa-discord"></i> Rejoindre le Discord
+    </a>
+    <p>Rejoignez le serveur Minecraft pour recevoir votre code qui vous permettra de lier vos comptes.</p>
+    <img src="https://i.imgur.com/ybLQMso.png" alt="Exemple de code">
+    <p>Envoyez le code au bot du serveur Discord "True Vanilla V3".</p>
+    <img src="BOTt.gif" height="270px" width="480px" alt="Où trouver le bot">
+  </div>
+
+  <div class="card">
+    <h2><i class="fas fa-play card-icon"></i> Étape 2 : Se connecter au serveur</h2>
+    <p>Une fois vos comptes liés, créez un compte sur le serveur en utilisant :</p>
+    <code>/register motdepasse motdepasse</code>
+    <p>Connectez-vous en utilisant :</p>
+    <code>/login motdepasse</code>
+    
+    <div class="attention-box">
+      ⚠️ Attention ! Remplacez "motdepasse" par votre mot de passe personnel (minimum 4 caractères)
     </div>
-  </main>
-<footer>© <span id="year"></span> True Vanilla — Tous droits réservés.</footer>
+  </div>
+</main>
+
+<footer>
+  © <span id="year"></span> True Vanilla – Tous droits réservés.
+</footer>
+
 <div id="loader">
   <div class="spinner"></div>
 </div>
-<style>
-  #loader {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
 
-#loader.active {
-  opacity: 1;
-  pointer-events: all;
-}
+<script>
+// Year
+document.getElementById('year').textContent = new Date().getFullYear();
 
-.spinner {
-  width: 60px;
-  height: 60px;
-  border: 6px solid rgba(255,255,255,0.2);
-  border-top: 6px solid #4facff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-</style>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-const obs = new IntersectionObserver(e => {
-  e.forEach(ent => ent.isIntersecting && ent.target.classList.add('visible'))
-},{threshold:.3});
-document.querySelectorAll('.zone .zone-text').forEach(el => obs.observe(el));
-    // Copie de l'IP
-    const copyIP = document.getElementById('copyIP');
-    const copyBubble = document.getElementById('copyBubble');
-    copyIP.addEventListener('click', () => {
-      navigator.clipboard.writeText(copyIP.textContent.replace('Copié !',''));
-      copyBubble.classList.add('show');
-      setTimeout(() => { copyBubble.classList.remove('show'); }, 1300);
-    });
-
-    // Fade-in cascade
-    const elements = document.querySelectorAll('main > *');
-    elements.forEach((el, i) => {
-      el.classList.add('fade-in');
-      el.style.transitionDelay = `${i * 0.2}s`; // Cascade de 0.2s
-    });
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    elements.forEach(el => observer.observe(el));
-window.addEventListener("scroll", () => {
-  document.getElementById("mainHeader").classList.toggle("scrolled", window.scrollY>50);
+// Copy IP
+const copyIP = document.getElementById('copyIP');
+const copyBubble = document.getElementById('copyBubble');
+copyIP.addEventListener('click', () => {
+  navigator.clipboard.writeText('play.true-vanilla.fr');
+  copyBubble.classList.add('show');
+  setTimeout(() => copyBubble.classList.remove('show'), 2000);
 });
-document.addEventListener("DOMContentLoaded", () => {
-  const burgerBtn = document.getElementById("burgerBtn");
-  const mobileMenu = document.getElementById("mobileMenu");
-  const overlay = document.getElementById("overlay");
 
-  function toggleMenu(){
-    overlay.classList.toggle("active");
-    mobileMenu.classList.toggle("active");
-  }
+// Mobile menu
+const burgerBtn = document.getElementById('burgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const overlay = document.getElementById('overlay');
 
-  if (burgerBtn && mobileMenu && overlay) {
-    overlay.addEventListener("click", toggleMenu);
-    burgerBtn.addEventListener("click", toggleMenu);
+function toggleMenu() {
+  mobileMenu.classList.toggle('active');
+  overlay.classList.toggle('active');
+}
 
+burgerBtn.addEventListener('click', toggleMenu);
+overlay.addEventListener('click', toggleMenu);
 
-    document.querySelectorAll(".mobile-menu a").forEach(link => {
-      link.addEventListener("click", () => {
-        mobileMenu.classList.remove("active");
-        overlay.classList.remove("active");
-      });
-    });
-  } else {
-    console.error("Élément manquant");
-  }
+document.querySelectorAll('.mobile-menu a').forEach(link => {
+  link.addEventListener('click', toggleMenu);
 });
-  document.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", e => {
-      const href = link.getAttribute("href");
-      if (href && href.endsWith(".html")) {
-        e.preventDefault();
-        document.getElementById("loader").classList.add("active");
-        setTimeout(() => { window.location.href = href; }, 400);
-      }
-    });
-  });
 
-  // Cacher le loader quand la page est complètement chargée
-  window.addEventListener("load", () => {
-    document.getElementById("loader").classList.remove("active");
+// Background slideshow
+const slides = document.querySelectorAll('.bg-slide');
+let currentSlide = 0;
+
+function nextSlide() {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (currentSlide + 1) % slides.length;
+  slides[currentSlide].classList.add('active');
+}
+
+setInterval(nextSlide, 5000);
+
+// Page loader
+window.addEventListener('load', () => {
+  document.getElementById('loader').classList.remove('active');
+});
+
+document.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', e => {
+    const href = link.getAttribute('href');
+    if (href && href.endsWith('.html') && !link.target) {
+      e.preventDefault();
+      document.getElementById('loader').classList.add('active');
+      setTimeout(() => { window.location.href = href; }, 300);
+    }
   });
-  </script>
+});
+</script>
+
 </body>
 </html>
-
-
