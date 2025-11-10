@@ -27,14 +27,27 @@ body{
   line-height:1.6;
 }
 
-.bg-video{
+.bg-slideshow{
   position:fixed;
   inset:0;
   width:100%;
   height:100%;
-  object-fit:cover;
   z-index:-3;
+}
+
+.bg-slide{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  opacity:0;
+  transition:opacity 1.5s ease-in-out;
   filter:brightness(0.7) contrast(1.05);
+}
+
+.bg-slide.active{
+  opacity:1;
 }
 
 /* HEADER */
@@ -194,11 +207,17 @@ nav a.active{
   align-items:center;
   justify-content:center;
   padding:100px var(--spacing) var(--spacing);
-  text-align:center;
+  gap:40px;
 }
 
 .hero-content{
-  max-width:900px;
+  flex:1;
+  max-width:600px;
+}
+
+.hero-video-container{
+  flex:1;
+  max-width:700px;
 }
 
 .hero h1{
@@ -217,8 +236,7 @@ nav a.active{
 }
 
 .hero .video-frame{
-  max-width:700px;
-  margin:30px auto 0;
+  width:100%;
   aspect-ratio:16/9;
   background:rgba(0,0,0,0.3);
   border-radius:16px;
@@ -710,6 +728,15 @@ footer{
   
   .hero{
     padding:120px 20px 40px;
+    flex-direction:column;
+  }
+  
+  .hero-content{
+    text-align:center;
+  }
+  
+  .hero-video-container{
+    width:100%;
   }
   
   section{
@@ -798,9 +825,9 @@ footer{
 <body>
 
 <div class="bg-slideshow" id="bgSlideshow">
-  <div class="bg-slide active" style="background-image:url('diapomara/bg1.png')"></div>
-  <div class="bg-slide" style="background-image:url('diapomara/bg2.png')"></div>
-  <div class="bg-slide" style="background-image:url('diapomara/bg3.png')"></div>
+  <div class="bg-slide active" style="background-image:url('diaporama/bg1.png')"></div>
+  <div class="bg-slide" style="background-image:url('diaporama/bg2.png')"></div>
+  <div class="bg-slide" style="background-image:url('diaporama/bg3.png')"></div>
 </div>
 
 <header id="mainHeader">
@@ -841,6 +868,8 @@ footer{
       <h1>Venez revivre l'âge d'or de Minecraft !</h1>
       <p>Une expérience multijoueur soignée, un monde vivant et une communauté accueillante ✨</p>
       <a class="btn-primary" href="https://discord.gg/HefFTCS4cp" target="_blank">Rejoindre le serveur</a>
+    </div>
+    <div class="hero-video-container">
       <div class="video-frame">
         <iframe allowfullscreen src="https://www.youtube.com/embed/Oi-was94CtI?si=JsKNlarkmU5oIcdA" title="True Vanilla"></iframe>
       </div>
@@ -1015,6 +1044,12 @@ footer{
 
     <div class="chapter-title">Chapitre 2</div>
     <div class="season-grid">
+      <div class="season-card upcoming">
+        <p style="color:#888;font-style:italic">Prochainement...</p>
+      </div>
+      <div class="season-card upcoming">
+        <p style="color:#888;font-style:italic">Prochainement...</p>
+      </div>
       <div class="season-card upcoming">
         <p style="color:#888;font-style:italic">Prochainement...</p>
       </div>
@@ -1400,12 +1435,17 @@ document.querySelectorAll('a').forEach(link => {
   });
 });
 
-// Video loop fallback
-const video = document.getElementById('bgVideo');
-video.addEventListener('ended', () => {
-  video.currentTime = 0;
-  video.play();
-});
+// Background slideshow
+const slides = document.querySelectorAll('.bg-slide');
+let currentSlide = 0;
+
+function nextSlide() {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (currentSlide + 1) % slides.length;
+  slides[currentSlide].classList.add('active');
+}
+
+setInterval(nextSlide, 5000); // Change image every 5 seconds
 </script>
 
 </body>
