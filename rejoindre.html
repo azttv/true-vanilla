@@ -7,6 +7,7 @@
   <meta name="description" content="Le premier SMP Français 90% Vanilla !" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root{
       --text:#f5f7ff;
@@ -28,27 +29,120 @@
       padding-top:90px;
     }
 
-    .bg-slideshow{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:-3;
+    /* Animated Wave Background */
+    .animated-bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -3;
+      background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
     }
 
-    .bg-slide{
-      position:absolute;
-      inset:0;
-      background-size:cover;
-      background-position:center;
-      background-repeat:no-repeat;
-      opacity:0;
-      transition:opacity 1.5s ease-in-out;
-      filter:brightness(0.7) contrast(1.05);
+    .wave-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
     }
 
-    .bg-slide.active{
-      opacity:1;
+    .wave {
+      position: absolute;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(79, 172, 255, 0.1) 0%,
+        rgba(0, 242, 254, 0.05) 25%,
+        rgba(79, 172, 255, 0.15) 50%,
+        rgba(0, 100, 200, 0.08) 75%,
+        rgba(79, 172, 255, 0.1) 100%
+      );
+      animation: wave 15s ease-in-out infinite;
+    }
+
+    .wave:nth-child(2) {
+      background: linear-gradient(
+        225deg,
+        rgba(0, 242, 254, 0.08) 0%,
+        rgba(79, 172, 255, 0.12) 25%,
+        rgba(0, 150, 255, 0.06) 50%,
+        rgba(79, 172, 255, 0.1) 75%,
+        rgba(0, 242, 254, 0.08) 100%
+      );
+      animation: wave 20s ease-in-out infinite reverse;
+      animation-delay: -5s;
+    }
+
+    .wave:nth-child(3) {
+      background: linear-gradient(
+        315deg,
+        rgba(79, 172, 255, 0.05) 0%,
+        rgba(0, 200, 255, 0.1) 25%,
+        rgba(79, 172, 255, 0.08) 50%,
+        rgba(0, 242, 254, 0.06) 75%,
+        rgba(79, 172, 255, 0.05) 100%
+      );
+      animation: wave 25s ease-in-out infinite;
+      animation-delay: -10s;
+    }
+
+    @keyframes wave {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0) rotate(0deg) scale(1);
+      }
+      25% {
+        transform: translateX(-45%) translateY(-3%) rotate(1deg) scale(1.05);
+      }
+      50% {
+        transform: translateX(-50%) translateY(-5%) rotate(-1deg) scale(1.1);
+      }
+      75% {
+        transform: translateX(-55%) translateY(-3%) rotate(0.5deg) scale(1.05);
+      }
+    }
+
+    .particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(79, 172, 255, 0.6);
+      border-radius: 50%;
+      animation: float 20s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(79, 172, 255, 0.8);
+    }
+
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 15s; }
+    .particle:nth-child(2) { left: 20%; animation-delay: -3s; animation-duration: 18s; }
+    .particle:nth-child(3) { left: 30%; animation-delay: -6s; animation-duration: 22s; }
+    .particle:nth-child(4) { left: 40%; animation-delay: -9s; animation-duration: 20s; }
+    .particle:nth-child(5) { left: 50%; animation-delay: -12s; animation-duration: 17s; }
+    .particle:nth-child(6) { left: 60%; animation-delay: -15s; animation-duration: 19s; }
+    .particle:nth-child(7) { left: 70%; animation-delay: -18s; animation-duration: 21s; }
+    .particle:nth-child(8) { left: 80%; animation-delay: -21s; animation-duration: 16s; }
+    .particle:nth-child(9) { left: 90%; animation-delay: -24s; animation-duration: 23s; }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+        transform: translateY(90vh) translateX(10px) scale(1);
+      }
+      50% {
+        transform: translateY(50vh) translateX(-20px) scale(1.2);
+      }
+      90% {
+        opacity: 1;
+        transform: translateY(10vh) translateX(15px) scale(1);
+      }
     }
 
     /* HEADER */
@@ -399,10 +493,23 @@
 </head>
 <body>
 
-<div class="bg-slideshow" id="bgSlideshow">
-  <div class="bg-slide active" style="background-image:url('diaporama/bg1.png')"></div>
-  <div class="bg-slide" style="background-image:url('diaporama/bg2.png')"></div>
-  <div class="bg-slide" style="background-image:url('diaporama/bg3.png')"></div>
+<div class="animated-bg">
+  <div class="wave-container">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
 </div>
 
 <header id="mainHeader">
@@ -512,18 +619,6 @@ overlay.addEventListener('click', toggleMenu);
 document.querySelectorAll('.mobile-menu a').forEach(link => {
   link.addEventListener('click', toggleMenu);
 });
-
-// Background slideshow
-const slides = document.querySelectorAll('.bg-slide');
-let currentSlide = 0;
-
-function nextSlide() {
-  slides[currentSlide].classList.remove('active');
-  currentSlide = (currentSlide + 1) % slides.length;
-  slides[currentSlide].classList.add('active');
-}
-
-setInterval(nextSlide, 5000);
 
 // Page loader
 window.addEventListener('load', () => {
