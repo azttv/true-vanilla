@@ -550,7 +550,7 @@ section{
   display:flex;
   justify-content:center;
   align-items:flex-end;
-  gap:20px;
+  gap:15px;
   margin-bottom:60px;
   padding:40px 20px;
   perspective:1000px;
@@ -618,7 +618,10 @@ section{
   height:180px;
   margin-bottom:15px;
   position:relative;
-  perspective:1000px;
+  animation:float 3s ease-in-out infinite;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .podium-place.first .podium-skin-container{
@@ -626,9 +629,29 @@ section{
   height:240px;
 }
 
-.podium-skin-container canvas{
+.podium-place.second .podium-skin-container{
+  animation-delay:0.5s;
+}
+
+.podium-place.third .podium-skin-container{
+  animation-delay:1s;
+}
+
+@keyframes float{
+  0%, 100%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-10px);
+  }
+}
+
+.podium-skin-container img{
   width:100%;
   height:100%;
+  object-fit:contain;
+  image-rendering:pixelated;
+  filter:drop-shadow(0 10px 30px rgba(0,0,0,0.8));
 }
 
 .podium-stand{
@@ -648,7 +671,7 @@ section{
   top:0;
   left:0;
   right:0;
-  height:4px;
+  height:2px;
   background:linear-gradient(90deg, transparent, currentColor, transparent);
   animation:shimmer 2s ease-in-out infinite;
 }
@@ -663,21 +686,21 @@ section{
 }
 
 .podium-place.first .podium-stand{
-  height:180px;
+  height:270px;
   border-color:#ffd700;
   background:linear-gradient(180deg, rgba(255,215,0,0.2), rgba(139,0,0,0.5));
   box-shadow:0 0 40px rgba(255,215,0,0.4);
 }
 
 .podium-place.second .podium-stand{
-  height:140px;
+  height:220px;
   border-color:#c0c0c0;
   background:linear-gradient(180deg, rgba(192,192,192,0.2), rgba(0,0,0,0.5));
   box-shadow:0 0 30px rgba(192,192,192,0.3);
 }
 
 .podium-place.third .podium-stand{
-  height:100px;
+  height:170px;
   border-color:#cd7f32;
   background:linear-gradient(180deg, rgba(205,127,50,0.2), rgba(0,0,0,0.5));
   box-shadow:0 0 30px rgba(205,127,50,0.3);
@@ -1036,6 +1059,7 @@ footer{
   <div class="bg-slide" style="background-image:url('diapomara/bg5.png')"></div>
   <div class="bg-slide" style="background-image:url('diapomara/bg6.png')"></div>
   <div class="bg-slide" style="background-image:url('diapomara/bg7.png')"></div>
+  <div class="bg-slide" style="background-image:url('diapomara/bg8.png')"></div>
 </div>
 
 <header id="mainHeader">
@@ -1347,9 +1371,9 @@ footer{
     <!-- PODIUM -->
     <div class="podium-container">
       <div class="podium-place second">
-        <div class="podium-player-name">Gerard2pardegato</div>
+        <div class="podium-player-name">Gerard2gestapo</div>
         <div class="podium-skin-container">
-          <iframe src="https://namemc.com/profile/Gerard2pardegato/3d" style="width:100%;height:100%;border:none;" allowtransparency="true"></iframe>
+          <img src="https://starlightskins.lunareclipse.studio/render/walking/Gerard2gestapo/full" alt="Gerard2gestapo" onerror="this.src='https://mc-heads.net/player/Gerard2pardegato/150'">
         </div>
         <div class="podium-stand">
           <div class="podium-rank">🥈</div>
@@ -1360,7 +1384,7 @@ footer{
       <div class="podium-place first">
         <div class="podium-player-name">TomZyark862</div>
         <div class="podium-skin-container">
-          <iframe src="https://namemc.com/profile/TomZyark862/3d" style="width:100%;height:100%;border:none;" allowtransparency="true"></iframe>
+          <img src="https://starlightskins.lunareclipse.studio/render/walking/TomZyark862/full" alt="TomZyark862" onerror="this.src='https://mc-heads.net/player/TomZyark862/180'">
         </div>
         <div class="podium-stand">
           <div class="podium-rank">🥇</div>
@@ -1371,7 +1395,7 @@ footer{
       <div class="podium-place third">
         <div class="podium-player-name">CerberusX101</div>
         <div class="podium-skin-container">
-          <iframe src="https://namemc.com/profile/CerberusX101/3d" style="width:100%;height:100%;border:none;" allowtransparency="true"></iframe>
+          <img src="https://starlightskins.lunareclipse.studio/render/walking/CerberusX101/full" alt="CerberusX101" onerror="this.src='https://mc-heads.net/player/CerberusX101/150'">
         </div>
         <div class="podium-stand">
           <div class="podium-rank">🥉</div>
@@ -1398,7 +1422,7 @@ footer{
           <li><span>6. ACOX27</span><span>41</span></li>
           <li><span>7. az_ttv</span><span>28</span></li>
           <li><span>8. 0_jd</span><span>23</span></li>
-          <li><span>9. Gerard2pardegato</span><span>19</span></li>
+          <li><span>9. Gerard2gestapo</span><span>19</span></li>
           <li><span>10. DarkViandor</span><span>14</span></li>
         </ol>
       </div>
@@ -1409,7 +1433,7 @@ footer{
           <li><span>🥇 ACOX27</span><span>147</span></li>
           <li><span>🥈 goudaps</span><span>142</span></li>
           <li><span>🥉 Ryomen_sukuna201</span><span>138</span></li>
-          <li><span>4. Gerard2pardegato</span><span>98</span></li>
+          <li><span>4. Gerard2gestapo</span><span>98</span></li>
           <li><span>5. CerberusX101</span><span>97</span></li>
           <li><span>6. pixelmw</span><span>60</span></li>
           <li><span>7. Wano</span><span>57</span></li>
@@ -1422,7 +1446,7 @@ footer{
       <div class="stat-card">
         <h4>⌛ Heures de jeux</h4>
         <ol>
-          <li><span>🥇 Gerard2pardegato</span><span>182h</span></li>
+          <li><span>🥇 Gerard2gestapo</span><span>182h</span></li>
           <li><span>🥈 Coro_Blue</span><span>98h</span></li>
           <li><span>🥉 CerberusX101</span><span>98h</span></li>
           <li><span>4. Gluxcon</span><span>92h</span></li>
@@ -1438,7 +1462,7 @@ footer{
       <div class="stat-card">
         <h4>🚶 Distance parcourue</h4>
         <ol>
-          <li><span>🥇 Gerard2pardegato</span><span>248208</span></li>
+          <li><span>🥇 Gerard2gestapo</span><span>248208</span></li>
           <li><span>🥈 CerberusX101</span><span>147121</span></li>
           <li><span>🥉 TomZyark862</span><span>139154</span></li>
           <li><span>4. goudaps</span><span>114116</span></li>
@@ -1456,7 +1480,7 @@ footer{
         <ol>
           <li><span>🥇 ACOX27</span><span>699854</span></li>
           <li><span>🥈 Gluxcon</span><span>685791</span></li>
-          <li><span>🥉 Gerard2pardegato</span><span>671402</span></li>
+          <li><span>🥉 Gerard2gestapo</span><span>671402</span></li>
           <li><span>4. 0verMiine</span><span>668826</span></li>
           <li><span>5. Tornade6</span><span>629203</span></li>
           <li><span>6. TomZyark862</span><span>547209</span></li>
@@ -1476,7 +1500,7 @@ footer{
           <li><span>4. Jules_sp</span><span>6123</span></li>
           <li><span>5. goudaps</span><span>5581</span></li>
           <li><span>6. ACOX27</span><span>4834</span></li>
-          <li><span>7. Gerard2pardegato</span><span>4726</span></li>
+          <li><span>7. Gerard2gestapo</span><span>4726</span></li>
           <li><span>8. Wano</span><span>4551</span></li>
           <li><span>9. skibidiNOUTO11</span><span>4354</span></li>
           <li><span>10. CerberusX101</span><span>3576</span></li>
@@ -1486,7 +1510,7 @@ footer{
       <div class="stat-card">
         <h4>👻 Mobs tués</h4>
         <ol>
-          <li><span>🥇 Gerard2pardegato</span><span>39402</span></li>
+          <li><span>🥇 Gerard2gestapo</span><span>39402</span></li>
           <li><span>🥈 frantoi_mou</span><span>33310</span></li>
           <li><span>🥉 CerberusX101</span><span>28914</span></li>
           <li><span>4. skibidiNOUTO11</span><span>25424</span></li>
@@ -1504,7 +1528,7 @@ footer{
         <ol>
           <li><span>🥇 TomZyark862</span><span>544483</span></li>
           <li><span>🥈 CerberusX101</span><span>397822</span></li>
-          <li><span>🥉 Gerard2pardegato</span><span>315417</span></li>
+          <li><span>🥉 Gerard2gestapo</span><span>315417</span></li>
           <li><span>4. 0verMiine</span><span>277826</span></li>
           <li><span>5. Gluxcon</span><span>242573</span></li>
           <li><span>6. Tornade6</span><span>194547</span></li>
@@ -1518,7 +1542,7 @@ footer{
       <div class="stat-card">
         <h4>🛡️ Dégâts reçu</h4>
         <ol>
-          <li><span>🥇 Gerard2pardegato</span><span>73401</span></li>
+          <li><span>🥇 Gerard2gestapo</span><span>73401</span></li>
           <li><span>🥈 goudaps</span><span>61587</span></li>
           <li><span>🥉 ACOX27</span><span>60906</span></li>
           <li><span>4. TomZyark862</span><span>60746</span></li>
@@ -1536,7 +1560,7 @@ footer{
     <div class="points-explanation">
       <h3>📊 Comment sont calculés les points ?</h3>
       <p>
-        Le classement final est calculé selon une formule complexe prenant en compte plusieurs statistiques de jeu. 
+        Le classement du podium est calculé selon une formule complexe prenant en compte plusieurs statistiques de jeu. 
         Les points sont attribués en fonction de vos performances dans différentes catégories : kills, morts, temps de jeu, 
         distance parcourue, mobs tués, et bien plus encore. Plus votre score est bas, meilleure est votre position ! 
         La formule exacte reste secrète pour maintenir l'équité et éviter les optimisations abusives. 
