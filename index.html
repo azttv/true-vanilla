@@ -618,7 +618,6 @@ section{
   height:180px;
   margin-bottom:15px;
   position:relative;
-  transform-style:preserve-3d;
   perspective:1000px;
 }
 
@@ -630,7 +629,6 @@ section{
 .podium-skin-container canvas{
   width:100%;
   height:100%;
-  image-rendering:auto;
 }
 
 .podium-stand{
@@ -1038,7 +1036,6 @@ footer{
   <div class="bg-slide" style="background-image:url('diapomara/bg5.png')"></div>
   <div class="bg-slide" style="background-image:url('diapomara/bg6.png')"></div>
   <div class="bg-slide" style="background-image:url('diapomara/bg7.png')"></div>
-  <div class="bg-slide" style="background-image:url('diapomara/bg8.png')"></div>
 </div>
 
 <header id="mainHeader">
@@ -1561,147 +1558,7 @@ footer{
   <div class="spinner"></div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// 3D Minecraft Skin Viewer
-function createSkinViewer(containerId, username) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  
-  const width = container.offsetWidth;
-  const height = container.offsetHeight;
-  
-  // Scene setup
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setSize(width, height);
-  renderer.setClearColor(0x000000, 0);
-  container.appendChild(renderer.domElement);
-  
-  // Lighting
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-  scene.add(ambientLight);
-  
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-  directionalLight.position.set(5, 5, 5);
-  scene.add(directionalLight);
-  
-  const backLight = new THREE.DirectionalLight(0xffffff, 0.3);
-  backLight.position.set(-5, 3, -5);
-  scene.add(backLight);
-  
-  // Create player model
-  const playerGroup = new THREE.Group();
-  
-  // Load skin texture
-  const textureLoader = new THREE.TextureLoader();
-  textureLoader.crossOrigin = 'anonymous';
-  
-  textureLoader.load(
-    `https://mc-heads.net/skin/${username}`,
-    (texture) => {
-      texture.magFilter = THREE.NearestFilter;
-      texture.minFilter = THREE.NearestFilter;
-      
-      // Head
-      const headGeo = new THREE.BoxGeometry(8, 8, 8);
-      const headMat = new THREE.MeshLambertMaterial({ map: texture });
-      const head = new THREE.Mesh(headGeo, headMat);
-      head.position.y = 20;
-      
-      // UV mapping for head
-      const headUvs = headGeo.getAttribute('uv');
-      // Right face
-      headUvs.setXY(0, 0, 0.5); headUvs.setXY(1, 0.125, 0.5);
-      headUvs.setXY(2, 0, 1); headUvs.setXY(3, 0.125, 1);
-      // Left face
-      headUvs.setXY(4, 0.125, 0.5); headUvs.setXY(5, 0.25, 0.5);
-      headUvs.setXY(6, 0.125, 1); headUvs.setXY(7, 0.25, 1);
-      // Top face
-      headUvs.setXY(8, 0.125, 0.5); headUvs.setXY(9, 0.25, 0.5);
-      headUvs.setXY(10, 0.125, 0); headUvs.setXY(11, 0.25, 0);
-      // Bottom face
-      headUvs.setXY(12, 0.25, 0); headUvs.setXY(13, 0.375, 0);
-      headUvs.setXY(14, 0.25, 0.5); headUvs.setXY(15, 0.375, 0.5);
-      // Front face
-      headUvs.setXY(16, 0.125, 0); headUvs.setXY(17, 0.25, 0);
-      headUvs.setXY(18, 0.125, 0.5); headUvs.setXY(19, 0.25, 0.5);
-      // Back face
-      headUvs.setXY(20, 0.375, 0.5); headUvs.setXY(21, 0.5, 0.5);
-      headUvs.setXY(22, 0.375, 0); headUvs.setXY(23, 0.5, 0);
-      
-      playerGroup.add(head);
-      
-      // Body
-      const bodyGeo = new THREE.BoxGeometry(8, 12, 4);
-      const body = new THREE.Mesh(bodyGeo, headMat);
-      body.position.y = 10;
-      playerGroup.add(body);
-      
-      // Arms
-      const armGeo = new THREE.BoxGeometry(4, 12, 4);
-      const rightArm = new THREE.Mesh(armGeo, headMat);
-      rightArm.position.set(-6, 10, 0);
-      playerGroup.add(rightArm);
-      
-      const leftArm = new THREE.Mesh(armGeo, headMat);
-      leftArm.position.set(6, 10, 0);
-      playerGroup.add(leftArm);
-      
-      // Legs
-      const legGeo = new THREE.BoxGeometry(4, 12, 4);
-      const rightLeg = new THREE.Mesh(legGeo, headMat);
-      rightLeg.position.set(-2, -2, 0);
-      playerGroup.add(rightLeg);
-      
-      const leftLeg = new THREE.Mesh(legGeo, headMat);
-      leftLeg.position.set(2, -2, 0);
-      playerGroup.add(leftLeg);
-      
-      scene.add(playerGroup);
-    },
-    undefined,
-    (error) => {
-      console.error('Error loading skin:', error);
-    }
-  );
-  
-  // Camera position
-  camera.position.set(0, 10, 40);
-  camera.lookAt(0, 10, 0);
-  
-  // Animation
-  let time = 0;
-  function animate() {
-    requestAnimationFrame(animate);
-    time += 0.01;
-    
-    // Idle animation - removed body rotation
-    
-    // Arm swing
-    if (playerGroup.children.length > 2) {
-      playerGroup.children[2].rotation.x = Math.sin(time) * 0.3; // Right arm
-      playerGroup.children[3].rotation.x = Math.sin(time + Math.PI) * 0.3; // Left arm
-    }
-    
-    // Floating
-    playerGroup.position.y = Math.sin(time * 0.8) * 2;
-    
-    renderer.render(scene, camera);
-  }
-  animate();
-}
-
-// Initialize skin viewers after page load
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    createSkinViewer('skin-first', 'TomZyark862');
-    createSkinViewer('skin-second', 'Gerard2pardegato');
-    createSkinViewer('skin-third', 'CerberusX101');
-  }, 100);
-});
-
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
