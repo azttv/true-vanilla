@@ -7,7 +7,6 @@
   <meta name="description" content="Le premier SMP Français 90% Vanilla !" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root{
       --text:#f5f7ff;
@@ -28,120 +27,27 @@
       padding-top:90px;
     }
 
-    /* Animated Wave Background */
-    .animated-bg {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -3;
-      background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+    .bg-slideshow{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:-3;
     }
 
-    .wave-container {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
+    .bg-slide{
+      position:absolute;
+      inset:0;
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      opacity:0;
+      transition:opacity 1.5s ease-in-out;
+      filter:brightness(0.7) contrast(1.05);
     }
 
-    .wave {
-      position: absolute;
-      width: 200%;
-      height: 100%;
-      background: linear-gradient(
-        135deg,
-        rgba(79, 172, 255, 0.1) 0%,
-        rgba(0, 242, 254, 0.05) 25%,
-        rgba(79, 172, 255, 0.15) 50%,
-        rgba(0, 100, 200, 0.08) 75%,
-        rgba(79, 172, 255, 0.1) 100%
-      );
-      animation: wave 15s ease-in-out infinite;
-    }
-
-    .wave:nth-child(2) {
-      background: linear-gradient(
-        225deg,
-        rgba(0, 242, 254, 0.08) 0%,
-        rgba(79, 172, 255, 0.12) 25%,
-        rgba(0, 150, 255, 0.06) 50%,
-        rgba(79, 172, 255, 0.1) 75%,
-        rgba(0, 242, 254, 0.08) 100%
-      );
-      animation: wave 20s ease-in-out infinite reverse;
-      animation-delay: -5s;
-    }
-
-    .wave:nth-child(3) {
-      background: linear-gradient(
-        315deg,
-        rgba(79, 172, 255, 0.05) 0%,
-        rgba(0, 200, 255, 0.1) 25%,
-        rgba(79, 172, 255, 0.08) 50%,
-        rgba(0, 242, 254, 0.06) 75%,
-        rgba(79, 172, 255, 0.05) 100%
-      );
-      animation: wave 25s ease-in-out infinite;
-      animation-delay: -10s;
-    }
-
-    @keyframes wave {
-      0%, 100% {
-        transform: translateX(-50%) translateY(0) rotate(0deg) scale(1);
-      }
-      25% {
-        transform: translateX(-45%) translateY(-3%) rotate(1deg) scale(1.05);
-      }
-      50% {
-        transform: translateX(-50%) translateY(-5%) rotate(-1deg) scale(1.1);
-      }
-      75% {
-        transform: translateX(-55%) translateY(-3%) rotate(0.5deg) scale(1.05);
-      }
-    }
-
-    .particles {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
-
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: rgba(79, 172, 255, 0.6);
-      border-radius: 50%;
-      animation: float 20s ease-in-out infinite;
-      box-shadow: 0 0 10px rgba(79, 172, 255, 0.8);
-    }
-
-    .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 15s; }
-    .particle:nth-child(2) { left: 20%; animation-delay: -3s; animation-duration: 18s; }
-    .particle:nth-child(3) { left: 30%; animation-delay: -6s; animation-duration: 22s; }
-    .particle:nth-child(4) { left: 40%; animation-delay: -9s; animation-duration: 20s; }
-    .particle:nth-child(5) { left: 50%; animation-delay: -12s; animation-duration: 17s; }
-    .particle:nth-child(6) { left: 60%; animation-delay: -15s; animation-duration: 19s; }
-    .particle:nth-child(7) { left: 70%; animation-delay: -18s; animation-duration: 21s; }
-    .particle:nth-child(8) { left: 80%; animation-delay: -21s; animation-duration: 16s; }
-    .particle:nth-child(9) { left: 90%; animation-delay: -24s; animation-duration: 23s; }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(100vh) translateX(0) scale(0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-        transform: translateY(90vh) translateX(10px) scale(1);
-      }
-      50% {
-        transform: translateY(50vh) translateX(-20px) scale(1.2);
-      }
-      90% {
-        opacity: 1;
-        transform: translateY(10vh) translateX(15px) scale(1);
-      }
+    .bg-slide.active{
+      opacity:1;
     }
 
     /* HEADER */
@@ -503,8 +409,8 @@
       box-shadow:0 0 30px rgba(148,0,211,0.3);
     }
 
-    .package-card.seconde:hover{
-      box-shadow:0 0 30px rgba(255,0,0,0.3);
+    .package-card.cosmetic:hover{
+      box-shadow:0 0 30px rgba(0,255,200,0.3);
     }
 
     .package-header{
@@ -526,8 +432,8 @@
       color:#9400D3;
     }
 
-    .package-card.seconde .package-icon{
-      color:#FF0000;
+    .package-card.cosmetic .package-icon{
+      color:#00FFC8;
     }
 
     .package-header h3{
@@ -538,6 +444,13 @@
     .package-header p{
       opacity:0.9;
       line-height:1.6;
+    }
+
+    .disclaimer{
+      font-size:0.85rem;
+      font-style:italic;
+      opacity:0.7;
+      margin-top:8px;
     }
 
     .package-price{
@@ -563,6 +476,7 @@
       border:2px solid rgba(148,0,211,0.3);
       text-align:center;
       transition:all 0.3s;
+      position:relative;
     }
 
     .vip-option:hover{
@@ -583,6 +497,27 @@
       font-weight:800;
       color:#4facff;
       margin-bottom:15px;
+    }
+
+    .bonus-badge{
+      position:absolute;
+      top:-10px;
+      right:-10px;
+      background:linear-gradient(135deg,#FFD700,#FFA500);
+      color:#000;
+      font-size:0.75rem;
+      font-weight:700;
+      padding:6px 10px;
+      border-radius:20px;
+      display:flex;
+      align-items:center;
+      gap:5px;
+      box-shadow:0 4px 15px rgba(255,215,0,0.5);
+      z-index:10;
+    }
+
+    .bonus-badge i{
+      font-size:0.9rem;
     }
 
     /* Buttons */
@@ -769,23 +704,10 @@
 </head>
 <body>
 
-<div class="animated-bg">
-  <div class="wave-container">
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-  </div>
-  <div class="particles">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-  </div>
+<div class="bg-slideshow" id="bgSlideshow">
+  <div class="bg-slide active" style="background-image:url('diaporama/bg1.png')"></div>
+  <div class="bg-slide" style="background-image:url('diaporama/bg2.png')"></div>
+  <div class="bg-slide" style="background-image:url('diaporama/bg3.png')"></div>
 </div>
 
 <header id="mainHeader">
@@ -834,7 +756,8 @@
       <li><i class="fas fa-home"></i> 2 homes au lieu de 1</li>
       <li><i class="fas fa-palette"></i> Couleur de pseudo au choix</li>
       <li><i class="fas fa-paw"></i> Accès au /pet</li>
-      <li><i class="fas fa-wand-sparkles"></i> Accès au /skin</li>
+      <li><i class="fas fa-wand-magic-sparkles"></i> Accès au /skin</li>
+      <li><i class="fas fa-wand-magic-sparkles"></i> Animations de kills customs</li>
       <li><i class="fas fa-ticket-alt"></i> Tickets prioritaires</li>
       <li><i class="fas fa-star"></i> Accès aux exclus des saisons suivantes</li>
     </ul>
@@ -901,36 +824,39 @@
           <h4>✨ 1 mois</h4>
           <div class="price">2.99€</div>
           <a href="https://truevanilla.craftingstore.net/package/1406254" class="buy-btn">Acheter</a>
+          <div class="bonus-badge"><i class="fas fa-key"></i> Inclus: x1</div>
         </div>
         <div class="vip-option">
           <h4>⭐ 3 mois</h4>
           <div class="price">7.99€</div>
           <a href="https://truevanilla.craftingstore.net/package/1421794" class="buy-btn">Acheter</a>
+          <div class="bonus-badge"><i class="fas fa-key"></i> Inclus: x2</div>
         </div>
         <div class="vip-option">
           <h4>⚡ 6 mois</h4>
           <div class="price">12.99€</div>
           <a href="https://truevanilla.craftingstore.net/package/1421797" class="buy-btn">Acheter</a>
+          <div class="bonus-badge"><i class="fas fa-key"></i> Inclus: x3</div>
         </div>
         <div class="vip-option">
           <h4>👑 À vie</h4>
           <div class="price">19.99€</div>
           <a href="https://truevanilla.craftingstore.net/package/1421811" class="buy-btn">Acheter</a>
+          <div class="bonus-badge"><i class="fas fa-key"></i> Inclus: x5</div>
         </div>
       </div>
     </div>
 
-    <!-- Seconde Chance Package -->
-    <div class="package-card seconde">
+    <!-- Clé Cosmétiques Package -->
+    <div class="package-card cosmetic">
       <div class="package-header">
-        <span class="package-icon">🔓</span>
-        <h3>Seconde Chance</h3>
-        <p>Débannissement immédiat peu importe la sanction précédente.</p>
-        <p><em>(Blacklist compris)</em></p>
-        <span class="usage-unique">⚠️ USAGE UNIQUE</span>
+        <span class="package-icon">🔑</span>
+        <h3>Clé Cosmétiques</h3>
+        <p>Un clé qui vous permet d'ouvrir la Caisse à Cosmétique au spawn !</p>
+        <p class="disclaimer">⚠️ Les cosmétiques restent pûrement esthétique ⚠️</p>
       </div>
-      <div class="package-price">50€</div>
-      <a href="unban.html" class="buy-btn">Acheter</a>
+      <div class="package-price">0.90€</div>
+      <a href="https://google.com" class="buy-btn">Acheter</a>
     </div>
   </section>
 
@@ -946,9 +872,11 @@
       
       <p class="terms-warning"><strong>Litiges et contestations :</strong> Toute contestation de paiement (chargeback) après réception des avantages entraînera la révocation immédiate et définitive de votre VIP. Vous ne pourrez plus effectuer d'achat sur la boutique et pourriez faire l'objet de sanctions sur le serveur.</p>
       
-      <p><strong>Modification des services :</strong> L'équipe de True Vanilla se réserve le droit de modifier les avantages offerts dans les packs VIP. Les changements seront communiqués à l'avance.</p>
+      <p><strong>Modification des services :</strong> L'équipe de True Vanilla se réserve le droit de modifier les avantages offerts dans les packs VIP. Les changements seront communiqués à l'avance et ne s'appliqueront qu'aux nouveaux achats.</p>
       
       <p><strong>Sanctions et bannissements :</strong> L'achat d'un pack VIP ne vous exempte pas du respect des règles du serveur. En cas de bannissement justifié, aucun remboursement ne sera effectué.</p>
+
+      <p><strong>Changements de pseudos :</strong> Votre grade est lié avec votre pseudo, donc si vous souhaitez changer de pseudo alors que vous avez un VIP en cours, merci d'attendre que votre VIP expire pour ensuite changer de pseudo.</p>
     </div>
   </section>
 </main>
@@ -991,23 +919,33 @@ document.querySelectorAll('.mobile-menu a').forEach(link => {
   link.addEventListener('click', toggleMenu);
 });
 
-// Page loader
-document.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", e => {
-    const href = link.getAttribute("href");
-    if (href && href.endsWith(".html")) {
-      e.preventDefault();
-      document.getElementById("loader").classList.add("active");
-      setTimeout(() => { window.location.href = href; }, 400);
-    }
-  });
-});
+// Background slideshow
+const slides = document.querySelectorAll('.bg-slide');
+let currentSlide = 0;
 
-window.addEventListener("load", () => {
-  document.getElementById("loader").classList.remove("active");
-});
+function nextSlide() {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (currentSlide + 1) % slides.length;
+  slides[currentSlide].classList.add('active');
+}
+
+setInterval(nextSlide, 5000);
+
+// Page loader
+  document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", e => {
+      const href = link.getAttribute("href");
+      if (href && href.endsWith(".html")) {
+        e.preventDefault();
+        document.getElementById("loader").classList.add("active");
+        setTimeout(() => { window.location.href = href; }, 400);
+      }
+    });
+  });
+
+  window.addEventListener("load", () => {
+    document.getElementById("loader").classList.remove("active");
+  });
 </script>
 </body>
 </html>
-
-
