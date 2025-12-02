@@ -13,7 +13,7 @@ jobs:
       
       - name: Fetch stats from server
         run: |
-          curl -o stats.json "https://votre-serveur.com/stats.json"
+          curl -o stats.json "https://www.true-vanilla.fr/stats.json"
           
       - name: Commit and push
         run: |
