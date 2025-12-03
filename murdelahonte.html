@@ -867,41 +867,22 @@ document.querySelectorAll('a').forEach(link => {
   });
 });
 
-// ========== MOCK SYSTEM ==========
+// ========== MOCK SYSTEM WITH CLOUDFLARE WORKER ==========
 
-// Get today's date as a string (YYYY-MM-DD)
-function getTodayDate() {
-  const today = new Date();
-  return today.toISOString().split('T')[0];
-}
+// ⚠️ IMPORTANT: Replace this URL with your Cloudflare Worker URL
+const API_URL = 'https://mock-counter.YOUR_SUBDOMAIN.workers.dev';
 
-// Get mock counts from localStorage
-function getMockCounts() {
-  const counts = localStorage.getItem('mockCounts');
-  return counts ? JSON.parse(counts) : {};
-}
+// List of all players
+const PLAYERS = ['Akiiiii16', 'titi37vin', 'scibidiluxi', 'zozo3811', 'Alek404', 'Ahdoda', 'AskaladdX', 'Guezmog'];
 
-// Save mock counts to localStorage
-function saveMockCounts(counts) {
-  localStorage.setItem('mockCounts', JSON.stringify(counts));
-}
-
-// Get last mock dates from localStorage
-function getLastMockDates() {
-  const dates = localStorage.getItem('lastMockDates');
-  return dates ? JSON.parse(dates) : {};
-}
-
-// Save last mock dates to localStorage
-function saveLastMockDates(dates) {
-  localStorage.setItem('lastMockDates', JSON.stringify(dates));
-}
-
-// Check if user can mock a player today
-function canMockToday(playerName) {
-  const lastMockDates = getLastMockDates();
-  const today = getTodayDate();
-  return lastMockDates[playerName] !== today;
+// Generate or retrieve a unique visitor ID
+function getVisitorId() {
+  let visitorId = localStorage.getItem('visitorId');
+  if (!visitorId) {
+    visitorId = 'v_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+    localStorage.setItem('visitorId', visitorId);
+  }
+  return visitorId;
 }
 
 // Show toast notification
@@ -915,12 +896,11 @@ function showToast(message, icon = 'fa-info-circle') {
 }
 
 // Update button state
-function updateButtonState(playerName) {
+function setButtonState(playerName, canMock) {
   const card = document.querySelector(`[data-player="${playerName}"]`);
   if (!card) return;
   
   const btn = card.querySelector('.mock-btn');
-  const canMock = canMockToday(playerName);
   
   if (canMock) {
     btn.disabled = false;
@@ -932,63 +912,116 @@ function updateButtonState(playerName) {
 }
 
 // Update counter display
-function updateCounterDisplay(playerName) {
-  const counts = getMockCounts();
+function setCounterDisplay(playerName, count) {
   const countElement = document.getElementById(`count-${playerName}`);
   if (countElement) {
-    countElement.textContent = counts[playerName] || 0;
+    countElement.textContent = count || 0;
+  }
+}
+
+// Fetch all counts from the API
+async function fetchAllCounts() {
+  try {
+    const response = await fetch(`${API_URL}/counts`);
+    const counts = await response.json();
+    
+    PLAYERS.forEach(player => {
+      setCounterDisplay(player, counts[player] || 0);
+    });
+  } catch (error) {
+    console.error('Failed to fetch counts:', error);
+  }
+}
+
+// Check if visitor can mock each player
+async function checkAllMockStatus() {
+  const visitorId = getVisitorId();
+  
+  for (const player of PLAYERS) {
+    try {
+      const response = await fetch(`${API_URL}/can-mock?player=${encodeURIComponent(player)}&visitorId=${encodeURIComponent(visitorId)}`);
+      const data = await response.json();
+      setButtonState(player, data.canMock);
+    } catch (error) {
+      console.error(`Failed to check mock status for ${player}:`, error);
+      // Default to allowing mock if API fails
+      setButtonState(player, true);
+    }
   }
 }
 
 // Mock a player
-function mockPlayer(playerName) {
-  if (!canMockToday(playerName)) {
-    showToast('Tu as déjà moqué ce joueur aujourd\'hui ! Reviens demain 😏', 'fa-clock');
-    return;
-  }
-  
-  // Update mock count
-  const counts = getMockCounts();
-  counts[playerName] = (counts[playerName] || 0) + 1;
-  saveMockCounts(counts);
-  
-  // Update last mock date
-  const lastMockDates = getLastMockDates();
-  lastMockDates[playerName] = getTodayDate();
-  saveLastMockDates(lastMockDates);
-  
-  // Trigger shake and blink animation
+async function mockPlayer(playerName) {
+  const visitorId = getVisitorId();
   const card = document.querySelector(`[data-player="${playerName}"]`);
-  if (card) {
-    card.classList.add('mocked');
-    setTimeout(() => {
-      card.classList.remove('mocked');
-    }, 500);
+  const btn = card?.querySelector('.mock-btn');
+  
+  // Disable button while processing
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ...';
   }
   
-  // Update UI
-  updateCounterDisplay(playerName);
-  updateButtonState(playerName);
-  
-  // Show success toast
-  const messages = [
-    `😂 Tu t'es bien moqué de ${playerName} !`,
-    `🤣 ${playerName} vient de se faire humilier !`,
-    `💀 ${playerName} n'a plus qu'à pleurer !`,
-    `🔥 Honte à ${playerName} !`
-  ];
-  const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-  showToast(randomMessage, 'fa-laugh-squint');
+  try {
+    const response = await fetch(`${API_URL}/mock`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        player: playerName,
+        visitorId: visitorId
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (response.status === 429) {
+      // Already mocked today
+      showToast('Tu as déjà moqué ce joueur aujourd\'hui ! Reviens demain 😏', 'fa-clock');
+      setButtonState(playerName, false);
+      return;
+    }
+    
+    if (data.success) {
+      // Trigger shake and blink animation
+      if (card) {
+        card.classList.add('mocked');
+        setTimeout(() => {
+          card.classList.remove('mocked');
+        }, 500);
+      }
+      
+      // Update counter
+      setCounterDisplay(playerName, data.count);
+      setButtonState(playerName, false);
+      
+      // Show success toast
+      const messages = [
+        `😂 Tu t'es bien moqué de ${playerName} !`,
+        `🤣 ${playerName} vient de se faire humilier !`,
+        `😏 Bien joué ! ${playerName} en a pris pour son grade !`,
+        `💀 ${playerName} n'a plus qu'à pleurer !`,
+        `🔥 Moquerie envoyée à ${playerName} !`
+      ];
+      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+      showToast(randomMessage, 'fa-laugh-squint');
+    }
+    
+  } catch (error) {
+    console.error('Failed to mock player:', error);
+    showToast('Erreur de connexion. Réessaie plus tard !', 'fa-exclamation-triangle');
+    setButtonState(playerName, true);
+  }
 }
 
 // Initialize on page load
-function initMockSystem() {
-  const players = ['Akiiiii16', 'titi37vin', 'scibidiluxi', 'zozo3811', 'Alek404', 'Ahdoda', 'AskaladdX', 'Guezmog'];
-  
-  players.forEach(player => {
-    updateCounterDisplay(player);
-    updateButtonState(player);
-  });
+async function initMockSystem() {
+  // Fetch counts and mock status in parallel
+  await Promise.all([
+    fetchAllCounts(),
+    checkAllMockStatus()
+  ]);
 }
 
 // Run initialization
