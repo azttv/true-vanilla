@@ -415,6 +415,119 @@
       text-align:left;
     }
 
+    /* Mock Button Styles */
+    .mock-section{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      min-width:100px;
+    }
+
+    .mock-btn{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 18px;
+      background:linear-gradient(135deg, #ff6b35, #ff4c4c);
+      color:#fff;
+      font-weight:600;
+      font-size:14px;
+      border:none;
+      border-radius:25px;
+      cursor:pointer;
+      transition:all 0.3s;
+      box-shadow:0 4px 15px rgba(255,76,76,0.4);
+    }
+
+    .mock-btn:hover:not(:disabled){
+      background:linear-gradient(135deg, #ff8c5a, #ff6b6b);
+      transform:scale(1.05);
+      box-shadow:0 6px 20px rgba(255,76,76,0.6);
+    }
+
+    .mock-btn:disabled{
+      background:linear-gradient(135deg, #555, #444);
+      cursor:not-allowed;
+      box-shadow:none;
+      opacity:0.7;
+    }
+
+    /* Shake and blink animations */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    @keyframes redBlink {
+      0% { 
+        background: rgba(26,26,26,0.8);
+        box-shadow: 0 0 0 rgba(255,0,0,0);
+      }
+      50% { 
+        background: rgba(255,0,0,0.4);
+        box-shadow: 0 0 40px rgba(255,0,0,0.8), inset 0 0 30px rgba(255,0,0,0.3);
+      }
+      100% { 
+        background: rgba(26,26,26,0.8);
+        box-shadow: 0 0 0 rgba(255,0,0,0);
+      }
+    }
+
+    .ban-card.mocked {
+      animation: shake 0.5s ease-in-out, redBlink 0.5s ease-in-out;
+    }
+
+    .mock-btn i{
+      font-size:16px;
+    }
+
+    .mock-counter{
+      display:flex;
+      align-items:center;
+      gap:5px;
+      font-size:13px;
+      color:#ffaa88;
+      font-weight:500;
+    }
+
+    .mock-counter i{
+      font-size:12px;
+    }
+
+    .mock-counter span{
+      color:#fff;
+      font-weight:700;
+    }
+
+    /* Toast notification */
+    .toast{
+      position:fixed;
+      bottom:30px;
+      left:50%;
+      transform:translateX(-50%) translateY(100px);
+      background:rgba(0,0,0,0.9);
+      border:2px solid #ff4c4c;
+      color:#fff;
+      padding:15px 25px;
+      border-radius:12px;
+      font-weight:500;
+      z-index:10000;
+      opacity:0;
+      transition:all 0.4s ease;
+      box-shadow:0 0 20px rgba(255,76,76,0.5);
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    .toast i{
+      margin-right:10px;
+    }
+
     /* Footer */
     footer{
       text-align:center;
@@ -487,6 +600,16 @@
       .ban-info p{
         text-align:center;
       }
+
+      .mock-section{
+        width:100%;
+        margin-top:10px;
+      }
+
+      .mock-btn{
+        width:100%;
+        justify-content:center;
+      }
     }
   </style>
 </head>
@@ -554,67 +677,131 @@
 
   <!-- Ban list -->
   <section class="ban-list">
-    <div class="ban-card">
+    <div class="ban-card" data-player="Akiiiii16">
       <img src="https://mc-heads.net/avatar/Akiiiii16" alt="Akiiiii16">
       <div class="ban-info">
         <h2>Akiiiii16</h2>
         <p>X-Ray, Baritone, Redistribution de cheats, VPN.</p>
       </div>
+      <div class="mock-section">
+        <button class="mock-btn" onclick="mockPlayer('Akiiiii16')">
+          <i class="fas fa-laugh-squint"></i> Se moquer
+        </button>
+        <div class="mock-counter">
+          <i class="fas fa-users"></i> <span id="count-Akiiiii16">0</span> moqueries
+        </div>
+      </div>
     </div>
 
-    <div class="ban-card">
+    <div class="ban-card" data-player="titi37vin">
       <img src="https://mc-heads.net/avatar/titi37vin" alt="titi37vin">
       <div class="ban-info">
         <h2>titi37vin</h2>
         <p>Menace de hack du serveur et des staffs à plusieurs reprises, insultes sur staff, X-Ray.</p>
       </div>
+      <div class="mock-section">
+        <button class="mock-btn" onclick="mockPlayer('titi37vin')">
+          <i class="fas fa-laugh-squint"></i> Se moquer
+        </button>
+        <div class="mock-counter">
+          <i class="fas fa-users"></i> <span id="count-titi37vin">0</span> moqueries
+        </div>
+      </div>
     </div>
 
-    <div class="ban-card">
+    <div class="ban-card" data-player="scibidiluxi">
       <img src="https://mc-heads.net/avatar/scibidiluxi" alt="scibidiluxi">
       <div class="ban-info">
         <h2>scibidiluxi</h2>
         <p>X-Ray, insulte sur staff, menace de hack du serveur, bypass du bloquage de la netherite.</p>
       </div>
+      <div class="mock-section">
+        <button class="mock-btn" onclick="mockPlayer('scibidiluxi')">
+          <i class="fas fa-laugh-squint"></i> Se moquer
+        </button>
+        <div class="mock-counter">
+          <i class="fas fa-users"></i> <span id="count-scibidiluxi">0</span> moqueries
+        </div>
+      </div>
     </div>
 
-    <div class="ban-card">
+    <div class="ban-card" data-player="zozo3811">
       <img src="https://mc-heads.net/avatar/zozo3811" alt="zozo3811">
       <div class="ban-info">
         <h2>zozo3811</h2>
         <p>Cheat, Menace de destruction du serveur, se moque de l'équipe du staff en continue.</p>
       </div>
+      <div class="mock-section">
+        <button class="mock-btn" onclick="mockPlayer('zozo3811')">
+          <i class="fas fa-laugh-squint"></i> Se moquer
+        </button>
+        <div class="mock-counter">
+          <i class="fas fa-users"></i> <span id="count-zozo3811">0</span> moqueries
+        </div>
+      </div>
     </div>
     
-    <div class="ban-card">
+    <div class="ban-card" data-player="Alek404">
       <img src="https://mc-heads.net/avatar/Alek404" alt="Alek404">
       <div class="ban-info">
         <h2>Alek404</h2>
         <p>Cheat à multiples reprises, se moque du staff, insultes à plusieurs reprises.</p>
       </div>
+      <div class="mock-section">
+        <button class="mock-btn" onclick="mockPlayer('Alek404')">
+          <i class="fas fa-laugh-squint"></i> Se moquer
+        </button>
+        <div class="mock-counter">
+          <i class="fas fa-users"></i> <span id="count-Alek404">0</span> moqueries
+        </div>
+      </div>
     </div>
 
-    <div class="ban-card">
+    <div class="ban-card" data-player="Ahdoda">
       <img src="https://mc-heads.net/avatar/Ahdoda" alt="Ahdoda">
       <div class="ban-info">
         <h2>Ahdoda</h2>
         <p>Menace de dox les joueurs, menace de DDoS du serveur.</p>
       </div>
+      <div class="mock-section">
+        <button class="mock-btn" onclick="mockPlayer('Ahdoda')">
+          <i class="fas fa-laugh-squint"></i> Se moquer
+        </button>
+        <div class="mock-counter">
+          <i class="fas fa-users"></i> <span id="count-Ahdoda">0</span> moqueries
+        </div>
+      </div>
     </div>
 
-    <div class="ban-card">
+    <div class="ban-card" data-player="AskaladdX">
       <img src="https://mc-heads.net/avatar/AskaladdX" alt="AskaladdX">
       <div class="ban-info">
         <h2>AskaladdX</h2>
         <p>Menace de faire fermé le serveur, de tout faire pour qu'il se ferme, insultes sur Staff.</p>
       </div>
+      <div class="mock-section">
+        <button class="mock-btn" onclick="mockPlayer('AskaladdX')">
+          <i class="fas fa-laugh-squint"></i> Se moquer
+        </button>
+        <div class="mock-counter">
+          <i class="fas fa-users"></i> <span id="count-AskaladdX">0</span> moqueries
+        </div>
+      </div>
     </div>
 
-    <div class="ban-card">
+    <div class="ban-card" data-player="Guezmog">
       <img src="https://mc-heads.net/avatar/Guezmog" alt="Guezmog">
       <div class="ban-info">
         <h2>Guezmog</h2>
         <p>Double compte, manque de respect envers le staff, troll en ticket.</p>
+      </div>
+      <div class="mock-section">
+        <button class="mock-btn" onclick="mockPlayer('Guezmog')">
+          <i class="fas fa-laugh-squint"></i> Se moquer
+        </button>
+        <div class="mock-counter">
+          <i class="fas fa-users"></i> <span id="count-Guezmog">0</span> moqueries
+        </div>
       </div>
     </div>
   </section>
@@ -630,6 +817,9 @@
 <div id="loader">
   <div class="spinner"></div>
 </div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
 
 <script>
 // Year
@@ -676,11 +866,134 @@ document.querySelectorAll('a').forEach(link => {
     }
   });
 });
+
+// ========== MOCK SYSTEM ==========
+
+// Get today's date as a string (YYYY-MM-DD)
+function getTodayDate() {
+  const today = new Date();
+  return today.toISOString().split('T')[0];
+}
+
+// Get mock counts from localStorage
+function getMockCounts() {
+  const counts = localStorage.getItem('mockCounts');
+  return counts ? JSON.parse(counts) : {};
+}
+
+// Save mock counts to localStorage
+function saveMockCounts(counts) {
+  localStorage.setItem('mockCounts', JSON.stringify(counts));
+}
+
+// Get last mock dates from localStorage
+function getLastMockDates() {
+  const dates = localStorage.getItem('lastMockDates');
+  return dates ? JSON.parse(dates) : {};
+}
+
+// Save last mock dates to localStorage
+function saveLastMockDates(dates) {
+  localStorage.setItem('lastMockDates', JSON.stringify(dates));
+}
+
+// Check if user can mock a player today
+function canMockToday(playerName) {
+  const lastMockDates = getLastMockDates();
+  const today = getTodayDate();
+  return lastMockDates[playerName] !== today;
+}
+
+// Show toast notification
+function showToast(message, icon = 'fa-info-circle') {
+  const toast = document.getElementById('toast');
+  toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+// Update button state
+function updateButtonState(playerName) {
+  const card = document.querySelector(`[data-player="${playerName}"]`);
+  if (!card) return;
+  
+  const btn = card.querySelector('.mock-btn');
+  const canMock = canMockToday(playerName);
+  
+  if (canMock) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-laugh-squint"></i> Se moquer';
+  } else {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-clock"></i> Déjà moqué';
+  }
+}
+
+// Update counter display
+function updateCounterDisplay(playerName) {
+  const counts = getMockCounts();
+  const countElement = document.getElementById(`count-${playerName}`);
+  if (countElement) {
+    countElement.textContent = counts[playerName] || 0;
+  }
+}
+
+// Mock a player
+function mockPlayer(playerName) {
+  if (!canMockToday(playerName)) {
+    showToast('Tu as déjà moqué ce joueur aujourd\'hui ! Reviens demain 😏', 'fa-clock');
+    return;
+  }
+  
+  // Update mock count
+  const counts = getMockCounts();
+  counts[playerName] = (counts[playerName] || 0) + 1;
+  saveMockCounts(counts);
+  
+  // Update last mock date
+  const lastMockDates = getLastMockDates();
+  lastMockDates[playerName] = getTodayDate();
+  saveLastMockDates(lastMockDates);
+  
+  // Trigger shake and blink animation
+  const card = document.querySelector(`[data-player="${playerName}"]`);
+  if (card) {
+    card.classList.add('mocked');
+    setTimeout(() => {
+      card.classList.remove('mocked');
+    }, 500);
+  }
+  
+  // Update UI
+  updateCounterDisplay(playerName);
+  updateButtonState(playerName);
+  
+  // Show success toast
+  const messages = [
+    `😂 Tu t'es bien moqué de ${playerName} !`,
+    `🤣 ${playerName} vient de se faire humilier !`,
+    `💀 ${playerName} n'a plus qu'à pleurer !`,
+    `🔥 Honte à ${playerName} !`
+  ];
+  const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+  showToast(randomMessage, 'fa-laugh-squint');
+}
+
+// Initialize on page load
+function initMockSystem() {
+  const players = ['Akiiiii16', 'titi37vin', 'scibidiluxi', 'zozo3811', 'Alek404', 'Ahdoda', 'AskaladdX', 'Guezmog'];
+  
+  players.forEach(player => {
+    updateCounterDisplay(player);
+    updateButtonState(player);
+  });
+}
+
+// Run initialization
+initMockSystem();
 </script>
 
 </body>
 </html>
-
-
-
-
