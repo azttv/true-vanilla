@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>True Vanilla — Candidature Whitelist</title>
+  <meta name="description" content="Candidature pour rejoindre le serveur Whitelist True Vanilla" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --text: #f5f7ff;
+      --active: #4facff;
+      --dark: #0a0a0a;
+      --card-bg: #1a1a1a;
+      --spacing: clamp(20px, 5vw, 60px);
+      --danger: #ff4c4c;
+      --success: #4cff7a;
+      --warning: #ffb84c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      overflow-x: hidden;
+      background: #0a0a1a;
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .animated-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background: linear-gradient(135deg, #0a0a1a 0%, #1a1035 25%, #0d1a2d 50%, #1a0a2e 75%, #0a0a1a 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+    .animated-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse at 20% 80%, rgba(79, 102, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(138, 79, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(79, 172, 255, 0.08) 0%, transparent 60%);
+      animation: pulseGlow 8s ease-in-out infinite alternate;
+    }
+    .animated-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      opacity: 0.5;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes pulseGlow {
+      0% { opacity: 0.5; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.1); }
+    }
+    .pages-container {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      min-height: 100vh;
+      padding: var(--spacing);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(100%);
+      opacity: 0;
+      transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.6s ease;
+      pointer-events: none;
+      overflow-y: auto;
+    }
+    .page.active {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: auto;
+      position: relative;
+    }
+    .page.exit-left {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    .page.rules-page {
+      justify-content: flex-start;
+      padding-top: 40px;
+    }
+    main {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      margin-bottom: 30px;
+      text-align: center;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+    }
+    .card {
+      background: rgba(26, 26, 26, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(79, 172, 255, 0.2);
+      transition: all 0.3s;
+      width: 100%;
+      max-width: 700px;
+    }
+    .card:hover {
+      border-color: rgba(79, 172, 255, 0.4);
+      box-shadow: 0 10px 40px rgba(79, 172, 255, 0.15);
+    }
+    .card p {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 40px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, #4facff, #00d4ff);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(79, 172, 255, 0.4);
+      margin-top: 20px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 35px rgba(79, 172, 255, 0.6);
+    }
+    .btn-primary:disabled {
+      background: linear-gradient(135deg, #555, #444);
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+    .btn-discord {
+      background: linear-gradient(135deg, #5865F2, #7289da);
+      box-shadow: 0 4px 20px rgba(88, 101, 242, 0.4);
+    }
+    .btn-discord:hover {
+      box-shadow: 0 8px 35px rgba(88, 101, 242, 0.6);
+    }
+    .btn-success {
+      background: linear-gradient(135deg, #4cff7a, #00d46a);
+      box-shadow: 0 4px 20px rgba(76, 255, 122, 0.4);
+    }
+    .btn-success:hover {
+      box-shadow: 0 8px 35px rgba(76, 255, 122, 0.6);
+    }
+    .btn-success:disabled {
+      background: linear-gradient(135deg, #3a5a42, #2a4a32);
+      opacity: 0.6;
+    }
+    .notes {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .notes p {
+      color: #888;
+      font-style: italic;
+      font-size: 0.95rem;
+      margin: 8px 0;
+    }
+    .form-group {
+      margin: 20px 0;
+      width: 100%;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .form-input {
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 16px;
+      font-family: inherit;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(79, 172, 255, 0.3);
+      border-radius: 12px;
+      color: var(--text);
+      transition: all 0.3s;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--active);
+      box-shadow: 0 0 20px rgba(79, 172, 255, 0.3);
+    }
+    .form-input::placeholder {
+      color: #666;
+    }
+    textarea.form-input {
+      min-height: 200px;
+      resize: vertical;
+    }
+    .discord-connected {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      background: rgba(76, 255, 122, 0.1);
+      border: 1px solid rgba(76, 255, 122, 0.3);
+      border-radius: 12px;
+      margin: 15px 0;
+    }
+    .discord-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--success);
+    }
+    .discord-info {
+      flex: 1;
+    }
+    .discord-name {
+      font-weight: 600;
+      color: var(--success);
+    }
+    .discord-id {
+      font-size: 0.85rem;
+      color: #888;
+    }
+    .chapter-container {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      margin: 20px 0;
+    }
+    .chapter-btn {
+      flex: 1;
+      padding: 30px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      background: rgba(79, 172, 255, 0.1);
+      border: 2px solid rgba(79, 172, 255, 0.3);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .chapter-btn:hover {
+      background: rgba(79, 172, 255, 0.2);
+      border-color: var(--active);
+      transform: scale(1.02);
+    }
+    .chapter-btn.active {
+      flex: 2;
+      background: rgba(79, 172, 255, 0.15);
+      border-color: var(--active);
+    }
+    .chapter-btn.shrunk {
+      flex: 0.5;
+      opacity: 0.5;
+      transform: scale(0.95);
+    }
+    .chapter-btn i {
+      font-size: 2rem;
+      color: var(--active);
+    }
+    .seasons-grid {
+      display: none;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+      width: 100%;
+    }
+    .chapter-btn.active .seasons-grid {
+      display: grid;
+    }
+    .season-btn {
+      padding: 15px 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(79, 172, 255, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .season-btn:hover {
+      background: rgba(79, 172, 255, 0.2);
+      border-color: var(--active);
+    }
+    .season-btn.selected {
+      background: var(--active);
+      color: #000;
+      border-color: var(--active);
+    }
+    .season-btn.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .error-msg {
+      background: rgba(255, 76, 76, 0.15);
+      border: 1px solid var(--danger);
+      color: var(--danger);
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin-top: 15px;
+      display: none;
+      animation: shake 0.5s ease;
+    }
+    .error-msg.show {
+      display: block;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    .rules-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 30px auto;
+    }
+    .rule-card {
+      background: rgba(26, 26, 26, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(79, 172, 255, 0.2);
+      overflow: hidden;
+      max-height: 500px;
+      display: flex;
+      flex-direction: column;
+    }
+    .rule-card-header {
+      padding: 20px;
+      background: rgba(79, 172, 255, 0.1);
+      border-bottom: 1px solid rgba(79, 172, 255, 0.2);
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .rule-card-content {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .rule-section {
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .rule-section:last-child {
+      border-bottom: none;
+    }
+    .rule-title {
+      font-weight: 700;
+      color: var(--active);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rule-text {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #ccc;
+    }
+    .rule-text strong {
+      color: var(--danger);
+    }
+    .rule-text em {
+      color: var(--warning);
+    }
+    .rule-list {
+      list-style: none;
+      margin: 10px 0;
+      padding-left: 15px;
+    }
+    .rule-list li {
+      padding: 4px 0;
+      position: relative;
+      padding-left: 15px;
+    }
+    .rule-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--active);
+    }
+    .asavoir-container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 30px;
+    }
+    .asavoir-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--warning);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .asavoir-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .asavoir-card {
+      background: rgba(26, 26, 26, 0.9);
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 4px solid;
+    }
+    .asavoir-card:nth-child(1) { border-left-color: #888; }
+    .asavoir-card:nth-child(2) { border-left-color: var(--danger); }
+    .asavoir-card:nth-child(3) { border-left-color: var(--warning); }
+    .asavoir-card p {
+      margin: 0;
+      text-align: left;
+      font-size: 1rem;
+    }
+    .checkbox-section {
+      background: rgba(26, 26, 26, 0.9);
+      border-radius: 16px;
+      padding: 25px;
+      margin-top: 30px;
+      border: 1px solid rgba(79, 172, 255, 0.2);
+      max-width: 900px;
+      width: 100%;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin: 15px 0;
+      cursor: pointer;
+    }
+    .checkbox-group input[type="checkbox"] { display: none; }
+    .custom-checkbox {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      border: 2px solid rgba(79, 172, 255, 0.4);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .checkbox-group:hover .custom-checkbox { border-color: var(--active); }
+    .checkbox-group input:checked + .custom-checkbox {
+      background: var(--active);
+      border-color: var(--active);
+    }
+    .custom-checkbox i {
+      color: #000;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .checkbox-group input:checked + .custom-checkbox i { opacity: 1; }
+    .checkbox-group.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .checkbox-label {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #ccc;
+    }
+    .word-counter {
+      text-align: right;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+    .word-counter.valid { color: var(--success); }
+    .word-counter.invalid { color: var(--danger); }
+    .success-icon {
+      font-size: 4rem;
+      color: var(--success);
+      margin-bottom: 20px;
+      animation: bounce 1s ease infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .redirect-section {
+      margin-top: 40px;
+      text-align: center;
+    }
+    .redirect-text {
+      font-size: 1rem;
+      color: #888;
+      margin-bottom: 15px;
+    }
+    .progress-bar {
+      width: 300px;
+      max-width: 100%;
+      height: 8px;
+      background: rgba(79, 172, 255, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--active), var(--success));
+      border-radius: 4px;
+      transition: width 0.1s linear;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      width: 100%;
+    }
+    .scroll-indicator {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255, 184, 76, 0.15);
+      border: 1px solid var(--warning);
+      border-radius: 10px;
+      color: var(--warning);
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      animation: pulse 2s ease infinite;
+    }
+    .scroll-indicator.show { display: flex; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    @media (max-width: 900px) {
+      .rules-container { grid-template-columns: 1fr; }
+      .chapter-container { flex-direction: column; }
+      .chapter-btn.shrunk { flex: 1; }
+      .seasons-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .seasons-grid { grid-template-columns: repeat(2, 1fr); }
+      .card { padding: 20px; }
+      h1 { font-size: clamp(22px, 5vw, 32px); }
+    }
+  </style>
+</head>
+<body>
+<div class="animated-bg"></div>
+<div class="pages-container">
+  <div class="page active" id="page1">
+    <main>
+      <h1>📋 Candidature Serveur Whitelist</h1>
+      <div class="card" style="text-align:center;">
+        <p>La survie Whitelist est une version du SMP principal, avec des règles plus souples, et une communauté plus "friendly".</p>
+        <button class="btn-primary" onclick="goToPage(2)">
+          <i class="fas fa-play"></i> Commencer la candidature
+        </button>
+      </div>
+      <div class="notes">
+        <p>*Vous serez choisis en fonction de votre candidature, de votre réputation sur le serveur en général, et de votre casier.</p>
+        <p>*Tout sera expliqué en détails pendant votre candidature</p>
+      </div>
+    </main>
+  </div>
+
+  <div class="page" id="page2">
+    <main>
+      <h1>👤 Qui es-tu ?</h1>
+      <div class="card">
+        <div style="text-align:center;">
+          <div id="discordSection">
+            <a href="https://discord.com/oauth2/authorize?client_id=1425143639125786724&redirect_uri=https://discord.com/oauth2/authorize?client_id=1425143639125786724&response_type=code&redirect_uri=https%3A%2F%2Fwww.true-vanilla.fr%2Fwhitelist&scope=identify&response_type=code&scope=identify" class="btn-primary btn-discord" id="discordLoginBtn">
+              <i class="fab fa-discord"></i> Connexion avec Discord
+            </a>
+          </div>
+          <div id="discordConnected" class="discord-connected" style="display:none;">
+            <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar" class="discord-avatar" id="discordAvatar">
+            <div class="discord-info">
+              <div class="discord-name" id="discordName">Utilisateur Discord</div>
+              <div class="discord-id" id="discordId">ID: 123456789</div>
+            </div>
+            <i class="fas fa-check-circle" style="color:var(--success);font-size:1.5rem;"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="minecraftUsername">Pseudo Minecraft exact</label>
+          <input type="text" class="form-input" id="minecraftUsername" placeholder="Ex: Steve_Minecraft" oninput="checkPage2Validity()">
+        </div>
+        <div class="nav-buttons">
+          <button class="btn-primary btn-success" id="page2Continue" onclick="goToPage(3)" disabled>
+            Continuer <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="page" id="page3">
+    <main>
+      <h1>📅 Quand as-tu rejoint le serveur ?</h1>
+      <div class="card" style="max-width:900px;">
+        <div class="chapter-container">
+          <div class="chapter-btn" id="chapter1Btn" onclick="selectChapter(1)">
+            <i class="fas fa-book"></i>
+            <span>Chapitre 1</span>
+            <div class="seasons-grid" onclick="event.stopPropagation()">
+              <button class="season-btn" onclick="selectSeason(1, 1)">Saison 1</button>
+              <button class="season-btn" onclick="selectSeason(1, 2)">Saison 2</button>
+              <button class="season-btn" onclick="selectSeason(1, 3)">Saison 3</button>
+              <button class="season-btn" onclick="selectSeason(1, 4)">Saison 4</button>
+              <button class="season-btn" onclick="selectSeason(1, 5)">Saison 5</button>
+            </div>
+          </div>
+          <div class="chapter-btn" id="chapter2Btn" onclick="selectChapter(2)">
+            <i class="fas fa-book-open"></i>
+            <span>Chapitre 2</span>
+            <div class="seasons-grid" onclick="event.stopPropagation()">
+              <button class="season-btn" onclick="selectSeason(2, 1)">Saison 1</button>
+              <button class="season-btn disabled" onclick="showSeasonError(event)">Saison 2</button>
+              <button class="season-btn disabled" onclick="showSeasonError(event)">Saison 3</button>
+              <button class="season-btn disabled" onclick="showSeasonError(event)">Saison 4</button>
+              <button class="season-btn disabled" onclick="showSeasonError(event)">Saison 5</button>
+            </div>
+          </div>
+        </div>
+        <div class="error-msg" id="seasonError">
+          <i class="fas fa-exclamation-triangle"></i> Cette saison n'a toujours pas commencé, tu ne peux pas la sélectionner (à moins que tu voyages dans le temps)
+        </div>
+        <div class="nav-buttons">
+          <button class="btn-primary btn-success" id="page3Continue" onclick="goToPage(4)" disabled>
+            Continuer <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="page rules-page" id="page4">
+    <main style="max-width:1200px;">
+      <h1>📜 Lisez bien les règles !</h1>
+      <div class="asavoir-container">
+        <div class="asavoir-title"><i class="fas fa-exclamation-circle"></i> À SAVOIR</div>
+        <div class="asavoir-cards">
+          <div class="asavoir-card">
+            <p>Merci de bien lire ces règles, les <strong>"je ne savais pas"</strong> ou <strong>"j'ai oublié"</strong> ne fonctionne pas comme excuse, vous serez traité comme si vous connaissiez les règles parfaitement.</p>
+          </div>
+          <div class="asavoir-card">
+            <p>Si vous venez à vous faire bannir du serveur Whitelist, vous ne serez pas banni du serveur principal, <strong>MAIS</strong> en fonction de la gravité de la faute, il se peut que nous soyons obligés de vous bannir des deux serveurs.</p>
+          </div>
+          <div class="asavoir-card">
+            <p>En cas de doute concernant une règle, veuillez <strong>créer un ticket</strong> avant toute action.</p>
+          </div>
+        </div>
+      </div>
+      <div class="rules-container">
+        <div class="rule-card">
+          <div class="rule-card-header"><i class="fas fa-scroll"></i> Règlement Moral du Serveur</div>
+          <div class="rule-card-content" id="moralRules" onscroll="checkRulesScroll()">
+            <div class="rule-section">
+              <div class="rule-title">👍 Soyez présentable</div>
+              <div class="rule-text">Un profil Discord <em>(Pseudo et image de profil)</em> non offensant est <strong>OBLIGATOIRE</strong>, tout profil à connotations <strong>sexuelles, offensantes</strong> ou à caractère <strong>politique/religieux provocateur</strong> pourra être modifié par le staff, voir kick du serveur.</div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">🔴 Triche interdite</div>
+              <div class="rule-text">Toute forme de cheat <em>(XRay, Autoclicker, Freecam, ESP, etc...)</em> sera sanctionné par un ban. <strong>Les autoclickers ne sont pas autorisés pour farms !</strong><br><br>Les cheats « softs » sont aussi <strong>Interdit</strong>. Cela comprend :
+                <ul class="rule-list">
+                  <li>Freecam</li>
+                  <li>Xaero's Minimap <em>(la version fair-play est autorisée)</em></li>
+                  <li>Inventory Profile Next <em>(ou tout autre mods qui peuvent vider un inventaire d'un coup)</em></li>
+                  <li>Clear Water & Lava <em>(Compte comme un X-Ray)</em></li>
+                  <li>Tout autre mods « QOL » qui donnent un avantage</li>
+                </ul>
+              </div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">🤝 Respectez les autres</div>
+              <div class="rule-text">Aucun propos <strong>insultant, raciste, sexiste, homophobe</strong> ou <strong>discriminatoire</strong> ne sera toléré. Restez respectueux en toutes circonstances.<br><br>Le trashtalk, la moquerie, le ragebait sont autorisés <strong>SANS ABUS</strong>, si vous en abusez, vous serez mute pour 4 jours.</div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">🧍 Respectez les AFK</div>
+              <div class="rule-text">Il est <strong>STRICTEMENT INTERDIT</strong> de pousser un joueur AFK hors d'une Safezone.</div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">⚒️ Les staffs ne sont pas des robots</div>
+              <div class="rule-text">➤ <u>Ne demandez pas</u> à être staff <strong>à répétition</strong>.<br>➤ <u>N'identifiez pas</u> le staff <strong>inutilement</strong> sur Discord.<br>➤ <strong>AUCUNE</strong> demande en messages privés — utilisez les salons dédiés ou ouvrez un ticket.<br>➤ <u>Ne nous demandez pas des coordonnées</u>, s'il y a un village, où est l'End, comment on craft une porte... <strong>INTERNET EXISTE</strong>.<br>➤ <strong>NE DEMANDEZ SURTOUT PAS</strong> à être give, téléporter, ou autre chose nécessitant des permissions supérieures, en cas de non-respect de cette règle, vous serez <strong>mute 4 jours</strong> et <strong>clear d'un ou plusieurs items importants</strong>.</div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">🚧 Constructions inappropriées interdites</div>
+              <div class="rule-text">Pas de constructions à caractère <strong>sexuelles, offensantes</strong> ou <strong>politique/religieux provocateur</strong>.</div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">💀 Grief INTERDIT</div>
+              <div class="rule-text">Le pillage de base, grief de décoration et de farms est <strong>STRICTEMENT INTERDIT</strong>.<br>Il est aussi <strong>STRICTEMENT INTERDIT</strong> de grief les structures importantes ! <em>(portail de l'end, structure d'event/administrative)</em><br><br>En cas de grief, n'hésitez pas à ouvrir un ticket.</div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">🔄 AFK farm interdit</div>
+              <div class="rule-text">L'AFK farm à l'aide d'<strong>auto clicker</strong> ou autres méthodes est considérée comme de la <strong>triche</strong> et sera <strong>sanctionnée</strong>.</div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">👤 Pseudo & skin</div>
+              <div class="rule-text">Les pseudos et skins doivent rester <u>décents</u>, sans connotation <strong>choquante</strong> ou <strong>provocante</strong>.</div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-card-header"><i class="fas fa-khanda"></i> Règlement PvP du Serveur</div>
+          <div class="rule-card-content" id="pvpRules" onscroll="checkRulesScroll()">
+            <div class="rule-section">
+              <div class="rule-title">⚔️ Explication du statut PvP</div>
+              <div class="rule-text">Lorsque deux joueurs ou plus se frappent, ils entrent en <u>situation de combat</u> pendant <strong>30 secondes</strong> :
+                <ul class="rule-list">
+                  <li>Leurs skins passent en <strong>surbrillance</strong></li>
+                  <li>Elytras <strong>autorisées</strong></li>
+                  <li>Riptide <em>(Impulsion)</em> <strong>autorisées</strong></li>
+                  <li>Commandes <strong>bloquées</strong></li>
+                </ul>
+                Si vous vous <u>déconnectez</u> pendant un combat, vous <strong>mourrez automatiquement</strong>.
+              </div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">💎 Crystal PvP INTERDIT</div>
+              <div class="rule-text">Le <strong>cPvP</strong> <em>(Crystal PVP)</em> est <strong>STRICTEMENT INTERDIT</strong>.</div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">🚫 TP Kill / TP Trap INTERDIT</div>
+              <div class="rule-text">Ces pratiques sont <strong>STRICTEMENT INTERDITES</strong>.</div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">🛑 Pas de harcèlement / acharnement</div>
+              <div class="rule-text">Le focus <u>abusif</u> d'un joueur <em>(ex : le suivre et le tuer en boucle sans raison)</em> est <strong>interdit</strong>.</div>
+            </div>
+            <div class="rule-section">
+              <div class="rule-title">🏠 Interdiction de spawn trap</div>
+              <div class="rule-text">Il est <strong>interdit</strong> de bloquer ou tuer un joueur en boucle <u>dès sa réapparition</u> (lit, spawn ou home). Cela prend en compte <strong>AUSSI</strong> les points de déconnections.<br><br>En cas de non-respect de cette règle, votre inventaire sera donné à la personne que vous campez.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-indicator show" id="scrollIndicator">
+        <i class="fas fa-arrow-down"></i> Faites défiler les deux règlements jusqu'en bas pour continuer
+      </div>
+      <div class="checkbox-section">
+        <label class="checkbox-group disabled" id="checkbox1Group">
+          <input type="checkbox" id="rulesCheckbox1" onchange="checkPage4Validity()" disabled>
+          <span class="custom-checkbox"><i class="fas fa-check"></i></span>
+          <span class="checkbox-label">J'ai lu et compris toutes les règles du serveur Whitelist, et je comprends que si j'enfreins l'une de ces règles, mon accès au serveur sera retiré</span>
+        </label>
+        <label class="checkbox-group disabled" id="checkbox2Group">
+          <input type="checkbox" id="rulesCheckbox2" onchange="checkPage4Validity()" disabled>
+          <span class="custom-checkbox"><i class="fas fa-check"></i></span>
+          <span class="checkbox-label">Je comprends que les sanctions peuvent être réajustées en fonction de la gravité de la faute commise.</span>
+        </label>
+      </div>
+      <div class="nav-buttons">
+        <button class="btn-primary btn-success" id="page4Continue" onclick="goToPage(5)" disabled>
+          Continuer <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <div class="page" id="page5">
+    <main>
+      <h1>✍️ Pourquoi vouloir rejoindre le serveur Whitelist ?</h1>
+      <div class="card" style="max-width:800px;">
+        <div class="form-group">
+          <textarea class="form-input" id="motivationText" placeholder="Expliquez-nous pourquoi vous souhaitez rejoindre le serveur Whitelist, ce que vous comptez y faire, et pourquoi nous devrions vous accepter..." oninput="updateWordCount()"></textarea>
+          <div class="word-counter invalid" id="wordCounter">0 / 85 mots minimum (200 max)</div>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn-primary btn-success" id="page5Continue" onclick="submitApplication()" disabled>
+            Envoyer ma candidature <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="page" id="page6">
+    <main>
+      <h1>🎉 Merci pour votre candidature !</h1>
+      <div class="card" style="text-align:center;">
+        <i class="fas fa-check-circle success-icon"></i>
+        <p>Votre candidature a été envoyée à notre équipe de staff. Nous allons examiner votre demande et vous recevrez une réponse dans les jours qui suivent !</p>
+        <div class="redirect-section">
+          <div class="redirect-text">Redirection...</div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+const appData = {
+  discord: null,
+  minecraftUsername: '',
+  chapter: null,
+  season: null,
+  motivation: ''
+};
+let currentPage = 1;
+let moralScrolled = false;
+let pvpScrolled = false;
+
+window.addEventListener('load', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const discordUser = urlParams.get('discord_user');
+  const discordId = urlParams.get('discord_id');
+  const discordAvatar = urlParams.get('discord_avatar');
+  if (discordUser && discordId) {
+    appData.discord = { id: discordId, username: discordUser, avatar: discordAvatar || 'https://cdn.discordapp.com/embed/avatars/0.png' };
+    document.getElementById('discordLoginBtn').style.display = 'none';
+    document.getElementById('discordConnected').style.display = 'flex';
+    document.getElementById('discordName').textContent = appData.discord.username;
+    document.getElementById('discordId').textContent = 'ID: ' + appData.discord.id;
+    if (discordAvatar) document.getElementById('discordAvatar').src = discordAvatar;
+    if (currentPage === 1) goToPage(2);
+    checkPage2Validity();
+  }
+});
+
+function goToPage(pageNum) {
+  const currentPageEl = document.getElementById('page' + currentPage);
+  const nextPageEl = document.getElementById('page' + pageNum);
+  currentPageEl.classList.remove('active');
+  currentPageEl.classList.add(pageNum > currentPage ? 'exit-left' : 'enter-right');
+  setTimeout(() => {
+    currentPageEl.classList.remove('exit-left', 'enter-right');
+    nextPageEl.classList.add('active');
+    currentPage = pageNum;
+    window.scrollTo(0, 0);
+  }, 50);
+}
+
+function checkPage2Validity() {
+  const username = document.getElementById('minecraftUsername').value.trim();
+  appData.minecraftUsername = username;
+  const isValid = appData.discord && username.length >= 3;
+  document.getElementById('page2Continue').disabled = !isValid;
+}
+
+function selectChapter(chapter) {
+  const chapter1 = document.getElementById('chapter1Btn');
+  const chapter2 = document.getElementById('chapter2Btn');
+  document.getElementById('seasonError').classList.remove('show');
+  document.querySelectorAll('.season-btn').forEach(btn => btn.classList.remove('selected'));
+  appData.season = null;
+  document.getElementById('page3Continue').disabled = true;
+  if (chapter === 1) {
+    chapter1.classList.add('active');
+    chapter1.classList.remove('shrunk');
+    chapter2.classList.add('shrunk');
+    chapter2.classList.remove('active');
+  } else {
+    chapter2.classList.add('active');
+    chapter2.classList.remove('shrunk');
+    chapter1.classList.add('shrunk');
+    chapter1.classList.remove('active');
+  }
+  appData.chapter = chapter;
+}
+
+function selectSeason(chapter, season) {
+  const chapterEl = document.getElementById('chapter' + chapter + 'Btn');
+  chapterEl.querySelectorAll('.season-btn').forEach((btn, index) => {
+    btn.classList.remove('selected');
+    if (index + 1 === season) btn.classList.add('selected');
+  });
+  appData.season = season;
+  document.getElementById('page3Continue').disabled = false;
+  document.getElementById('seasonError').classList.remove('show');
+}
+
+function showSeasonError(event) {
+  event.stopPropagation();
+  document.getElementById('seasonError').classList.add('show');
+}
+
+function checkRulesScroll() {
+  const moralEl = document.getElementById('moralRules');
+  const pvpEl = document.getElementById('pvpRules');
+  if (moralEl.scrollTop + moralEl.clientHeight >= moralEl.scrollHeight - 10) moralScrolled = true;
+  if (pvpEl.scrollTop + pvpEl.clientHeight >= pvpEl.scrollHeight - 10) pvpScrolled = true;
+  if (moralScrolled && pvpScrolled) {
+    document.getElementById('checkbox1Group').classList.remove('disabled');
+    document.getElementById('checkbox2Group').classList.remove('disabled');
+    document.getElementById('rulesCheckbox1').disabled = false;
+    document.getElementById('rulesCheckbox2').disabled = false;
+    document.getElementById('scrollIndicator').classList.remove('show');
+  }
+}
+
+function checkPage4Validity() {
+  const cb1 = document.getElementById('rulesCheckbox1').checked;
+  const cb2 = document.getElementById('rulesCheckbox2').checked;
+  document.getElementById('page4Continue').disabled = !(cb1 && cb2);
+}
+
+function updateWordCount() {
+  const text = document.getElementById('motivationText').value.trim();
+  const words = text ? text.split(/\s+/).filter(w => w.length > 0) : [];
+  const count = words.length;
+  const counter = document.getElementById('wordCounter');
+  counter.textContent = count + ' / 85 mots minimum (200 max)';
+  if (count >= 85 && count <= 200) {
+    counter.className = 'word-counter valid';
+    document.getElementById('page5Continue').disabled = false;
+    appData.motivation = text;
+  } else {
+    counter.className = 'word-counter invalid';
+    document.getElementById('page5Continue').disabled = true;
+  }
+}
+
+async function submitApplication() {
+  appData.motivation = document.getElementById('motivationText').value.trim();
+  const embed = {
+    embeds: [{
+      title: '📋 Nouvelle Candidature Whitelist',
+      color: 0x4facff,
+      fields: [
+        { name: '👤 Discord', value: '**Pseudo:** ' + (appData.discord ? appData.discord.username : 'Non connecté') + '\n**ID:** ' + (appData.discord ? appData.discord.id : 'N/A'), inline: true },
+        { name: '🎮 Minecraft', value: appData.minecraftUsername, inline: true },
+        { name: '📅 Rejoint au', value: 'Chapitre ' + appData.chapter + ' - Saison ' + appData.season, inline: true },
+        { name: '✍️ Motivation', value: appData.motivation.length > 1024 ? appData.motivation.substring(0, 1021) + '...' : appData.motivation, inline: false }
+      ],
+      timestamp: new Date().toISOString(),
+      footer: { text: 'Candidature Whitelist True Vanilla' }
+    }]
+  };
+  try {
+    await fetch('https://discord.com/api/webhooks/1425136704796491838/p-801gPLjvGjMQQhOZaAkYEU1L57F_bCC6OeWr8YF8quwB6cea_-IS_EcuX9UDYzsG6C', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(embed)
+    });
+  } catch (error) {
+    console.error('Error sending webhook:', error);
+  }
+  goToPage(6);
+  startRedirectTimer();
+}
+
+function startRedirectTimer() {
+  const progressFill = document.getElementById('progressFill');
+  let progress = 0;
+  const duration = 10000;
+  const interval = 50;
+  const increment = (interval / duration) * 100;
+  const timer = setInterval(() => {
+    progress += increment;
+    progressFill.style.width = Math.min(progress, 100) + '%';
+    if (progress >= 100) {
+      clearInterval(timer);
+      window.location.href = 'https://true-vanilla.fr/';
+    }
+  }, interval);
+}
+</script>
+</body>
+</html>
