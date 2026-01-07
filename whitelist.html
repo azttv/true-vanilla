@@ -608,9 +608,9 @@
       <div class="card">
         <div style="text-align:center;">
           <div id="discordSection">
-            <a href="https://discord.com/oauth2/authorize?client_id=1425143639125786724&redirect_uri=https://discord.com/oauth2/authorize?client_id=1425143639125786724&response_type=code&redirect_uri=https%3A%2F%2Fwww.true-vanilla.fr%2Fwhitelist&scope=identify&response_type=code&scope=identify" class="btn-primary btn-discord" id="discordLoginBtn">
+            <button class="btn-primary btn-discord" id="discordLoginBtn" onclick="openDiscordLogin()">
               <i class="fab fa-discord"></i> Connexion avec Discord
-            </a>
+            </button>
           </div>
           <div id="discordConnected" class="discord-connected" style="display:none;">
             <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar" class="discord-avatar" id="discordAvatar">
@@ -845,21 +845,130 @@ let moralScrolled = false;
 let pvpScrolled = false;
 
 window.addEventListener('load', () => {
+  // First check if this is a Discord OAuth callback (token in URL fragment)
+  if (window.location.hash && window.location.hash.includes('access_token')) {
+    handleDiscordCallback();
+    return;
+  }
+  
+  // Check for Discord data in URL params (from backend OAuth callback)
   const urlParams = new URLSearchParams(window.location.search);
   const discordUser = urlParams.get('discord_user');
   const discordId = urlParams.get('discord_id');
   const discordAvatar = urlParams.get('discord_avatar');
+  
+  // If we got Discord data from URL, save it to localStorage
   if (discordUser && discordId) {
-    appData.discord = { id: discordId, username: discordUser, avatar: discordAvatar || 'https://cdn.discordapp.com/embed/avatars/0.png' };
-    document.getElementById('discordLoginBtn').style.display = 'none';
-    document.getElementById('discordConnected').style.display = 'flex';
-    document.getElementById('discordName').textContent = appData.discord.username;
-    document.getElementById('discordId').textContent = 'ID: ' + appData.discord.id;
-    if (discordAvatar) document.getElementById('discordAvatar').src = discordAvatar;
-    if (currentPage === 1) goToPage(2);
-    checkPage2Validity();
+    const discordData = {
+      id: discordId,
+      username: discordUser,
+      avatar: discordAvatar || 'https://cdn.discordapp.com/embed/avatars/0.png'
+    };
+    localStorage.setItem('discord_auth', JSON.stringify(discordData));
+    // Clean URL and go to page 2
+    window.history.replaceState({}, document.title, window.location.pathname);
+    appData.discord = discordData;
+    showDiscordConnected();
+    // Go directly to page 2
+    document.getElementById('page1').classList.remove('active');
+    document.getElementById('page2').classList.add('active');
+    currentPage = 2;
+  } else {
+    // Check localStorage for existing Discord auth
+    const storedDiscord = localStorage.getItem('discord_auth');
+    if (storedDiscord) {
+      try {
+        appData.discord = JSON.parse(storedDiscord);
+        showDiscordConnected();
+      } catch (e) {
+        localStorage.removeItem('discord_auth');
+      }
+    }
   }
+  
+  // Also restore Minecraft username if saved
+  const storedUsername = localStorage.getItem('minecraft_username');
+  if (storedUsername) {
+    document.getElementById('minecraftUsername').value = storedUsername;
+    appData.minecraftUsername = storedUsername;
+  }
+  
+  checkPage2Validity();
 });
+
+function showDiscordConnected() {
+  document.getElementById('discordLoginBtn').style.display = 'none';
+  document.getElementById('discordConnected').style.display = 'flex';
+  document.getElementById('discordName').textContent = appData.discord.username;
+  document.getElementById('discordId').textContent = 'ID: ' + appData.discord.id;
+  if (appData.discord.avatar) {
+    document.getElementById('discordAvatar').src = appData.discord.avatar;
+  }
+}
+
+// Discord OAuth Configuration - REPLACE THESE VALUES
+const DISCORD_CLIENT_ID = '1425143639125786724'; // Replace with your Discord App Client ID
+const DISCORD_REDIRECT_URI = encodeURIComponent(window.location.origin + window.location.pathname);
+
+function openDiscordLogin() {
+  // Use Discord's implicit grant (token) flow for client-side auth
+  const discordAuthUrl = 'https://discord.com/api/oauth2/authorize' +
+    '?client_id=' + DISCORD_CLIENT_ID +
+    '&redirect_uri=' + DISCORD_REDIRECT_URI +
+    '&response_type=token' +
+    '&scope=identify';
+  
+  // Open in same window (will redirect back with token in URL fragment)
+  window.location.href = discordAuthUrl;
+}
+
+// Handle Discord OAuth callback (token in URL fragment)
+function handleDiscordCallback() {
+  const fragment = window.location.hash.substring(1);
+  const params = new URLSearchParams(fragment);
+  const accessToken = params.get('access_token');
+  
+  if (accessToken) {
+    // Clear the hash from URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+    
+    // Fetch user info from Discord API
+    fetch('https://discord.com/api/users/@me', {
+      headers: { 'Authorization': 'Bearer ' + accessToken }
+    })
+    .then(response => response.json())
+    .then(user => {
+      const avatarUrl = user.avatar 
+        ? 'https://cdn.discordapp.com/avatars/' + user.id + '/' + user.avatar + '.png'
+        : 'https://cdn.discordapp.com/embed/avatars/' + (parseInt(user.discriminator || '0') % 5) + '.png';
+      
+      appData.discord = {
+        id: user.id,
+        username: user.global_name || user.username,
+        avatar: avatarUrl
+      };
+      
+      localStorage.setItem('discord_auth', JSON.stringify(appData.discord));
+      showDiscordConnected();
+      
+      // Go to page 2 if on page 1
+      if (currentPage === 1) {
+        document.getElementById('page1').classList.remove('active');
+        document.getElementById('page2').classList.add('active');
+        currentPage = 2;
+      }
+      
+      checkPage2Validity();
+    })
+    .catch(err => {
+      console.error('Error fetching Discord user:', err);
+      alert('Erreur lors de la connexion Discord. Veuillez réessayer.');
+    });
+    
+    return true;
+  }
+  return false;
+}
 
 function goToPage(pageNum) {
   const currentPageEl = document.getElementById('page' + currentPage);
@@ -877,6 +986,10 @@ function goToPage(pageNum) {
 function checkPage2Validity() {
   const username = document.getElementById('minecraftUsername').value.trim();
   appData.minecraftUsername = username;
+  // Save to localStorage
+  if (username) {
+    localStorage.setItem('minecraft_username', username);
+  }
   const isValid = appData.discord && username.length >= 3;
   document.getElementById('page2Continue').disabled = !isValid;
 }
