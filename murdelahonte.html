@@ -820,6 +820,55 @@
         </div>
       </div>
     </div>
+
+    <div class="ban-card" data-player="llivox">
+      <img src="https://mc-heads.net/avatar/llivox" alt="llivox">
+      <div class="ban-info">
+        <h2>llivox</h2>
+        <p>Crack de la seed, X-Ray, manque de respect en ticket, tentative de nuire à la réputation du staff avec de fausses accusations, ragebait constant, menaces, blackmail (chantage) envers d’autres joueurs.</p>
+      </div>
+      <div class="mock-section">
+        <button class="mock-btn" onclick="mockPlayer('llivox')">
+          <i class="fas fa-laugh-squint"></i> Se moquer
+        </button>
+        <div class="mock-counter">
+          <i class="fas fa-users"></i> <span id="count-llivox">0</span> moqueries
+        </div>
+      </div>
+    </div>
+
+    <div class="ban-card" data-player="SK_XIOZ">
+      <img src="https://mc-heads.net/avatar/SK_XIOZ" alt="SK_XIOZ">
+      <div class="ban-info">
+        <h2>SK_XIOZ</h2>
+        <p>Crack de la seed, X-Ray, tentative de nuire à la réputation du staff avec de fausses accusations.</p>
+      </div>
+      <div class="mock-section">
+        <button class="mock-btn" onclick="mockPlayer('SK_XIOZ')">
+          <i class="fas fa-laugh-squint"></i> Se moquer
+        </button>
+        <div class="mock-counter">
+          <i class="fas fa-users"></i> <span id="count-SK_XIOZ">0</span> moqueries
+        </div>
+      </div>
+    </div>
+
+    <div class="ban-card" data-player="Noobixx">
+      <img src="https://mc-heads.net/avatar/Noobixx" alt="Noobixx">
+      <div class="ban-info">
+        <h2>Noobixx</h2>
+        <p>Manque de respect, tentative de nuire à la réputation du staff avec de fausses accusations, ragebait constant, menaces, blackmail (chantage) envers d’autres joueurs, récidiviste.</p>
+      </div>
+      <div class="mock-section">
+        <button class="mock-btn" onclick="mockPlayer('Noobixx')">
+          <i class="fas fa-laugh-squint"></i> Se moquer
+        </button>
+        <div class="mock-counter">
+          <i class="fas fa-users"></i> <span id="count-Noobixx">0</span> moqueries
+        </div>
+      </div>
+    </div>
+    
   </section>
 
   <p>&nbsp;</p>
@@ -889,7 +938,7 @@ document.querySelectorAll('a').forEach(link => {
 const API_URL = 'https://mock-counter.amiardewen.workers.dev';
 
 // List of all players
-const PLAYERS = ['Akiiiii16', 'titi37vin', 'scibidiluxi', 'zozo3811', 'Alek404', 'Ahdoda', 'AskaladdX', 'Guezmog', 'Nhics_'];
+const PLAYERS = ['Akiiiii16', 'titi37vin', 'scibidiluxi', 'zozo3811', 'Alek404', 'Ahdoda', 'AskaladdX', 'Guezmog', 'Nhics_', 'llivox', 'SK_XIOZ', 'Noobixx'];
 
 // Generate or retrieve a unique visitor ID
 function getVisitorId() {
@@ -1016,7 +1065,7 @@ async function mockPlayer(playerName) {
       const messages = [
         `😂 Tu t'es bien moqué de ${playerName} !`,
         `🤣 ${playerName} vient de se faire humilier !`,
-        `😏 Bien joué ! ${playerName} en a pris pour son grade !`,
+        `😏 ${playerName} pue le seum !`,
         `💀 ${playerName} n'a plus qu'à pleurer !`,
         `🔥 Moquerie envoyée à ${playerName} !`
       ];
@@ -1046,3 +1095,4 @@ initMockSystem();
 
 </body>
 </html>
+
