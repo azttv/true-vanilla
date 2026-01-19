@@ -465,7 +465,10 @@
         // ============================================
         // CONFIGURATION - UPDATE THIS URL
         // ============================================
-        const STATS_API_BASE = 'http://145.239.149.173:8214/';
+        // For REST API: 'http://your-server-ip:8080'
+        // For GitHub Pages: 'https://username.github.io/repo-name'
+        const STATS_API_BASE = 'https://145.239.149.173:8214';
+        const USE_API = true; // true for REST API, false for GitHub Pages (JSON files)
         // ============================================
         
         let currentServer = null;
@@ -529,7 +532,14 @@
             document.getElementById('leaderboardList').innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: var(--accent-aqua);"></i><p>Chargement des statistiques...</p></div>';
             
             try {
-                const response = await fetch(`${STATS_API_BASE}/${id}.json`);
+                // Build URL based on mode
+                // REST API: http://server:8080/stats/smp
+                // GitHub Pages: https://user.github.io/repo/smp.json
+                const url = USE_API 
+                    ? `${STATS_API_BASE}/stats/${id}`
+                    : `${STATS_API_BASE}/${id}.json`;
+                
+                const response = await fetch(url);
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 
                 const data = await response.json();
@@ -563,7 +573,7 @@
                 }
             } catch (error) {
                 console.error('Failed to load stats:', error);
-                document.getElementById('leaderboardList').innerHTML = `<div style="text-align: center; padding: 3rem; color: var(--text-muted);"><i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: #ef4444;"></i><p>Impossible de charger les statistiques</p><button onclick="loadStats('${id}')" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--accent-aqua); color: var(--bg-dark); border: none; border-radius: 8px; font-weight: 600; cursor: pointer;"><i class="fas fa-redo"></i> Réessayer</button></div>`;
+                document.getElementById('leaderboardList').innerHTML = `<div style="text-align: center; padding: 3rem; color: var(--text-muted);"><i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: #ef4444;"></i><p>Impossible de charger les statistiques</p><p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.7;">${error.message}</p><button onclick="loadStats('${id}')" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--accent-aqua); color: var(--bg-dark); border: none; border-radius: 8px; font-weight: 600; cursor: pointer;"><i class="fas fa-redo"></i> Réessayer</button></div>`;
             }
         }
 
