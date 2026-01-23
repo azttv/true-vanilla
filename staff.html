@@ -678,6 +678,7 @@
                 situation1: null,
                 situation2: null,
                 situation3: null,
+                openingMessageIndex: null,
             };
 
             // Opening messages (random)
@@ -769,21 +770,23 @@
             }
 
             function restoreChat() {
-                // Restore messages and continue
-                const randomMessage =
-                    openingMessages[
-                        Math.floor(Math.random() * openingMessages.length)
-                    ];
-                addBotMessageInstant(randomMessage);
+                // Restore messages instantly using the saved opening message
+                const openingMessage =
+                    openingMessages[chatState.openingMessageIndex] ||
+                    openingMessages[0];
+                addBotMessageInstant(openingMessage);
                 addUserMessageInstant("Oui");
                 addBotMessageInstant(
                     "Parfait ! Pour commencer, j'aimerais savoir à qui je parle. Connecte-toi avec ton compte Discord pour que je puisse t'identifier.",
                 );
 
                 // Show connected state
-                addUserMessageInstant(
+                addUserMessage(
                     `Connecté en tant que ${chatState.discordUser.globalName}`,
                 );
+
+                // Clear saved state
+                sessionStorage.removeItem("chatState");
 
                 chatState.step = 2;
                 proceedToStep(2);
@@ -793,10 +796,11 @@
                 if (chatState.discordUser) return; // Already restored
 
                 chatState.step = 0;
+                chatState.openingMessageIndex = Math.floor(
+                    Math.random() * openingMessages.length,
+                );
                 const randomMessage =
-                    openingMessages[
-                        Math.floor(Math.random() * openingMessages.length)
-                    ];
+                    openingMessages[chatState.openingMessageIndex];
                 showTypingThenMessage(randomMessage, () => {
                     showYesNoButtons();
                 });
@@ -1025,7 +1029,6 @@
                         showTypingThenMessage(
                             `Je vois, tu t'appelles donc ${chatState.discordUser.globalName}, et dernière chose personnelle : tu as quel âge ?`,
                             showDateSelects,
-                            "Votre âge aura peu d'impact sur votre candidature, on ne se base pas uniquement sur ça",
                         );
                         break;
 
@@ -1191,6 +1194,16 @@
                 chatState.age = age;
 
                 addUserMessage(`${day}/${month}/${year} (${age} ans)`);
+
+                // Check if user is under 18
+                if (age < 18) {
+                    showTypingThenMessage(
+                        "Je suis désolé, mais nous recrutons uniquement des personnes majeures. N'hésite pas à retenter ta chance quand tu auras l'âge requis, on sera ravis de te revoir !",
+                        showFinalButton,
+                    );
+                    return;
+                }
+
                 chatState.step = 3;
                 proceedToStep(3);
             }
