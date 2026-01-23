@@ -697,7 +697,6 @@
             document.addEventListener("DOMContentLoaded", () => {
                 createParticles();
                 checkOAuthCallback();
-                startChat();
             });
 
             function createParticles() {
@@ -736,6 +735,9 @@
 
                     // Fetch Discord user info
                     fetchDiscordUser(accessToken);
+                } else {
+                    // No OAuth callback, start fresh chat
+                    startChat();
                 }
             }
 
@@ -783,8 +785,6 @@
             }
 
             function startChat() {
-                if (chatState.discordUser) return; // Already restored
-
                 chatState.step = 0;
                 chatState.openingMessageIndex = Math.floor(
                     Math.random() * openingMessages.length,
