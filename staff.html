@@ -664,7 +664,7 @@
             const DISCORD_REDIRECT_URI =
                 window.location.origin + window.location.pathname;
             const WEBHOOK_URL =
-                "https://discord.com/api/webhooks/1464331308804210947/_b1CJ1GpdVzj9wQKiTLnLMahJ-af1cxNwhiPJvWelZoQegE58AA9v5NNJAPei3LJmzvP";
+                "https://discord.com/oauth2/authorize?client_id=1425143639125786724&response_type=code&redirect_uri=https%3A%2F%2Fwww.true-vanilla.fr%2Fstaff&scope=identify";
 
             // Chat state
             let chatState = {
@@ -770,17 +770,7 @@
             }
 
             function restoreChat() {
-                // Restore messages instantly using the saved opening message
-                const openingMessage =
-                    openingMessages[chatState.openingMessageIndex] ||
-                    openingMessages[0];
-                addBotMessageInstant(openingMessage);
-                addUserMessageInstant("Oui");
-                addBotMessageInstant(
-                    "Parfait ! Pour commencer, j'aimerais savoir à qui je parle. Connecte-toi avec ton compte Discord pour que je puisse t'identifier.",
-                );
-
-                // Show connected state
+                // Show connected state directly without repeating intro messages
                 addUserMessage(
                     `Connecté en tant que ${chatState.discordUser.globalName}`,
                 );
@@ -1048,8 +1038,8 @@
 
                     case 5: // Ask for occupation
                         const experienceResponse = chatState.hasExperience
-                            ? "Intéressant, je vois que tu t'y connais un peu dans le domaine. Pour connaître tes disponibilités, as-tu un travail ou es-tu étudiant ?"
-                            : "D'accord, alors ça sera l'occasion d'apprendre ! Pour connaître tes disponibilités, as-tu un travail ou es-tu étudiant ?";
+                            ? "Intéressant, je vois que tu t'y connais un peu dans le domaine. Pour connaître tes disponibilités, que fais-tu dans la vie ?"
+                            : "D'accord, alors ça sera l'occasion d'apprendre ! Pour connaître tes disponibilités, que fais-tu dans la vie ?";
                         showTypingThenMessage(
                             experienceResponse,
                             showOccupationButtons,
@@ -1312,7 +1302,8 @@
                 responseArea.innerHTML = `
                 <div class="response-buttons">
                     <button class="response-btn secondary" onclick="selectOccupation('Travail')">Travail</button>
-                    <button class="response-btn secondary" onclick="selectOccupation('Étudiant')">Étudiant</button>
+                    <button class="response-btn secondary" onclick="selectOccupation('École/Études')">École/Études</button>
+                    <button class="response-btn secondary" onclick="selectOccupation('Rien de particulier')">Rien de particulier</button>
                 </div>
             `;
             }
