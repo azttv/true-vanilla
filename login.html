@@ -1373,27 +1373,43 @@
                 appId: "1:839667873698:web:c8d66aa664dd8a0b3e24fb",
             };
 
-            // Initialize Firebase
-            firebase.initializeApp(firebaseConfig);
-            const auth = firebase.auth();
-            const db = firebase.firestore();
+            // Initialize Firebase with error handling
+            let auth = null;
+            let db = null;
+            let firebaseInitialized = false;
+
+            try {
+                if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+                    firebase.initializeApp(firebaseConfig);
+                    auth = firebase.auth();
+                    db = firebase.firestore();
+                    firebaseInitialized = true;
+
+                    // Auth State Observer
+                    auth.onAuthStateChanged((user) => {
+                        updateLoginButton(user);
+                        if (user && user.emailVerified) {
+                            window.location.href = "index.html";
+                        }
+                    });
+                } else {
+                    console.warn(
+                        "Firebase not configured. Please replace the firebaseConfig values.",
+                    );
+                }
+            } catch (error) {
+                console.error("Firebase initialization error:", error);
+            }
 
             // Allowed characters for username
             const allowedUsernameChars =
                 "1234567890.-_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZéèà";
 
-            // Auth State Observer
-            auth.onAuthStateChanged((user) => {
-                updateLoginButton(user);
-                if (user && user.emailVerified) {
-                    // Redirect to home if already logged in
-                    window.location.href = "index.html";
-                }
-            });
-
             function updateLoginButton(user) {
                 const loginBtn = document.getElementById("loginBtn");
-                if (user) {
+                if (!loginBtn) return;
+
+                if (user && firebaseInitialized) {
                     // Get username from Firestore or use email
                     db.collection("users")
                         .doc(user.uid)
@@ -1416,6 +1432,8 @@
 
             function showUserMenu(e) {
                 e.preventDefault();
+                if (!firebaseInitialized) return;
+
                 if (confirm("Voulez-vous vous déconnecter ?")) {
                     auth.signOut().then(() => {
                         window.location.reload();
@@ -1571,11 +1589,19 @@
                 e.preventDefault();
                 const email = document.getElementById("loginEmail").value;
                 const password = document.getElementById("loginPassword").value;
-                const alert = document.getElementById("loginAlert");
+                const alertEl = document.getElementById("loginAlert");
                 const spinner = document.getElementById("loginSpinner");
                 const btn = document.getElementById("loginSubmitBtn");
 
-                alert.classList.remove("show");
+                // Check if Firebase is configured
+                if (!firebaseInitialized) {
+                    alertEl.textContent =
+                        "Firebase n'est pas configuré. Veuillez contacter l'administrateur.";
+                    alertEl.classList.add("show");
+                    return;
+                }
+
+                alertEl.classList.remove("show");
                 spinner.classList.add("show");
                 btn.disabled = true;
 
@@ -1599,9 +1625,9 @@
                             password,
                         );
                     if (!userCredential.user.emailVerified) {
-                        alert.textContent =
+                        alertEl.textContent =
                             "Veuillez vérifier votre e-mail avant de vous connecter.";
-                        alert.classList.add("show");
+                        alertEl.classList.add("show");
                         await auth.signOut();
                     } else {
                         window.location.href = "index.html";
@@ -1624,8 +1650,8 @@
                                 "Trop de tentatives. Réessayez plus tard.";
                             break;
                     }
-                    alert.textContent = message;
-                    alert.classList.add("show");
+                    alertEl.textContent = message;
+                    alertEl.classList.add("show");
                 } finally {
                     spinner.classList.remove("show");
                     btn.disabled = false;
@@ -1644,9 +1670,17 @@
                 const passwordConfirm = document.getElementById(
                     "registerPasswordConfirm",
                 ).value;
-                const alert = document.getElementById("registerAlert");
+                const alertEl = document.getElementById("registerAlert");
                 const spinner = document.getElementById("registerSpinner");
                 const btn = document.getElementById("registerSubmitBtn");
+
+                // Check if Firebase is configured
+                if (!firebaseInitialized) {
+                    alertEl.textContent =
+                        "Firebase n'est pas configuré. Veuillez contacter l'administrateur.";
+                    alertEl.classList.add("show");
+                    return;
+                }
 
                 // Validate all fields
                 const isUsernameValid = validateUsername(
@@ -1668,13 +1702,13 @@
                     !isPasswordValid ||
                     !isPasswordConfirmValid
                 ) {
-                    alert.textContent =
+                    alertEl.textContent =
                         "Veuillez corriger les erreurs dans le formulaire.";
-                    alert.classList.add("show");
+                    alertEl.classList.add("show");
                     return;
                 }
 
-                alert.classList.remove("show");
+                alertEl.classList.remove("show");
                 spinner.classList.add("show");
                 btn.disabled = true;
 
@@ -1685,9 +1719,9 @@
                         .where("username", "==", username)
                         .get();
                     if (!snapshot.empty) {
-                        alert.textContent =
+                        alertEl.textContent =
                             "Ce nom d'utilisateur est déjà pris.";
-                        alert.classList.add("show");
+                        alertEl.classList.add("show");
                         spinner.classList.remove("show");
                         btn.disabled = false;
                         return;
@@ -1734,8 +1768,8 @@
                             message = "Le mot de passe est trop faible.";
                             break;
                     }
-                    alert.textContent = message;
-                    alert.classList.add("show");
+                    alertEl.textContent = message;
+                    alertEl.classList.add("show");
                 } finally {
                     spinner.classList.remove("show");
                     btn.disabled = false;
@@ -1744,6 +1778,15 @@
 
             // OAuth Sign-in functions
             async function signInWithGoogle() {
+                const alertEl = document.getElementById("loginAlert");
+
+                if (!firebaseInitialized) {
+                    alertEl.textContent =
+                        "Firebase n'est pas configuré. Veuillez contacter l'administrateur.";
+                    alertEl.classList.add("show");
+                    return;
+                }
+
                 const provider = new firebase.auth.GoogleAuthProvider();
                 try {
                     const result = await auth.signInWithPopup(provider);
@@ -1769,14 +1812,22 @@
                     window.location.href = "index.html";
                 } catch (error) {
                     console.error("Google sign-in error:", error);
-                    const alert = document.getElementById("loginAlert");
-                    alert.textContent =
+                    alertEl.textContent =
                         "Erreur lors de la connexion avec Google.";
-                    alert.classList.add("show");
+                    alertEl.classList.add("show");
                 }
             }
 
             async function signInWithMicrosoft() {
+                const alertEl = document.getElementById("loginAlert");
+
+                if (!firebaseInitialized) {
+                    alertEl.textContent =
+                        "Firebase n'est pas configuré. Veuillez contacter l'administrateur.";
+                    alertEl.classList.add("show");
+                    return;
+                }
+
                 const provider = new firebase.auth.OAuthProvider(
                     "microsoft.com",
                 );
@@ -1804,35 +1855,47 @@
                     window.location.href = "index.html";
                 } catch (error) {
                     console.error("Microsoft sign-in error:", error);
-                    const alert = document.getElementById("loginAlert");
-                    alert.textContent =
+                    alertEl.textContent =
                         "Erreur lors de la connexion avec Microsoft.";
-                    alert.classList.add("show");
+                    alertEl.classList.add("show");
                 }
             }
 
             async function signInWithDiscord() {
-                const provider = new firebase.auth.OAuthProvider('oidc.discord');
-                provider.addScope('identify');
-                provider.addScope('email');
+                const provider = new firebase.auth.OAuthProvider(
+                    "oidc.discord",
+                );
+                provider.addScope("identify");
+                provider.addScope("email");
                 try {
                     const result = await auth.signInWithPopup(provider);
-                    const userDoc = await db.collection('users').doc(result.user.uid).get();
+                    const userDoc = await db
+                        .collection("users")
+                        .doc(result.user.uid)
+                        .get();
                     if (!userDoc.exists) {
-                        await db.collection('users').doc(result.user.uid).set({
-                            username: result.user.displayName || 'Utilisateur Discord',
-                            email: result.user.email,
-                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                            provider: 'discord'
-                        });
+                        await db
+                            .collection("users")
+                            .doc(result.user.uid)
+                            .set({
+                                username:
+                                    result.user.displayName ||
+                                    "Utilisateur Discord",
+                                email: result.user.email,
+                                createdAt:
+                                    firebase.firestore.FieldValue.serverTimestamp(),
+                                provider: "discord",
+                            });
                     }
-                    window.location.href = 'index.html';
+                    window.location.href = "index.html";
                 } catch (error) {
-                    console.error('Discord sign-in error:', error);
-                    const alert = document.getElementById('loginAlert');
-                    alert.textContent = 'Erreur lors de la connexion avec Discord.';
-                    alert.classList.add('show');
+                    console.error("Discord sign-in error:", error);
+                    const alert = document.getElementById("loginAlert");
+                    alert.textContent =
+                        "Erreur lors de la connexion avec Discord.";
+                    alert.classList.add("show");
                 }
+            }
 
             // Copy to clipboard
             function copyToClipboard() {
