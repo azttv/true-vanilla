@@ -1,1 +1,801 @@
-Prochainement...
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>True Vanilla - Statistiques</title>
+    <meta content="Le classement de tout les joueurs sur le serveur !" name="description">
+    <link rel="icon" type="image/png" href="icons/favicon.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-dark: #0a0d12;
+            --bg-card: #111827;
+            --accent-aqua: #06b6d4;
+            --accent-aqua-light: #22d3ee;
+            --accent-aqua-glow: rgba(6, 182, 212, 0.3);
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-gold: #fbbf24;
+            --accent-silver: #94a3b8;
+            --accent-bronze: #cd7f32;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(17, 24, 39, 0.9);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+            background:
+                radial-gradient(ellipse at 15% 30%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 70%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(6, 182, 212, 0.05) 0%, transparent 60%);
+        }
+
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: hidden; }
+        .particle {
+            position: absolute; width: 4px; height: 4px; background: var(--accent-aqua);
+            border-radius: 50%; opacity: 0; animation: float-particle 10s infinite ease-in-out;
+        }
+        @keyframes float-particle {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.5; } 90% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0 2rem; height: 80px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--glass-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle);
+        }
+        .header-left { display: flex; align-items: center; gap: 0.5rem; }
+        .season-badge {
+            font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 600; color: var(--accent-aqua);
+            letter-spacing: 0.15em; text-transform: uppercase; padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(6, 182, 212, 0.05));
+            border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 4px; position: relative; overflow: hidden;
+        }
+        .season-badge::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer { 0% { left: -100%; } 100% { left: 100%; } }
+
+        .header-center { display: flex; align-items: center; gap: 2rem; position: absolute; left: 50%; transform: translateX(-50%); }
+        .nav-left, .nav-right { display: flex; gap: 0.5rem; }
+        .nav-btn {
+            font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--text-secondary);
+            background: transparent; border: none; padding: 0.6rem 1.2rem; cursor: pointer;
+            transition: all 0.3s ease; position: relative; border-radius: 6px; text-decoration: none;
+        }
+        .nav-btn::after {
+            content: ''; position: absolute; bottom: 4px; left: 50%; width: 0; height: 2px;
+            background: var(--accent-aqua); transition: all 0.3s ease; transform: translateX(-50%); border-radius: 2px;
+        }
+        .nav-btn:hover { color: var(--text-primary); }
+        .nav-btn:hover::after { width: 60%; }
+        .nav-btn.active { color: var(--accent-aqua); }
+        .nav-btn.active::after { width: 60%; }
+
+        .logo-container { display: flex; align-items: center; justify-content: center; }
+        .logo {
+            width: 100px; height: 100px; object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--accent-aqua-glow));
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .logo:hover { transform: scale(1.1) rotate(5deg); filter: drop-shadow(0 0 20px var(--accent-aqua-glow)); }
+
+        .header-right {
+            display: flex; flex-direction: column; align-items: flex-end; cursor: pointer;
+            padding: 0.5rem 1rem; border-radius: 8px; transition: all 0.3s ease; position: relative;
+        }
+        .header-right:hover { background: rgba(6, 182, 212, 0.1); }
+        .server-ip { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem; }
+        .server-ip i { color: var(--accent-aqua); font-size: 0.8rem; }
+        .bedrock-port { font-size: 0.90rem; color: var(--text-muted); margin-top: 2px; }
+        .copy-tooltip {
+            position: absolute; top: calc(100% + 8px); right: 0; background: var(--accent-aqua); color: var(--bg-dark);
+            padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600;
+            opacity: 0; transform: translateY(-5px); transition: all 0.3s ease; pointer-events: none; white-space: nowrap; z-index: 1001;
+        }
+        .copy-tooltip::before { content: ''; position: absolute; top: -6px; right: 20px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid var(--accent-aqua); }
+        .copy-tooltip.show { opacity: 1; transform: translateY(0); }
+
+        main { position: relative; z-index: 1; padding-top: 100px; padding-bottom: 120px; min-height: 100vh; }
+
+        .section-title {
+            font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 700; color: var(--text-primary);
+            text-align: center; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2rem;
+        }
+        .section-title span { color: var(--accent-aqua); }
+
+        .server-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.3s ease;
+        }
+        .server-modal.active { opacity: 1; visibility: visible; }
+        .server-modal-content {
+            background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border-subtle);
+            padding: 3rem; max-width: 700px; width: 90%; text-align: center;
+            transform: scale(0.9) translateY(20px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .server-modal.active .server-modal-content { transform: scale(1) translateY(0); }
+        .server-modal h2 { font-family: 'Cinzel', serif; font-size: 1.75rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .server-modal h2 span { color: var(--accent-aqua); }
+        .server-modal p { color: var(--text-secondary); margin-bottom: 2rem; }
+
+        .server-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .server-option {
+            background: rgba(0, 0, 0, 0.3); border: 2px solid var(--border-subtle); border-radius: 16px;
+            padding: 2rem 1.5rem; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .server-option::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), transparent);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .server-option:hover { border-color: var(--accent-aqua); transform: translateY(-5px); box-shadow: 0 10px 40px rgba(6, 182, 212, 0.2); }
+        .server-option:hover::before { opacity: 1; }
+        .server-option.smp { --option-color: var(--accent-aqua); }
+        .server-option.minijeux { --option-color: var(--accent-blue); }
+        .server-option.whitelist { --option-color: var(--accent-purple); }
+        .server-option:hover { border-color: var(--option-color); }
+        .server-option-icon {
+            width: 70px; height: 70px; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.05));
+            border-radius: 16px; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1rem; transition: all 0.3s ease;
+        }
+        .server-option.minijeux .server-option-icon { background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.05)); }
+        .server-option.whitelist .server-option-icon { background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05)); }
+        .server-option-icon i { font-size: 2rem; color: var(--option-color); }
+        .server-option h3 { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .server-option span { font-size: 0.85rem; color: var(--text-muted); }
+
+        .stats-container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+
+        .category-tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+        .category-tab {
+            font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-secondary);
+            background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 1rem 2rem;
+            border-radius: 12px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .category-tab::before {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px;
+            background: var(--accent-aqua); transform: scaleX(0); transition: transform 0.3s ease;
+        }
+        .category-tab:hover { color: var(--text-primary); border-color: rgba(6, 182, 212, 0.3); }
+        .category-tab.active { color: var(--accent-aqua); border-color: var(--accent-aqua); background: rgba(6, 182, 212, 0.1); }
+        .category-tab.active::before { transform: scaleX(1); }
+        .category-tab i { margin-right: 0.5rem; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .individual-stats { display: grid; grid-template-columns: 380px 1fr; gap: 2rem; }
+
+        .player-search-card {
+            background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border-subtle);
+            padding: 2rem; height: fit-content; position: sticky; top: 100px;
+        }
+        .search-container { position: relative; margin-bottom: 2rem; }
+        .search-input {
+            width: 100%; padding: 1rem 1rem 1rem 3rem; background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-subtle); border-radius: 12px; color: var(--text-primary);
+            font-family: 'Outfit', sans-serif; font-size: 1rem; transition: all 0.3s ease;
+        }
+        .search-input::placeholder { color: var(--text-muted); }
+        .search-input:focus { outline: none; border-color: var(--accent-aqua); box-shadow: 0 0 20px rgba(6, 182, 212, 0.2); }
+        .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); transition: color 0.3s ease; }
+        .search-input:focus + .search-icon { color: var(--accent-aqua); }
+
+        .autocomplete-dropdown {
+            position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: var(--bg-card);
+            border: 1px solid var(--border-subtle); border-radius: 12px; max-height: 300px;
+            overflow-y: auto; z-index: 100; display: none; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        .autocomplete-dropdown.show { display: block; }
+        .autocomplete-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem; cursor: pointer; transition: all 0.2s ease; }
+        .autocomplete-item:hover { background: rgba(6, 182, 212, 0.1); }
+        .autocomplete-item img { width: 32px; height: 32px; border-radius: 4px; image-rendering: pixelated; }
+        .autocomplete-item span { color: var(--text-primary); font-weight: 500; }
+
+        .player-display { text-align: center; padding: 1rem 0; }
+        .player-model { position: relative; margin-bottom: 1.5rem; }
+        .player-model img { width: 180px; height: 420px; image-rendering: pixelated; filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5)); }
+        .player-rank-badge {
+            position: absolute; top: -10px; right: calc(50% - 110px); width: 45px; height: 45px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        .player-rank-badge.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1a1a1a; }
+        .player-rank-badge.silver { background: linear-gradient(135deg, #94a3b8, #64748b); color: #1a1a1a; }
+        .player-rank-badge.bronze { background: linear-gradient(135deg, #cd7f32, #b8860b); color: #1a1a1a; }
+        .player-rank-badge.normal { background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(6, 182, 212, 0.1)); color: var(--accent-aqua); border: 1px solid rgba(6, 182, 212, 0.3); }
+        .player-name { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .player-uuid { font-size: 0.75rem; color: var(--text-muted); font-family: monospace; }
+        .player-score-display { margin-top: 1.5rem; padding: 1rem; background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; }
+        .player-score-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
+        .player-score-value { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 700; color: var(--accent-aqua); }
+        .no-player-selected { padding: 3rem 1rem; text-align: center; color: var(--text-muted); }
+        .no-player-selected i { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+
+        .stats-grid-container { background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border-subtle); padding: 2rem; }
+        .stats-grid-title { font-family: 'Cinzel', serif; font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+        .stats-grid-title i { color: var(--accent-aqua); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+        .stat-card { background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.25rem; transition: all 0.3s ease; }
+        .stat-card:hover { border-color: rgba(6, 182, 212, 0.3); transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); }
+        .stat-card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+        .stat-card-icon { width: 36px; height: 36px; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.05)); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .stat-card-icon i { font-size: 1rem; color: var(--accent-aqua); }
+        .stat-card-icon.blue { background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.05)); }
+        .stat-card-icon.blue i { color: var(--accent-blue); }
+        .stat-card-icon.purple { background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05)); }
+        .stat-card-icon.purple i { color: var(--accent-purple); }
+        .stat-card-icon.gold { background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.05)); }
+        .stat-card-icon.gold i { color: var(--accent-gold); }
+        .stat-card-icon.red { background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.05)); }
+        .stat-card-icon.red i { color: #ef4444; }
+        .stat-card-icon.green { background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.05)); }
+        .stat-card-icon.green i { color: #22c55e; }
+        .stat-card-label { font-size: 0.85rem; color: var(--text-muted); }
+        .stat-card-value { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
+        .stat-card-subvalue { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+        .leaderboard-container { background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border-subtle); overflow: hidden; }
+        .leaderboard-header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; background: rgba(0, 0, 0, 0.2); border-bottom: 1px solid var(--border-subtle); }
+        .leaderboard-title { font-family: 'Cinzel', serif; font-size: 1.25rem; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 0.75rem; }
+        .leaderboard-title i { color: var(--accent-gold); }
+        .leaderboard-sort { display: flex; align-items: center; gap: 0.5rem; }
+        .leaderboard-sort label { font-size: 0.9rem; color: var(--text-secondary); }
+        .leaderboard-sort select { background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.5rem 1rem; color: var(--text-primary); font-family: 'Outfit', sans-serif; cursor: pointer; }
+        .leaderboard-sort select:focus { outline: none; border-color: var(--accent-aqua); }
+        .leaderboard-list { padding: 1rem; }
+        .leaderboard-item {
+            display: grid; grid-template-columns: 60px 50px 1fr auto; align-items: center; gap: 1rem;
+            padding: 1rem 1.5rem; background: rgba(0, 0, 0, 0.2); border-radius: 12px;
+            margin-bottom: 0.75rem; cursor: pointer; transition: all 0.3s ease; border: 1px solid transparent;
+        }
+        .leaderboard-item:hover { background: rgba(6, 182, 212, 0.1); border-color: rgba(6, 182, 212, 0.2); transform: translateX(5px); }
+        .leaderboard-item.top-1 { background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.05)); border-color: rgba(251, 191, 36, 0.3); }
+        .leaderboard-item.top-2 { background: linear-gradient(135deg, rgba(148, 163, 184, 0.15), rgba(148, 163, 184, 0.05)); border-color: rgba(148, 163, 184, 0.3); }
+        .leaderboard-item.top-3 { background: linear-gradient(135deg, rgba(205, 127, 50, 0.15), rgba(205, 127, 50, 0.05)); border-color: rgba(205, 127, 50, 0.3); }
+        .leaderboard-rank { font-family: 'Cinzel', serif; font-size: 1.25rem; font-weight: 700; text-align: center; color: var(--text-muted); }
+        .leaderboard-item.top-1 .leaderboard-rank { color: var(--accent-gold); }
+        .leaderboard-item.top-2 .leaderboard-rank { color: var(--accent-silver); }
+        .leaderboard-item.top-3 .leaderboard-rank { color: var(--accent-bronze); }
+        .leaderboard-avatar { width: 50px; height: 50px; border-radius: 8px; overflow: hidden; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.05)); }
+        .leaderboard-avatar img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+        .leaderboard-info { display: flex; flex-direction: column; gap: 0.25rem; }
+        .leaderboard-name { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); }
+        .leaderboard-mini-stats { display: flex; gap: 1rem; font-size: 0.8rem; color: var(--text-muted); }
+        .leaderboard-mini-stat { display: flex; align-items: center; gap: 0.3rem; }
+        .leaderboard-mini-stat i { font-size: 0.75rem; }
+        .leaderboard-score { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--accent-aqua); text-align: right; }
+        .leaderboard-score span { font-size: 0.8rem; font-family: 'Outfit', sans-serif; font-weight: 400; color: var(--text-muted); }
+
+        .dock-container {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1500;
+            display: flex; align-items: flex-end; justify-content: center; gap: 8px; padding: 12px 16px;
+            background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(20px); border-radius: 20px;
+            border: 1px solid var(--border-subtle); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .dock-item { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; text-decoration: none; }
+        .dock-icon {
+            width: 50px; height: 50px; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.05));
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+        .dock-icon i { font-size: 1.4rem; color: var(--accent-aqua); transition: all 0.2s ease; }
+        .dock-item:hover .dock-icon { background: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(6, 182, 212, 0.15)); box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); border-color: rgba(6, 182, 212, 0.5); }
+        .dock-item:hover .dock-icon i { transform: scale(1.1); }
+        .dock-tooltip {
+            position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(10px);
+            background: var(--bg-card); color: var(--text-primary); padding: 8px 14px; border-radius: 8px;
+            font-size: 0.85rem; font-weight: 500; white-space: nowrap; opacity: 0; visibility: hidden;
+            transition: all 0.2s ease; border: 1px solid var(--border-subtle); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); pointer-events: none;
+        }
+        .dock-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid var(--bg-card); }
+        .dock-item:hover .dock-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+        .dock-item.magnify-1 { transform: scale(1.15) translateY(-5px); }
+        .dock-item.magnify-2 { transform: scale(1.35) translateY(-12px); }
+        .dock-item.magnify-1 .dock-icon { background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(6, 182, 212, 0.1)); }
+        .dock-item.magnify-2 .dock-icon { background: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(6, 182, 212, 0.15)); box-shadow: 0 0 25px rgba(6, 182, 212, 0.5); }
+        .dock-separator { width: 1px; height: 40px; background: var(--border-subtle); margin: 0 8px; }
+
+        .current-server { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; }
+        .current-server-badge { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 30px; }
+        .current-server-badge i { color: var(--accent-aqua); }
+        .current-server-badge span { font-weight: 600; color: var(--text-primary); }
+        .change-server-btn { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-family: 'Outfit', sans-serif; }
+        .change-server-btn:hover { border-color: var(--accent-aqua); color: var(--accent-aqua); }
+
+        @media (max-width: 1100px) {
+            .individual-stats { grid-template-columns: 1fr; }
+            .player-search-card { position: static; }
+        }
+        @media (max-width: 768px) {
+            header { padding: 1rem; height: auto; flex-wrap: wrap; gap: 1rem; }
+            .header-left { order: 1; flex: 1; }
+            .header-center { order: 3; position: static; transform: none; width: 100%; justify-content: center; flex-wrap: wrap; gap: 0.5rem; }
+            .header-right { order: 2; }
+            .nav-left, .nav-right { gap: 0; }
+            .nav-btn { padding: 0.5rem 0.8rem; font-size: 0.8rem; }
+            .season-badge { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+            main { padding-top: 140px; }
+            .server-options { grid-template-columns: 1fr; }
+            .category-tabs { flex-direction: column; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .leaderboard-item { grid-template-columns: 40px 40px 1fr auto; gap: 0.75rem; padding: 0.75rem 1rem; }
+            .leaderboard-mini-stats { display: none; }
+        }
+        @media (max-width: 500px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .dock-container { bottom: 15px; padding: 10px 14px; gap: 6px; }
+            .dock-icon { width: 44px; height: 44px; }
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-aqua); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0891b2; }
+
+        /* JOIN MODAL STYLES */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-container { background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border-subtle); width: 90%; max-width: 750px; max-height: 90vh; overflow: hidden; transform: scale(0.9) translateY(20px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5); }
+        .modal-overlay.active .modal-container { transform: scale(1) translateY(0); }
+        .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-subtle); }
+        .modal-title { font-family: 'Cinzel', serif; font-size: 1.25rem; font-weight: 600; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .modal-close { width: 36px; height: 36px; border: none; background: rgba(255, 255, 255, 0.05); border-radius: 8px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .modal-close:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); }
+        .modal-tabs { display: flex; gap: 0.5rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-subtle); background: rgba(0, 0, 0, 0.2); }
+        .join-tab-btn { flex: 1; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); }
+        .join-tab-btn:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); }
+        .join-tab-btn.active { background: var(--accent-aqua); color: var(--bg-dark); }
+        .join-tab-content { display: none; padding: 1.5rem; }
+        .join-tab-content.active { display: block; }
+        .server-address-box { background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; text-align: center; }
+        .server-address-box .address { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
+        .server-address-box .address-copy { background: rgba(6, 182, 212, 0.2); border: none; color: var(--accent-aqua); padding: 0.4rem 0.6rem; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
+        .server-address-box .address-copy:hover { background: var(--accent-aqua); color: var(--bg-dark); }
+        .server-address-box .port { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem; }
+        .instructions-title { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; }
+        .instructions-list { list-style: none; counter-reset: step-counter; }
+        .instructions-list > li { counter-increment: step-counter; display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.85rem; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
+        .instructions-list > li::before { content: counter(step-counter) "."; font-weight: 600; color: var(--accent-aqua); min-width: 1.25rem; flex-shrink: 0; }
+        .instructions-list li strong { color: var(--text-primary); font-weight: 600; }
+        .field-list { list-style: none; margin-top: 0.6rem; margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; }
+        .field-list li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+        .field-list li::before { content: "•"; color: var(--text-muted); margin-right: 0.25rem; }
+        .field-list .field-label { color: var(--text-muted); }
+        .field-list .field-value { color: var(--text-primary); font-weight: 600; }
+        .note-box { background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 8px; padding: 0.875rem 1rem; margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+        .note-box strong { color: var(--accent-aqua); }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Join Modal -->
+    <div class="modal-overlay" id="joinModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">Rejoindre le serveur</h2>
+                <button class="modal-close" onclick="closeJoinModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-tabs">
+                <button class="join-tab-btn active" onclick="switchJoinTab('java')">Java Edition</button>
+                <button class="join-tab-btn" onclick="switchJoinTab('bedrock')">Bedrock Edition</button>
+            </div>
+            <div class="join-tab-content active" id="tab-java">
+                <div class="server-address-box">
+                    <div class="address">
+                        <span>play.true-vanilla.fr</span>
+                        <button class="address-copy" onclick="copyAddress('play.true-vanilla.fr')"><i class="fas fa-copy"></i></button>
+                    </div>
+                </div>
+                <h3 class="instructions-title">Comment rejoindre (Java Edition)</h3>
+                <ol class="instructions-list">
+                    <li>Ouvrez Minecraft Java Edition (version 1.21.4 ou supérieure)</li>
+                    <li>Depuis le menu principal, cliquez sur <strong>"Multijoueur"</strong></li>
+                    <li>Cliquez sur <strong>"Ajouter un serveur"</strong></li>
+                    <li>Dans le champ "Adresse du serveur", saisissez <strong>play.true-vanilla.fr</strong></li>
+                    <li>Cliquez sur <strong>"Terminé"</strong> puis sélectionnez le serveur dans la liste</li>
+                    <li>Cliquez sur <strong>"Rejoindre le serveur"</strong></li>
+                </ol>
+            </div>
+            <div class="join-tab-content" id="tab-bedrock">
+                <div class="server-address-box">
+                    <div class="address">
+                        <span>play.true-vanilla.fr</span>
+                        <button class="address-copy" onclick="copyAddress('play.true-vanilla.fr')"><i class="fas fa-copy"></i></button>
+                    </div>
+                    <div class="port">Port: 50327</div>
+                </div>
+                <h3 class="instructions-title">Comment rejoindre (Bedrock Edition)</h3>
+                <ol class="instructions-list">
+                    <li>Ouvrez Minecraft Bedrock Edition</li>
+                    <li>Allez dans l'onglet <strong>"Serveurs"</strong></li>
+                    <li>Faites défiler jusqu'en bas et cliquez sur <strong>"Ajouter un serveur"</strong></li>
+                    <li>Remplissez les champs suivants:
+                        <ul class="field-list">
+                            <li><span class="field-label">Nom du serveur:</span> <span class="field-value">True Vanilla</span></li>
+                            <li><span class="field-label">Adresse du serveur:</span> <span class="field-value">play.true-vanilla.fr</span></li>
+                            <li><span class="field-label">Port:</span> <span class="field-value">50327</span></li>
+                        </ul>
+                    </li>
+                    <li>Appuyez sur <strong>"Enregistrer"</strong></li>
+                    <li>Sélectionnez <strong>"True Vanilla"</strong> dans votre liste de serveurs</li>
+                </ol>
+                <div class="note-box">
+                    <strong>Note:</strong> True Vanilla est compatible avec toutes les plateformes Bedrock (mobile, console, Windows 10/11).
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="server-modal active" id="serverModal">
+        <div class="server-modal-content">
+            <h2>Choisissez un <span>serveur</span></h2>
+            <p>Sélectionnez le serveur dont vous souhaitez voir les statistiques</p>
+            <div class="server-options">
+                <div class="server-option smp" onclick="selectServer('smp', 'SMP')">
+                    <div class="server-option-icon"><i class="fas fa-cube"></i></div>
+                    <h3>SMP</h3>
+                    <span>Survie principale</span>
+                </div>
+                <div class="server-option minijeux" onclick="selectServer('minijeux', 'Mini-Jeux')">
+                    <div class="server-option-icon"><i class="fas fa-gamepad"></i></div>
+                    <h3>Mini-Jeux</h3>
+                    <span>Jeux communautaires</span>
+                </div>
+                <div class="server-option whitelist" onclick="selectServer('whitelist', 'Whitelist')">
+                    <div class="server-option-icon"><i class="fas fa-shield-halved"></i></div>
+                    <h3>Whitelist</h3>
+                    <span>Serveur Privé</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dock-container" id="dock">
+        <a href="historique.html" class="dock-item"><div class="dock-icon"><i class="fas fa-clock-rotate-left"></i></div><span class="dock-tooltip">Historique</span></a>
+        <a class="dock-item"><div class="dock-icon" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(6, 182, 212, 0.15)); border-color: var(--accent-aqua);"><i class="fas fa-chart-line"></i></div><span class="dock-tooltip">Statistiques</span>
+        <a href="honte.html" class="dock-item"><div class="dock-icon"><i class="fas fa-handcuffs"></i></div><span class="dock-tooltip">Mur de la honte</span></a>
+        <div class="dock-separator"></div>
+        <a href="#" onclick="window.open('https://discord.gg/HefFTCS4cp', '_blank')" class="dock-item"><div class="dock-icon"><i class="fa-brands fa-discord"></i></div><span class="dock-tooltip">Discord</span></a>
+        <a href="#" onclick="window.open('https://www.youtube.com/@truevanillafr', '_blank')" class="dock-item"><div class="dock-icon"><i class="fa-brands fa-youtube"></i></div><span class="dock-tooltip">Youtube</span></a>
+        <a href="#" onclick="window.open('https://www.instagram.com/truevanillafr', '_blank')" class="dock-item"><div class="dock-icon"><i class="fa-brands fa-instagram"></i></div><span class="dock-tooltip">Instagram</span></a>
+    </div>
+
+    <header>
+        <div class="header-left"><div class="season-badge">Chapitre 2 - Saison 1</div></div>
+        <div class="header-center">
+            <nav class="nav-left"><a href="index.html" class="nav-btn">Accueil</a><a href="#" class="nav-btn" onclick="openJoinModal(); return false;">Rejoindre</a></nav>
+            <div class="logo-container"><a href="index.html"><img src="icons/logo.png" alt="Logo" class="logo"></a></div>
+            <nav class="nav-right"><a href="boutique.html" class="nav-btn">Boutique</a><a href="#" class="nav-btn">À propos</a></nav>
+        </div>
+        <div class="header-right" onclick="copyToClipboard()">
+            <div class="server-ip"><i class="fas fa-circle"></i> play.true-vanilla.fr</div>
+            <div class="bedrock-port">Port Bedrock: 50327</div>
+            <div class="copy-tooltip" id="copyTooltip">Copié !</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="stats-container" id="statsContent" style="display: none;">
+            <h1 class="section-title">Statistiques <span id="serverNameDisplay">SMP</span></h1>
+            <div class="current-server">
+                <div class="current-server-badge"><i class="fas fa-server"></i><span id="currentServerName">SMP</span></div>
+                <button class="change-server-btn" onclick="openServerModal()"><i class="fas fa-exchange-alt"></i> Changer</button>
+            </div>
+            <div class="category-tabs">
+                <button class="category-tab active" onclick="switchCategory('individual')"><i class="fas fa-user"></i> Stats Individuelles</button>
+                <button class="category-tab" onclick="switchCategory('leaderboard')"><i class="fas fa-trophy"></i> Classement Général</button>
+            </div>
+            <div class="tab-content active" id="tab-individual">
+                <div class="individual-stats">
+                    <div class="player-search-card">
+                        <div class="search-container">
+                            <input type="text" class="search-input" id="playerSearch" placeholder="Rechercher un joueur..." autocomplete="off">
+                            <i class="fas fa-search search-icon"></i>
+                            <div class="autocomplete-dropdown" id="autocompleteDropdown"></div>
+                        </div>
+                        <div id="playerDisplay"><div class="no-player-selected"><i class="fas fa-user-slash"></i><p>Recherchez un joueur pour voir ses statistiques</p></div></div>
+                    </div>
+                    <div class="stats-grid-container" id="statsGridContainer" style="display: none;">
+                        <h3 class="stats-grid-title"><i class="fas fa-chart-bar"></i> Statistiques de <span id="statsPlayerName">-</span></h3>
+                        <div class="stats-grid" id="statsGrid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="tab-leaderboard">
+                <div class="leaderboard-container">
+                    <div class="leaderboard-header">
+                        <h3 class="leaderboard-title"><i class="fas fa-crown"></i> Classement Général</h3>
+                        <div class="leaderboard-sort">
+                            <label for="sortBy">Trier par:</label>
+                            <select id="sortBy" onchange="sortLeaderboard()">
+                                <option value="score">Score Total</option>
+                                <option value="playtime">Temps de jeu</option>
+                                <option value="kills">Kills</option>
+                                <option value="deaths">Morts</option>
+                                <option value="blocks_broken">Blocs cassés</option>
+                                <option value="blocks_placed">Blocs posés</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="leaderboard-list" id="leaderboardList"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ============================================
+        // CONFIGURATION - UPDATE THIS URL
+        // ============================================
+        // For REST API: 'http://your-server-ip:8080'
+        // For GitHub Pages: 'https://username.github.io/repo-name'
+        const STATS_API_BASE = 'https://api.brandfinder.fr/';
+        const USE_API = true; // true for REST API, false for GitHub Pages (JSON files)
+        // ============================================
+
+        let currentServer = null;
+        let statsData = null;
+        let allPlayers = [];
+
+        document.addEventListener('DOMContentLoaded', () => { createParticles(); initDock(); initSearch(); });
+
+        function createParticles() {
+            const c = document.getElementById('particles');
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 10 + 's';
+                p.style.animationDuration = (8 + Math.random() * 6) + 's';
+                const s = 2 + Math.random() * 4;
+                p.style.width = s + 'px';
+                p.style.height = s + 'px';
+                if (Math.random() > 0.6) p.style.background = '#3b82f6';
+                c.appendChild(p);
+            }
+        }
+
+        function initDock() {
+            const dock = document.getElementById('dock');
+            const items = dock.querySelectorAll('.dock-item');
+            dock.addEventListener('mousemove', (e) => {
+                items.forEach((item) => {
+                    const r = item.getBoundingClientRect();
+                    const d = Math.abs(e.clientX - (r.left + r.width / 2));
+                    item.classList.remove('magnify-1', 'magnify-2');
+                    if (d < 30) item.classList.add('magnify-2');
+                    else if (d < 70) item.classList.add('magnify-1');
+                });
+            });
+            dock.addEventListener('mouseleave', () => items.forEach(i => i.classList.remove('magnify-1', 'magnify-2')));
+        }
+
+        function copyToClipboard() {
+            navigator.clipboard.writeText('play.true-vanilla.fr').then(() => {
+                const t = document.getElementById('copyTooltip');
+                t.classList.add('show');
+                setTimeout(() => t.classList.remove('show'), 2000);
+            });
+        }
+
+        function copyAddress(address) {
+            navigator.clipboard.writeText(address).then(() => {
+                const btn = event.target.closest('.address-copy');
+                const originalIcon = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                btn.style.background = 'var(--accent-aqua)';
+                btn.style.color = 'var(--bg-dark)';
+                setTimeout(() => { btn.innerHTML = originalIcon; btn.style.background = ''; btn.style.color = ''; }, 1500);
+            });
+        }
+
+        function openJoinModal() { document.getElementById('joinModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeJoinModal() { document.getElementById('joinModal').classList.remove('active'); document.body.style.overflow = ''; }
+
+        document.getElementById('joinModal').addEventListener('click', function(e) { if (e.target === this) closeJoinModal(); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeJoinModal(); });
+
+        function switchJoinTab(tab) {
+            document.querySelectorAll('#joinModal .join-tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('#joinModal .join-tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+        }
+
+        function selectServer(id, name) {
+            currentServer = id;
+            document.getElementById('serverModal').classList.remove('active');
+            document.getElementById('statsContent').style.display = 'block';
+            document.getElementById('serverNameDisplay').textContent = name;
+            document.getElementById('currentServerName').textContent = name;
+            loadStats(id);
+        }
+
+        function openServerModal() { document.getElementById('serverModal').classList.add('active'); }
+
+        async function loadStats(id) {
+            // Show loading state
+            document.getElementById('leaderboardList').innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: var(--accent-aqua);"></i><p>Chargement des statistiques...</p></div>';
+
+            try {
+                // Build URL based on mode
+                // REST API: http://server:8080/stats/smp
+                // GitHub Pages: https://user.github.io/repo/smp.json
+                const url = USE_API
+                    ? `${STATS_API_BASE}/stats/${id}`
+                    : `${STATS_API_BASE}/${id}.json`;
+
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                const data = await response.json();
+
+                if (data.players && data.players.length > 0) {
+                    // Map API fields to expected field names
+                    allPlayers = data.players.map(p => ({
+                        uuid: p.uuid,
+                        name: p.name,
+                        score: p.score,
+                        playtime: p.stats.playtime,
+                        kills: p.stats.playerKills,
+                        deaths: p.stats.deaths,
+                        mob_kills: p.stats.mobKills,
+                        blocks_broken: p.stats.blocksBroken,
+                        blocks_placed: p.stats.blocksPlaced,
+                        distance_walked: p.stats.totalDistance * 100, // Convert blocks to cm for formatDistance
+                        jumps: p.stats.jumps,
+                        items_crafted: p.stats.itemsCrafted,
+                        fish_caught: p.stats.fishCaught,
+                        animals_bred: p.stats.animalsBred,
+                        raids_won: p.stats.raidsWon,
+                        enchantments: p.stats.enchantments,
+                        villager_trades: p.stats.villagerTrades,
+                        damage_dealt: p.stats.damageDealt,
+                        damage_taken: p.stats.damageTaken
+                    }));
+                    renderLeaderboard();
+                } else {
+                    document.getElementById('leaderboardList').innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);"><i class="fas fa-users-slash" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i><p>Aucun joueur trouvé sur ce serveur</p></div>';
+                }
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+                document.getElementById('leaderboardList').innerHTML = `<div style="text-align: center; padding: 3rem; color: var(--text-muted);"><i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: #ef4444;"></i><p>Impossible de charger les statistiques</p><p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.7;">${error.message}</p><button onclick="loadStats('${id}')" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--accent-aqua); color: var(--bg-dark); border: none; border-radius: 8px; font-weight: 600; cursor: pointer;"><i class="fas fa-redo"></i> Réessayer</button></div>`;
+            }
+        }
+
+        function initSearch() {
+            const input = document.getElementById('playerSearch');
+            const dropdown = document.getElementById('autocompleteDropdown');
+            input.addEventListener('input', (e) => {
+                const q = e.target.value.toLowerCase();
+                if (q.length < 2) { dropdown.classList.remove('show'); return; }
+                const m = allPlayers.filter(p => p.name.toLowerCase().includes(q));
+                if (m.length > 0) {
+                    dropdown.innerHTML = m.map(p => `<div class="autocomplete-item" onclick="selectPlayer('${p.uuid}')"><img src="https://mc-heads.net/avatar/${p.name}/32" alt="${p.name}"><span>${p.name}</span></div>`).join('');
+                    dropdown.classList.add('show');
+                } else dropdown.classList.remove('show');
+            });
+            input.addEventListener('blur', () => setTimeout(() => dropdown.classList.remove('show'), 200));
+        }
+
+        function selectPlayer(uuid) {
+            const p = allPlayers.find(x => x.uuid === uuid);
+            if (!p) return;
+            document.getElementById('playerSearch').value = p.name;
+            document.getElementById('autocompleteDropdown').classList.remove('show');
+            const rank = allPlayers.sort((a, b) => b.score - a.score).findIndex(x => x.uuid === uuid) + 1;
+            const rc = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : 'normal';
+            document.getElementById('playerDisplay').innerHTML = `
+                <div class="player-display">
+                    <div class="player-model"><img src="https://mc-heads.net/body/${p.name}/180" alt="${p.name}"><div class="player-rank-badge ${rc}">#${rank}</div></div>
+                    <div class="player-name">${p.name}</div>
+                    <div class="player-uuid">${p.uuid}</div>
+                    <div class="player-score-display"><div class="player-score-label">Score Total</div><div class="player-score-value">${p.score.toLocaleString()}</div></div>
+                </div>`;
+            document.getElementById('statsGridContainer').style.display = 'block';
+            document.getElementById('statsPlayerName').textContent = p.name;
+            renderPlayerStats(p);
+        }
+
+        function renderPlayerStats(p) {
+            const cfg = [
+                { key: 'playtime', label: 'Temps de jeu', icon: 'fa-clock', color: '', fmt: v => formatTime(v) },
+                { key: 'kills', label: 'Joueurs tués', icon: 'fa-skull-crossbones', color: 'red', fmt: v => v.toLocaleString() },
+                { key: 'deaths', label: 'Morts', icon: 'fa-cross', color: 'red', fmt: v => v.toLocaleString() },
+                { key: 'mob_kills', label: 'Mobs tués', icon: 'fa-ghost', color: 'purple', fmt: v => v.toLocaleString() },
+                { key: 'blocks_broken', label: 'Blocs cassés', icon: 'fa-hammer', color: 'gold', fmt: v => v.toLocaleString() },
+                { key: 'blocks_placed', label: 'Blocs posés', icon: 'fa-cube', color: 'blue', fmt: v => v.toLocaleString() },
+                { key: 'distance_walked', label: 'Distance', icon: 'fa-person-walking', color: 'green', fmt: v => formatDistance(v) },
+                { key: 'jumps', label: 'Sauts', icon: 'fa-arrow-up', color: '', fmt: v => v.toLocaleString() },
+                { key: 'items_crafted', label: 'Items craftés', icon: 'fa-screwdriver-wrench', color: 'gold', fmt: v => v.toLocaleString() },
+                { key: 'fish_caught', label: 'Poissons pêchés', icon: 'fa-fish', color: 'blue', fmt: v => v.toLocaleString() },
+                { key: 'animals_bred', label: 'Animaux élevés', icon: 'fa-heart', color: 'red', fmt: v => v.toLocaleString() },
+                { key: 'raids_won', label: 'Raids gagnés', icon: 'fa-shield-halved', color: 'purple', fmt: v => v.toLocaleString() },
+                { key: 'enchantments', label: 'Enchantements', icon: 'fa-wand-magic-sparkles', color: 'purple', fmt: v => v.toLocaleString() },
+                { key: 'villager_trades', label: 'Échanges', icon: 'fa-handshake', color: 'green', fmt: v => v.toLocaleString() },
+                { key: 'damage_dealt', label: 'Dégâts infligés', icon: 'fa-bolt', color: 'gold', fmt: v => v.toLocaleString() },
+                { key: 'damage_taken', label: 'Dégâts subis', icon: 'fa-heart-crack', color: 'red', fmt: v => v.toLocaleString() }
+            ];
+            const kd = p.deaths > 0 ? (p.kills / p.deaths).toFixed(2) : p.kills;
+            document.getElementById('statsGrid').innerHTML = cfg.map(s => `
+                <div class="stat-card">
+                    <div class="stat-card-header"><div class="stat-card-icon ${s.color}"><i class="fas ${s.icon}"></i></div><span class="stat-card-label">${s.label}</span></div>
+                    <div class="stat-card-value">${s.fmt(p[s.key])}</div>
+                    ${s.key === 'kills' ? `<div class="stat-card-subvalue">K/D: ${kd}</div>` : ''}
+                </div>`).join('');
+        }
+
+        function renderLeaderboard(sortBy = 'score') {
+            const sorted = [...allPlayers].sort((a, b) => b[sortBy] - a[sortBy]);
+            document.getElementById('leaderboardList').innerHTML = sorted.map((p, i) => {
+                const r = i + 1;
+                const tc = r === 1 ? 'top-1' : r === 2 ? 'top-2' : r === 3 ? 'top-3' : '';
+                return `
+                    <div class="leaderboard-item ${tc}" onclick="viewPlayerStats('${p.uuid}')">
+                        <div class="leaderboard-rank">#${r}</div>
+                        <div class="leaderboard-avatar"><img src="https://mc-heads.net/avatar/${p.name}/50" alt="${p.name}"></div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">${p.name}</div>
+                            <div class="leaderboard-mini-stats">
+                                <span class="leaderboard-mini-stat"><i class="fas fa-clock"></i> ${formatTime(p.playtime)}</span>
+                                <span class="leaderboard-mini-stat"><i class="fas fa-skull"></i> ${p.kills} kills</span>
+                                <span class="leaderboard-mini-stat"><i class="fas fa-cube"></i> ${(p.blocks_broken / 1000).toFixed(1)}k</span>
+                            </div>
+                        </div>
+                        <div class="leaderboard-score">${p[sortBy].toLocaleString()} <span>${sortBy === 'score' ? 'pts' : ''}</span></div>
+                    </div>`;
+            }).join('');
+        }
+
+        function sortLeaderboard() { renderLeaderboard(document.getElementById('sortBy').value); }
+        function viewPlayerStats(uuid) { switchCategory('individual'); selectPlayer(uuid); }
+        function switchCategory(cat) {
+            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.category-tab:nth-child(${cat === 'individual' ? 1 : 2})`).classList.add('active');
+            document.getElementById(`tab-${cat}`).classList.add('active');
+        }
+        function formatTime(s) {
+            const h = Math.floor(s / 3600);
+            if (h >= 24) { const d = Math.floor(h / 24); return `${d}j ${h % 24}h`; }
+            return `${h}h ${Math.floor((s % 3600) / 60)}m`;
+        }
+        function formatDistance(cm) {
+            const km = cm / 100000;
+            return km >= 1 ? `${km.toFixed(1)} km` : `${(cm / 100).toFixed(0)} m`;
+        }
+    </script>
+</body>
+</html>
