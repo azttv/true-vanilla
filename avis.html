@@ -8,7 +8,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-:root{--text:#f5f7ff;--active:#4facff}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,system-ui,sans-serif;min-height:100vh;color:var(--text);padding:40px 20px;overflow-x:hidden;background:#000;display:flex;align-items:center;justify-content:center}.bg-slideshow{position:fixed;inset:0;width:100%;height:100%;z-index:-3}.bg-slide{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0;transition:opacity 1.5s ease-in-out;filter:brightness(0.7) contrast(1.05)}.bg-slide.active{opacity:1}main{max-width:700px;width:100%;padding:20px}h1{font-size:2.5rem;margin-bottom:40px;text-align:center;text-shadow:0 4px 20px rgba(0,0,0,0.9)}.form-card{background:rgba(26,26,26,0.8);backdrop-filter:blur(10px);border-radius:16px;padding:30px;margin-bottom:30px;border:1px solid rgba(79,172,255,0.2);transition:all 0.3s}.form-card:hover{transform:translateY(-5px);border-color:rgba(79,172,255,0.5);box-shadow:0 10px 40px rgba(79,172,255,0.2)}.form-group{margin-bottom:25px}.form-group label{display:block;font-size:1.2rem;font-weight:600;margin-bottom:10px;color:var(--text)}.form-group textarea{width:100%;padding:12px 16px;font-size:1rem;font-family:Inter,sans-serif;background:rgba(0,0,0,0.3);border:2px solid rgba(79,172,255,0.3);border-radius:10px;color:var(--text);transition:all 0.3s ease;min-height:150px;resize:vertical}.form-group textarea:focus{outline:none;border-color:#4facff;box-shadow:0 0 15px rgba(79,172,255,0.5)}.char-counter{text-align:right;font-size:0.9rem;color:rgba(245,247,255,0.7);margin-top:5px}.char-counter.warning{color:#ffa500}.char-counter.limit{color:#ff4c4c}.submit-btn{width:100%;padding:16px;font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,#4facff,#00f2fe);color:#fff;border:none;border-radius:12px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 5px 20px rgba(79,172,255,0.4)}.submit-btn:hover{transform:translateY(-3px);box-shadow:0 0 30px rgba(79,172,255,0.8),0 0 50px rgba(0,242,254,0.6);animation:btnGlow 1.5s infinite alternate}@keyframes btnGlow{0%{box-shadow:0 0 20px rgba(79,172,255,0.6),0 0 40px rgba(0,242,254,0.4)}100%{box-shadow:0 0 40px rgba(79,172,255,1),0 0 70px rgba(0,242,254,0.8)}}.submit-btn:active{transform:translateY(-1px)}.discord-connect-btn{width:100%;padding:14px;font-size:1.1rem;font-weight:600;background:#5865F2;color:#fff;border:none;border-radius:10px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 5px 15px rgba(88,101,242,0.4)}.discord-connect-btn:hover{background:#4752C4;transform:translateY(-2px);box-shadow:0 8px 20px rgba(88,101,242,0.6)}.discord-user-display{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(88,101,242,0.2);border:2px solid #5865F2;border-radius:10px;font-size:1.1rem;font-weight:600}.discord-avatar{width:40px;height:40px;border-radius:50%;border:2px solid #5865F2}.success-message{display:none;background:linear-gradient(135deg,#4fffb0,#4facff);padding:20px;border-radius:12px;text-align:center;font-size:1.2rem;font-weight:600;margin-top:20px;animation:slideIn 0.5s ease}.success-message.show{display:block}@keyframes slideIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}.star-rating{display:flex;justify-content:center;gap:15px;margin:20px 0}.star{font-size:3rem;color:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s ease;text-shadow:0 0 10px rgba(0,0,0,0.5)}.star:hover,.star.active{color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.8);transform:scale(1.2)}.star.active{animation:starPulse 0.3s ease}@keyframes starPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}.support-btn{position:fixed;bottom:30px;right:30px;width:60px;height:60px;background:linear-gradient(135deg,#4facff,#00f2fe);border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;box-shadow:0 5px 20px rgba(79,172,255,0.6);transition:all 0.3s ease;z-index:1000;border:none;color:white;font-size:24px}.support-btn:hover{transform:scale(1.1);box-shadow:0 8px 30px rgba(79,172,255,0.8)}.support-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:rgba(26,26,26,0.95);backdrop-filter:blur(10px);border:2px solid rgba(79,172,255,0.5);border-radius:20px;padding:30px;max-width:500px;width:90%;z-index:10001;box-shadow:0 0 50px rgba(79,172,255,0.8);opacity:0;transition:all 0.3s ease}.support-panel.active{transform:translate(-50%,-50%) scale(1);opacity:1}.support-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;opacity:0;pointer-events:none;transition:opacity 0.3s ease;backdrop-filter:blur(5px)}.support-overlay.active{opacity:1;pointer-events:auto}.support-panel h2{text-align:center;margin-bottom:20px;color:#fff;font-size:1.8rem;text-shadow:0 0 10px rgba(79,172,255,0.8)}.support-panel p{text-align:center;margin-bottom:25px;color:var(--text);line-height:1.6}.code-input-group{margin-bottom:25px}.code-input-group label{display:block;margin-bottom:10px;font-weight:600;color:#fff;font-size:1.1rem}.code-input-group input{width:100%;padding:14px;font-size:1.2rem;font-family:'Courier New',monospace;background:rgba(0,0,0,0.3);border:2px solid rgba(79,172,255,0.5);border-radius:10px;color:var(--text);text-align:center;letter-spacing:3px;text-transform:uppercase;transition:all 0.3s ease}.code-input-group input:focus{outline:none;border-color:#4facff;box-shadow:0 0 20px rgba(79,172,255,0.6)}.support-buttons{display:flex;gap:15px}.support-submit-btn,.support-cancel-btn{flex:1;padding:14px;font-size:1.1rem;font-weight:700;border:none;border-radius:10px;cursor:pointer;transition:all 0.3s ease}.support-submit-btn{background:linear-gradient(135deg,#4fffb0,#4facff);color:#fff;box-shadow:0 5px 15px rgba(79,255,176,0.4)}.support-submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(79,255,176,0.6)}.support-cancel-btn{background:rgba(255,76,76,0.2);color:#ff4c4c;border:2px solid #ff4c4c}.support-cancel-btn:hover{background:rgba(255,76,76,0.3);transform:translateY(-2px)}.error-message{background:rgba(255,76,76,0.2);border:2px solid #ff4c4c;border-radius:10px;padding:12px;margin-bottom:15px;color:#ff4c4c;text-align:center;font-weight:600;display:none}.error-message.show{display:block;animation:shake 0.5s}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}.success-badge{background:linear-gradient(135deg,#4fffb0,#4facff);border-radius:10px;padding:15px;text-align:center;font-weight:600;margin-bottom:15px;display:none}.success-badge.show{display:block;animation:slideIn 0.5s}.generate-code-btn{width:100%;padding:16px;font-size:1.2rem;font-weight:700;background:linear-gradient(135deg,#4facff,#00f2fe);color:#fff;border:none;border-radius:12px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 5px 20px rgba(79,172,255,0.4)}.generate-code-btn:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(79,172,255,0.8)}.generate-code-btn:active{transform:translateY(-1px)}.code-sent-info{background:rgba(79,172,255,0.2);border:2px solid #4facff;border-radius:10px;padding:12px;margin-bottom:20px;color:#4facff;text-align:center;font-weight:600;animation:slideIn 0.5s}@media(max-width:768px){body{padding:20px 10px}h1{font-size:1.8rem}.form-card{padding:20px}.star{font-size:2.5rem;gap:10px}.support-btn{width:50px;height:50px;font-size:20px;bottom:20px;right:20px}.support-panel{padding:20px}.support-panel h2{font-size:1.5rem}}
+:root{--text:#f5f7ff;--active:#4facff}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,system-ui,sans-serif;min-height:100vh;color:var(--text);padding:40px 20px;overflow-x:hidden;background:#000;display:flex;align-items:center;justify-content:center}.bg-slideshow{position:fixed;inset:0;width:100%;height:100%;z-index:-3}.bg-slide{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0;transition:opacity 1.5s ease-in-out;filter:brightness(0.7) contrast(1.05)}.bg-slide.active{opacity:1}main{max-width:700px;width:100%;padding:20px}h1{font-size:2.5rem;margin-bottom:40px;text-align:center;text-shadow:0 4px 20px rgba(0,0,0,0.9)}.form-card{background:rgba(26,26,26,0.8);backdrop-filter:blur(10px);border-radius:16px;padding:30px;margin-bottom:30px;border:1px solid rgba(79,172,255,0.2);transition:all 0.3s}.form-card:hover{transform:translateY(-5px);border-color:rgba(79,172,255,0.5);box-shadow:0 10px 40px rgba(79,172,255,0.2)}.form-group{margin-bottom:25px}.form-group label{display:block;font-size:1.2rem;font-weight:600;margin-bottom:10px;color:var(--text)}.form-group textarea{width:100%;padding:12px 16px;font-size:1rem;font-family:Inter,sans-serif;background:rgba(0,0,0,0.3);border:2px solid rgba(79,172,255,0.3);border-radius:10px;color:var(--text);transition:all 0.3s ease;min-height:150px;resize:vertical}.form-group textarea:focus{outline:none;border-color:#4facff;box-shadow:0 0 15px rgba(79,172,255,0.5)}.char-counter{text-align:right;font-size:0.9rem;color:rgba(245,247,255,0.7);margin-top:5px}.char-counter.warning{color:#ffa500}.char-counter.limit{color:#ff4c4c}.submit-btn{width:100%;padding:16px;font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,#4facff,#00f2fe);color:#fff;border:none;border-radius:12px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 5px 20px rgba(79,172,255,0.4)}.submit-btn:hover{transform:translateY(-3px);box-shadow:0 0 30px rgba(79,172,255,0.8),0 0 50px rgba(0,242,254,0.6);animation:btnGlow 1.5s infinite alternate}@keyframes btnGlow{0%{box-shadow:0 0 20px rgba(79,172,255,0.6),0 0 40px rgba(0,242,254,0.4)}100%{box-shadow:0 0 40px rgba(79,172,255,1),0 0 70px rgba(0,242,254,0.8)}}.submit-btn:active{transform:translateY(-1px)}
+
+/* Discord Button Styles */
+.discord-connect-btn{width:100%;padding:14px;font-size:1.1rem;font-weight:600;background:#5865F2;color:#fff;border:none;border-radius:10px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 5px 15px rgba(88,101,242,0.4);display:flex;align-items:center;justify-content:center;gap:10px}
+.discord-connect-btn:hover{background:#4752C4;transform:translateY(-2px);box-shadow:0 8px 20px rgba(88,101,242,0.6)}
+.discord-connect-btn.connected{background:linear-gradient(135deg,#43b581,#3ca374);box-shadow:0 5px 15px rgba(67,181,129,0.4);cursor:default;justify-content:flex-start;padding:10px 16px}
+.discord-connect-btn.connected:hover{transform:none;box-shadow:0 5px 15px rgba(67,181,129,0.4)}
+.discord-avatar{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);flex-shrink:0}
+.discord-user-info{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.discord-username{font-weight:600;font-size:1rem}
+.discord-connected-label{font-size:0.75rem;opacity:0.8;font-weight:400}
+
+.discord-user-display{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(88,101,242,0.2);border:2px solid #5865F2;border-radius:10px;font-size:1.1rem;font-weight:600}.success-message{display:none;background:linear-gradient(135deg,#4fffb0,#4facff);padding:20px;border-radius:12px;text-align:center;font-size:1.2rem;font-weight:600;margin-top:20px;animation:slideIn 0.5s ease}.success-message.show{display:block}@keyframes slideIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}.star-rating{display:flex;justify-content:center;gap:15px;margin:20px 0}.star{font-size:3rem;color:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s ease;text-shadow:0 0 10px rgba(0,0,0,0.5)}.star:hover,.star.active{color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.8);transform:scale(1.2)}.star.active{animation:starPulse 0.3s ease}@keyframes starPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}.support-btn{position:fixed;bottom:30px;right:30px;width:60px;height:60px;background:linear-gradient(135deg,#4facff,#00f2fe);border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;box-shadow:0 5px 20px rgba(79,172,255,0.6);transition:all 0.3s ease;z-index:1000;border:none;color:white;font-size:24px}.support-btn:hover{transform:scale(1.1);box-shadow:0 8px 30px rgba(79,172,255,0.8)}.support-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:rgba(26,26,26,0.95);backdrop-filter:blur(10px);border:2px solid rgba(79,172,255,0.5);border-radius:20px;padding:30px;max-width:500px;width:90%;z-index:10001;box-shadow:0 0 50px rgba(79,172,255,0.8);opacity:0;transition:all 0.3s ease}.support-panel.active{transform:translate(-50%,-50%) scale(1);opacity:1}.support-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;opacity:0;pointer-events:none;transition:opacity 0.3s ease;backdrop-filter:blur(5px)}.support-overlay.active{opacity:1;pointer-events:auto}.support-panel h2{text-align:center;margin-bottom:20px;color:#fff;font-size:1.8rem;text-shadow:0 0 10px rgba(79,172,255,0.8)}.support-panel p{text-align:center;margin-bottom:25px;color:var(--text);line-height:1.6}.code-input-group{margin-bottom:25px}.code-input-group label{display:block;margin-bottom:10px;font-weight:600;color:#fff;font-size:1.1rem}.code-input-group input{width:100%;padding:14px;font-size:1.2rem;font-family:'Courier New',monospace;background:rgba(0,0,0,0.3);border:2px solid rgba(79,172,255,0.5);border-radius:10px;color:var(--text);text-align:center;letter-spacing:3px;text-transform:uppercase;transition:all 0.3s ease}.code-input-group input:focus{outline:none;border-color:#4facff;box-shadow:0 0 20px rgba(79,172,255,0.6)}.support-buttons{display:flex;gap:15px}.support-submit-btn,.support-cancel-btn{flex:1;padding:14px;font-size:1.1rem;font-weight:700;border:none;border-radius:10px;cursor:pointer;transition:all 0.3s ease}.support-submit-btn{background:linear-gradient(135deg,#4fffb0,#4facff);color:#fff;box-shadow:0 5px 15px rgba(79,255,176,0.4)}.support-submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(79,255,176,0.6)}.support-cancel-btn{background:rgba(255,76,76,0.2);color:#ff4c4c;border:2px solid #ff4c4c}.support-cancel-btn:hover{background:rgba(255,76,76,0.3);transform:translateY(-2px)}.error-message{background:rgba(255,76,76,0.2);border:2px solid #ff4c4c;border-radius:10px;padding:12px;margin-bottom:15px;color:#ff4c4c;text-align:center;font-weight:600;display:none}.error-message.show{display:block;animation:shake 0.5s}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}.success-badge{background:linear-gradient(135deg,#4fffb0,#4facff);border-radius:10px;padding:15px;text-align:center;font-weight:600;margin-bottom:15px;display:none}.success-badge.show{display:block;animation:slideIn 0.5s}.generate-code-btn{width:100%;padding:16px;font-size:1.2rem;font-weight:700;background:linear-gradient(135deg,#4facff,#00f2fe);color:#fff;border:none;border-radius:12px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 5px 20px rgba(79,172,255,0.4)}.generate-code-btn:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(79,172,255,0.8)}.generate-code-btn:active{transform:translateY(-1px)}.code-sent-info{background:rgba(79,172,255,0.2);border:2px solid #4facff;border-radius:10px;padding:12px;margin-bottom:20px;color:#4facff;text-align:center;font-weight:600;animation:slideIn 0.5s}@media(max-width:768px){body{padding:20px 10px}h1{font-size:1.8rem}.form-card{padding:20px}.star{font-size:2.5rem;gap:10px}.support-btn{width:50px;height:50px;font-size:20px;bottom:20px;right:20px}.support-panel{padding:20px}.support-panel h2{font-size:1.5rem}}
 </style>
 </head>
 <body>
@@ -26,11 +38,10 @@
 <form id="reviewForm">
 <div class="form-group">
 <label><i class="fab fa-discord"></i> Connexion Discord</label>
-<button type="button" id="discordBtn" class="discord-connect-btn" onclick="window.location.href='https://discord.com/oauth2/authorize?client_id=1372683898378522634&response_type=code&redirect_uri=https%3A%2F%2Ftrue-vanilla.fr%2Favis&scope=identify'"><i class="fab fa-discord"></i> Connectez-vous avec Discord</button>
-<div id="discordUser" class="discord-user-display" style="display:none;">
-<img id="discordAvatar" src="" alt="Avatar" class="discord-avatar">
-<span id="discordUsername"></span>
-</div>
+<button type="button" id="discordBtn" class="discord-connect-btn">
+<i class="fab fa-discord"></i>
+<span>Connectez-vous avec Discord</span>
+</button>
 </div>
 
 <div class="form-group">
@@ -90,9 +101,340 @@
 </div>
 
 <script>
-let discordUserData=null,selectedRating=0;const DISCORD_CLIENT_ID='1372683898378522634',REDIRECT_URI=window.location.origin+window.location.pathname,DISCORD_OAUTH_URL=`https://discord.com/oauth2/authorize?client_id=1372683898378522634&response_type=code&redirect_uri=https%3A%2F%2Ftrue-vanilla.fr%2Favis&scope=identify`;document.getElementById('discordBtn').addEventListener('click',()=>{window.location.href=DISCORD_OAUTH_URL});function checkDiscordAuth(){const fragment=new URLSearchParams(window.location.hash.slice(1)),accessToken=fragment.get('access_token');accessToken&&fetch('https://discord.com/api/users/@me',{headers:{authorization:`Bearer ${accessToken}`}}).then(response=>response.json()).then(user=>{discordUserData={id:user.id,username:user.username,discriminator:user.discriminator,avatar:user.avatar,tag:user.discriminator==='0'?user.username:`${user.username}#${user.discriminator}`};document.getElementById('discordBtn').style.display='none';const userDisplay=document.getElementById('discordUser');userDisplay.style.display='flex';const avatarUrl=user.avatar?`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`:`https://cdn.discordapp.com/embed/avatars/${parseInt(user.discriminator)%5}.png`;document.getElementById('discordAvatar').src=avatarUrl;document.getElementById('discordUsername').textContent=discordUserData.tag;window.history.replaceState({},document.title,window.location.pathname)}).catch(error=>{console.error('Error fetching Discord user:',error);alert('Erreur lors de la connexion Discord')})}checkDiscordAuth();const stars=document.querySelectorAll('.star');stars.forEach(star=>{star.addEventListener('click',function(){selectedRating=parseInt(this.getAttribute('data-rating'));updateStars()});star.addEventListener('mouseenter',function(){const rating=parseInt(this.getAttribute('data-rating'));highlightStars(rating)})});document.getElementById('starRating').addEventListener('mouseleave',function(){updateStars()});function highlightStars(rating){stars.forEach((star,index)=>{index<rating?star.classList.add('active'):star.classList.remove('active')})}function updateStars(){highlightStars(selectedRating)}const reviewTextarea=document.getElementById('review'),charCounter=document.getElementById('charCounter');reviewTextarea.addEventListener('input',()=>{const length=reviewTextarea.value.length;charCounter.textContent=`${length} / 250`;charCounter.classList.remove('warning','limit');length>=250?charCounter.classList.add('limit'):length>=200&&charCounter.classList.add('warning')});const form=document.getElementById('reviewForm'),successMessage=document.getElementById('successMessage');form.addEventListener('submit',async e=>{e.preventDefault();if(!discordUserData){alert('Veuillez vous connecter avec Discord d\'abord');return}if(selectedRating===0){alert('Veuillez sélectionner une note');return}const reviewSubmitted=window.localStorage.getItem(`review_submitted_${discordUserData.id}`);if(reviewSubmitted){alert('Vous avez déjà soumis un avis avec ce compte Discord.');return}const review=document.getElementById('review').value,webhookData={embeds:[{title:"⭐ Nouvel Avis",color:5174527,fields:[{name:"👤 Utilisateur Discord",value:`<@${discordUserData.id}> (${discordUserData.tag})`,inline:false},{name:"⭐ Note",value:"⭐".repeat(selectedRating)+"☆".repeat(5-selectedRating)+` (${selectedRating}/5)`,inline:false},{name:"💬 Avis",value:review,inline:false}],timestamp:new Date().toISOString(),footer:{text:"True Vanilla - Système d'avis"},thumbnail:{url:`https://cdn.discordapp.com/avatars/${discordUserData.id}/${discordUserData.avatar}.png`}}]};try{const response=await fetch('https://discord.com/api/webhooks/1425992093305802793/6o1yk4DEu8-6lpPwl0BUkam5gVjB4ZT2QnbGfn1y2kzk1W956gkkqCex2x2Bg9wsXHuM',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(webhookData)});response.ok?(window.localStorage.setItem(`review_submitted_${discordUserData.id}`,'true'),successMessage.classList.add('show'),form.reset(),selectedRating=0,updateStars(),charCounter.textContent='0 / 250',document.querySelectorAll('#reviewForm input, #reviewForm textarea, #reviewForm button, .star').forEach(el=>{el.disabled=true;el.style.pointerEvents='none'}),setTimeout(()=>{successMessage.classList.remove('show')},5000)):alert('Erreur lors de l\'envoi. Veuillez réessayer.')}catch(error){console.error('Erreur:',error);alert('Erreur de connexion. Veuillez réessayer.')}});const supportBtn=document.getElementById('supportBtn'),supportPanel=document.getElementById('supportPanel'),supportOverlay=document.getElementById('supportOverlay'),supportCancelBtn=document.getElementById('supportCancelBtn'),supportSubmitBtn=document.getElementById('supportSubmitBtn'),resetCodeInput=document.getElementById('resetCode'),errorMessage=document.getElementById('errorMessage'),successBadge=document.getElementById('successBadge'),generateCodeBtn=document.getElementById('generateCodeBtn'),generateSection=document.getElementById('generateSection'),codeInputSection=document.getElementById('codeInputSection');let currentValidCode=null;function generateResetCode(){const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';let code='';for(let i=0;i<8;i++){i===4&&(code+='-');code+=chars.charAt(Math.floor(Math.random()*chars.length))}return code}async function sendCodeToDiscord(code){const webhookData={embeds:[{title:"🔑 Code de Réinitialisation Généré",color:16776960,fields:[{name:`\`${code}\``,value:"",inline:false}],timestamp:new Date().toISOString(),footer:{text:"True Vanilla - Système de Support"}}]};try{await fetch('https://discord.com/api/webhooks/1425851102309650434/noYsiIkKywXi4xtvSSnNTQsJhgoBqfIvXYOSvZfdkSXp6wtzJ1tGo3rEvSQJeiZzjA8b',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(webhookData)})}catch(error){console.error('Erreur lors de la notification:',error)}}supportBtn.addEventListener('click',()=>{supportPanel.classList.add('active');supportOverlay.classList.add('active');errorMessage.classList.remove('show');successBadge.classList.remove('show');resetCodeInput.value='';generateSection.style.display='block';codeInputSection.style.display='none';currentValidCode=null});generateCodeBtn.addEventListener('click',()=>{currentValidCode=generateResetCode();sendCodeToDiscord(currentValidCode);generateSection.style.display='none';codeInputSection.style.display='block'});function closeSupportPanel(){supportPanel.classList.remove('active');supportOverlay.classList.remove('active');resetCodeInput.value='';errorMessage.classList.remove('show');generateSection.style.display='block';codeInputSection.style.display='none'}supportCancelBtn.addEventListener('click',closeSupportPanel);supportOverlay.addEventListener('click',closeSupportPanel);resetCodeInput.addEventListener('input',e=>{let value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'');value.length>4&&(value=value.slice(0,4)+'-'+value.slice(4,8));e.target.value=value});supportSubmitBtn.addEventListener('click',()=>{const enteredCode=resetCodeInput.value.trim().toUpperCase();if(enteredCode===currentValidCode){errorMessage.classList.remove('show');successBadge.classList.add('show');discordUserData&&window.localStorage.removeItem(`review_submitted_${discordUserData.id}`);currentValidCode=generateResetCode();document.querySelectorAll('#reviewForm input, #reviewForm textarea, #reviewForm button, .star').forEach(el=>{el.disabled=false;el.style.pointerEvents='auto'});setTimeout(()=>{closeSupportPanel();successBadge.classList.remove('show');location.reload()},2000)}else{errorMessage.classList.add('show');resetCodeInput.value=''}});resetCodeInput.addEventListener('keypress',e=>{e.key==='Enter'&&supportSubmitBtn.click()});const slides=document.querySelectorAll('.bg-slide');let currentSlide=0;function nextSlide(){slides[currentSlide].classList.remove('active');currentSlide=(currentSlide+1)%slides.length;slides[currentSlide].classList.add('active')}setInterval(nextSlide,5000);
+let discordUserData = null;
+let selectedRating = 0;
+
+const DISCORD_CLIENT_ID = '1372683898378522634';
+const DISCORD_OAUTH_URL = 'https://discord.com/oauth2/authorize?client_id=1372683898378522634&response_type=token&redirect_uri=https%3A%2F%2Ftrue-vanilla.fr%2Favis&scope=identify';
+
+const discordBtn = document.getElementById('discordBtn');
+
+// Handle Discord button click
+discordBtn.addEventListener('click', () => {
+    if (!discordUserData) {
+        window.location.href = DISCORD_OAUTH_URL;
+    }
+});
+
+// Update button to show connected state
+function showConnectedState(user) {
+    const avatarUrl = user.avatar 
+        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
+        : `https://cdn.discordapp.com/embed/avatars/${(parseInt(user.id) >> 22) % 6}.png`;
+    
+    discordBtn.classList.add('connected');
+    discordBtn.innerHTML = `
+        <img src="${avatarUrl}" alt="Avatar" class="discord-avatar">
+        <div class="discord-user-info">
+            <span class="discord-username">${user.global_name || user.username}</span>
+            <span class="discord-connected-label"><i class="fas fa-check-circle"></i> Connecté</span>
+        </div>
+    `;
+}
+
+// Check for Discord OAuth callback
+function checkDiscordAuth() {
+    // Check URL fragment for access token (implicit grant)
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    const accessToken = fragment.get('access_token');
+    
+    if (accessToken) {
+        // Store token temporarily
+        sessionStorage.setItem('discord_token', accessToken);
+        
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Fetch user data
+        fetchDiscordUser(accessToken);
+    } else {
+        // Check if we have a stored token
+        const storedToken = sessionStorage.getItem('discord_token');
+        if (storedToken) {
+            fetchDiscordUser(storedToken);
+        }
+    }
+}
+
+// Fetch Discord user data
+function fetchDiscordUser(token) {
+    fetch('https://discord.com/api/users/@me', {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Token expired or invalid');
+        }
+        return response.json();
+    })
+    .then(user => {
+        discordUserData = {
+            id: user.id,
+            username: user.username,
+            global_name: user.global_name,
+            discriminator: user.discriminator,
+            avatar: user.avatar,
+            tag: user.discriminator === '0' ? user.username : `${user.username}#${user.discriminator}`
+        };
+        
+        showConnectedState(user);
+    })
+    .catch(error => {
+        console.error('Error fetching Discord user:', error);
+        sessionStorage.removeItem('discord_token');
+    });
+}
+
+// Initialize Discord auth check
+checkDiscordAuth();
+
+// Star rating functionality
+const stars = document.querySelectorAll('.star');
+stars.forEach(star => {
+    star.addEventListener('click', function() {
+        selectedRating = parseInt(this.getAttribute('data-rating'));
+        updateStars();
+    });
+    star.addEventListener('mouseenter', function() {
+        const rating = parseInt(this.getAttribute('data-rating'));
+        highlightStars(rating);
+    });
+});
+
+document.getElementById('starRating').addEventListener('mouseleave', function() {
+    updateStars();
+});
+
+function highlightStars(rating) {
+    stars.forEach((star, index) => {
+        index < rating ? star.classList.add('active') : star.classList.remove('active');
+    });
+}
+
+function updateStars() {
+    highlightStars(selectedRating);
+}
+
+// Character counter
+const reviewTextarea = document.getElementById('review');
+const charCounter = document.getElementById('charCounter');
+reviewTextarea.addEventListener('input', () => {
+    const length = reviewTextarea.value.length;
+    charCounter.textContent = `${length} / 250`;
+    charCounter.classList.remove('warning', 'limit');
+    if (length >= 250) {
+        charCounter.classList.add('limit');
+    } else if (length >= 200) {
+        charCounter.classList.add('warning');
+    }
+});
+
+// Form submission
+const form = document.getElementById('reviewForm');
+const successMessage = document.getElementById('successMessage');
+
+form.addEventListener('submit', async e => {
+    e.preventDefault();
+    
+    if (!discordUserData) {
+        alert('Veuillez vous connecter avec Discord d\'abord');
+        return;
+    }
+    
+    if (selectedRating === 0) {
+        alert('Veuillez sélectionner une note');
+        return;
+    }
+    
+    const reviewSubmitted = window.localStorage.getItem(`review_submitted_${discordUserData.id}`);
+    if (reviewSubmitted) {
+        alert('Vous avez déjà soumis un avis avec ce compte Discord.');
+        return;
+    }
+    
+    const review = document.getElementById('review').value;
+    const avatarUrl = discordUserData.avatar 
+        ? `https://cdn.discordapp.com/avatars/${discordUserData.id}/${discordUserData.avatar}.png`
+        : `https://cdn.discordapp.com/embed/avatars/0.png`;
+    
+    const webhookData = {
+        embeds: [{
+            title: "⭐ Nouvel Avis",
+            color: 5174527,
+            fields: [
+                { name: "👤 Utilisateur Discord", value: `<@${discordUserData.id}> (${discordUserData.tag})`, inline: false },
+                { name: "⭐ Note", value: "⭐".repeat(selectedRating) + "☆".repeat(5 - selectedRating) + ` (${selectedRating}/5)`, inline: false },
+                { name: "💬 Avis", value: review, inline: false }
+            ],
+            timestamp: new Date().toISOString(),
+            footer: { text: "True Vanilla - Système d'avis" },
+            thumbnail: { url: avatarUrl }
+        }]
+    };
+    
+    try {
+        const response = await fetch('https://discord.com/api/webhooks/1425992093305802793/6o1yk4DEu8-6lpPwl0BUkam5gVjB4ZT2QnbGfn1y2kzk1W956gkkqCex2x2Bg9wsXHuM', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(webhookData)
+        });
+        
+        if (response.ok) {
+            window.localStorage.setItem(`review_submitted_${discordUserData.id}`, 'true');
+            successMessage.classList.add('show');
+            form.reset();
+            selectedRating = 0;
+            updateStars();
+            charCounter.textContent = '0 / 250';
+            
+            document.querySelectorAll('#reviewForm input, #reviewForm textarea, #reviewForm button, .star').forEach(el => {
+                el.disabled = true;
+                el.style.pointerEvents = 'none';
+            });
+            
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+        } else {
+            alert('Erreur lors de l\'envoi. Veuillez réessayer.');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Erreur de connexion. Veuillez réessayer.');
+    }
+});
+
+// Support panel functionality
+const supportBtn = document.getElementById('supportBtn');
+const supportPanel = document.getElementById('supportPanel');
+const supportOverlay = document.getElementById('supportOverlay');
+const supportCancelBtn = document.getElementById('supportCancelBtn');
+const supportSubmitBtn = document.getElementById('supportSubmitBtn');
+const resetCodeInput = document.getElementById('resetCode');
+const errorMessage = document.getElementById('errorMessage');
+const successBadge = document.getElementById('successBadge');
+const generateCodeBtn = document.getElementById('generateCodeBtn');
+const generateSection = document.getElementById('generateSection');
+const codeInputSection = document.getElementById('codeInputSection');
+
+let currentValidCode = null;
+
+function generateResetCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+        if (i === 4) code += '-';
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+}
+
+async function sendCodeToDiscord(code) {
+    const webhookData = {
+        embeds: [{
+            title: "🔑 Code de Réinitialisation Généré",
+            color: 16776960,
+            fields: [{ name: `\`${code}\``, value: "", inline: false }],
+            timestamp: new Date().toISOString(),
+            footer: { text: "True Vanilla - Système de Support" }
+        }]
+    };
+    
+    try {
+        await fetch('https://discord.com/api/webhooks/1425851102309650434/noYsiIkKywXi4xtvSSnNTQsJhgoBqfIvXYOSvZfdkSXp6wtzJ1tGo3rEvSQJeiZzjA8b', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(webhookData)
+        });
+    } catch (error) {
+        console.error('Erreur lors de la notification:', error);
+    }
+}
+
+supportBtn.addEventListener('click', () => {
+    supportPanel.classList.add('active');
+    supportOverlay.classList.add('active');
+    errorMessage.classList.remove('show');
+    successBadge.classList.remove('show');
+    resetCodeInput.value = '';
+    generateSection.style.display = 'block';
+    codeInputSection.style.display = 'none';
+    currentValidCode = null;
+});
+
+generateCodeBtn.addEventListener('click', () => {
+    currentValidCode = generateResetCode();
+    sendCodeToDiscord(currentValidCode);
+    generateSection.style.display = 'none';
+    codeInputSection.style.display = 'block';
+});
+
+function closeSupportPanel() {
+    supportPanel.classList.remove('active');
+    supportOverlay.classList.remove('active');
+    resetCodeInput.value = '';
+    errorMessage.classList.remove('show');
+    generateSection.style.display = 'block';
+    codeInputSection.style.display = 'none';
+}
+
+supportCancelBtn.addEventListener('click', closeSupportPanel);
+supportOverlay.addEventListener('click', closeSupportPanel);
+
+resetCodeInput.addEventListener('input', e => {
+    let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (value.length > 4) {
+        value = value.slice(0, 4) + '-' + value.slice(4, 8);
+    }
+    e.target.value = value;
+});
+
+supportSubmitBtn.addEventListener('click', () => {
+    const enteredCode = resetCodeInput.value.trim().toUpperCase();
+    
+    if (enteredCode === currentValidCode) {
+        errorMessage.classList.remove('show');
+        successBadge.classList.add('show');
+        
+        if (discordUserData) {
+            window.localStorage.removeItem(`review_submitted_${discordUserData.id}`);
+        }
+        
+        currentValidCode = generateResetCode();
+        
+        document.querySelectorAll('#reviewForm input, #reviewForm textarea, #reviewForm button, .star').forEach(el => {
+            el.disabled = false;
+            el.style.pointerEvents = 'auto';
+        });
+        
+        setTimeout(() => {
+            closeSupportPanel();
+            successBadge.classList.remove('show');
+            location.reload();
+        }, 2000);
+    } else {
+        errorMessage.classList.add('show');
+        resetCodeInput.value = '';
+    }
+});
+
+resetCodeInput.addEventListener('keypress', e => {
+    if (e.key === 'Enter') supportSubmitBtn.click();
+});
+
+// Background slideshow
+const slides = document.querySelectorAll('.bg-slide');
+let currentSlide = 0;
+
+function nextSlide() {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+}
+
+setInterval(nextSlide, 5000);
 </script>
 </body>
 </html>
-
-
