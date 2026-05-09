@@ -845,6 +845,64 @@
     border-radius: 999px;
     flex-shrink: 0;
   }
+  .notes-section { padding-top: 6px; }
+  .note-box {
+    background: var(--bg-section);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .note-box.editable {
+    background: var(--bg-card-hover);
+    border-color: var(--border-strong);
+  }
+  .note-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .note-head img { width: 28px; height: 28px; border-radius: 50%; }
+  .note-head .staff-placeholder { width: 28px; height: 28px; }
+  .note-author {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .note-author .you-tag {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--accent); margin-left: 6px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .note-textarea {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 13.5px;
+    line-height: 1.55;
+    padding: 10px 12px;
+    min-height: 72px;
+    resize: vertical;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .note-textarea::placeholder { color: var(--text-faint); }
+  .note-textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .note-textarea[readonly] {
+    cursor: default;
+    background: var(--bg);
+    color: var(--text-muted);
+  }
+  .note-save-btn {
+    margin-top: 10px;
+    padding: 8px 18px;
+    font-size: 13px;
+  }
   .modal-close {
     background: transparent;
     border: 1px solid var(--border);
@@ -1127,6 +1185,15 @@ async function deleteApplicationByDiscordId(discordId) {
   const { error } = await supa
     .from('applications')
     .delete()
+    .eq('discord_id', discordId);
+  return { error };
+}
+
+async function updateApplicationNotes(discordId, notes) {
+  if (!supa) return { error: 'no supabase' };
+  const { error } = await supa
+    .from('applications')
+    .update({ notes })
     .eq('discord_id', discordId);
   return { error };
 }
@@ -1604,6 +1671,32 @@ function viewModal() {
               </div>`;
             }).join('')}
           </div>
+          <div class="ans-section notes-section">
+            <h3>Notes Staff</h3>
+            ${CONFIG.ADMIN_IDS.map(adminId => {
+              const isMe = adminId === state.user.id;
+              const staff = state.staff.find(s => s.discord_id === adminId);
+              const noteText = (a.notes && a.notes[adminId]) || '';
+              const name = staff ? staff.username : adminId;
+              const avatar = staff ? staff.avatar : '';
+              const placeholder = isMe ? 'Ajouter une note privée…' : (noteText ? '' : 'Aucune note pour le moment');
+              return `<div class="note-box ${isMe ? 'editable' : 'readonly'}">
+                <div class="note-head">
+                  ${avatar
+                    ? `<img src="${escapeHtml(avatar)}" alt="" onerror="this.style.opacity=0">`
+                    : '<div class="staff-placeholder">?</div>'}
+                  <div class="note-author">
+                    ${escapeHtml(name)}${isMe ? '<span class="you-tag">vous</span>' : ''}
+                  </div>
+                </div>
+                <textarea id="note-textarea-${adminId}"
+                          class="note-textarea"
+                          ${isMe ? '' : 'readonly'}
+                          placeholder="${escapeHtml(placeholder)}">${escapeHtml(noteText)}</textarea>
+                ${isMe ? `<button class="primary-btn note-save-btn" onclick="saveNote('${adminId}', this)">Enregistrer la note</button>` : ''}
+              </div>`;
+            }).join('')}
+          </div>
         </div>
       </div>
     </div>`;
@@ -1780,6 +1873,37 @@ async function confirmDeleteApp(discordId) {
   render();
 }
 
+async function saveNote(adminId, button) {
+  if (!state.modal) return;
+  if (adminId !== state.user.id) return;
+  const appId = state.modal.discord_id;
+  const textarea = document.getElementById(`note-textarea-${adminId}`);
+  if (!textarea) return;
+  const text = textarea.value;
+  const app = state.applications.find(a => a.discord_id === appId);
+  if (!app) return;
+  const newNotes = Object.assign({}, app.notes || {}, { [adminId]: text });
+  const originalLabel = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Enregistrement…';
+  const { error } = await updateApplicationNotes(appId, newNotes);
+  if (error) {
+    alert('Erreur lors de l\'enregistrement : ' + (error.message || error));
+    button.textContent = originalLabel;
+    button.disabled = false;
+    return;
+  }
+  app.notes = newNotes;
+  if (state.modal && state.modal.discord_id === appId) {
+    state.modal.notes = newNotes;
+  }
+  button.textContent = 'Enregistré ✓';
+  setTimeout(() => {
+    button.textContent = originalLabel;
+    button.disabled = false;
+  }, 1500);
+}
+
 function enterTestMode() {
   state.testMode = true;
   state.checks = [false, false, false];
@@ -1813,7 +1937,7 @@ Object.assign(window, {
   goDisclaimers, goPersonal, goHelper, goQuizIntro,
   startQuiz, selectOption, prevQuestion, validateQuestion,
   goAdmin, enterTestMode, exitTestMode, openModal, closeModal,
-  setAdminTab, decide, confirmDeleteApp
+  setAdminTab, decide, confirmDeleteApp, saveNote
 });
 
 async function boot() {
