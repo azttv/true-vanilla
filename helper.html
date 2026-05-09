@@ -675,6 +675,8 @@
   .decision-btn.reject:hover { background: var(--danger-soft); border-color: var(--danger); color: var(--danger); }
   .decision-btn.accept.active { background: var(--success-soft); border-color: var(--success); color: var(--success); }
   .decision-btn.reject.active { background: var(--danger-soft); border-color: var(--danger); color: var(--danger); }
+  .decision-btn.delete { color: var(--text-faint); }
+  .decision-btn.delete:hover { background: var(--danger-soft); border-color: var(--danger); color: var(--danger); }
 
   .empty {
     text-align: center;
@@ -909,6 +911,7 @@ const CONFIG = {
    create policy "anyone insert" on applications for insert with check (true);
    create policy "anyone read"   on applications for select using (true);
    create policy "anyone update" on applications for update using (true);
+   create policy "anyone delete" on applications for delete using (true);
 
    create table staff (
      discord_id text primary key,
@@ -1127,6 +1130,15 @@ async function updateApplicationStatus(discordId, status) {
   const { error } = await supa
     .from('applications')
     .update({ status })
+    .eq('discord_id', discordId);
+  return { error };
+}
+
+async function deleteApplicationByDiscordId(discordId) {
+  if (!supa) return { error: 'no supabase' };
+  const { error } = await supa
+    .from('applications')
+    .delete()
     .eq('discord_id', discordId);
   return { error };
 }
@@ -1461,6 +1473,7 @@ function viewAdmin() {
   ];
   const checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
   const xSvg     = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  const banSvg   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>';
 
   return `
     <main><div class="container-wide">
@@ -1504,6 +1517,11 @@ function viewAdmin() {
                                 title="Refuser"
                                 onclick='decide(${JSON.stringify(a.discord_id)}, "rejected")'>
                           ${xSvg}
+                        </button>
+                        <button class="decision-btn delete"
+                                title="Supprimer la candidature"
+                                onclick='confirmDeleteApp(${JSON.stringify(a.discord_id)})'>
+                          ${banSvg}
                         </button>
                       </div>
                     </div>`;
@@ -1647,7 +1665,10 @@ function logout() {
 
 function toggleCheck(i) {
   state.checks[i] = !state.checks[i];
-  render();
+  // Update only the next button's disabled state — avoid re-rendering and re-animating
+  const allChecked = state.checks.every(Boolean);
+  const btn = document.querySelector('main .actions .primary-btn');
+  if (btn) btn.disabled = !allChecked;
 }
 
 function setField(store, id, val) {
@@ -1673,7 +1694,15 @@ function startQuiz()     {
   state.quizSelected = null;
   render();
 }
-function selectOption(j) { state.quizSelected = j; render(); }
+function selectOption(j) {
+  state.quizSelected = j;
+  // Update selected class directly to avoid re-rendering the card (which would re-animate)
+  document.querySelectorAll('.quiz-option').forEach((el, idx) => {
+    el.classList.toggle('selected', idx === j);
+  });
+  const btn = document.querySelector('main .actions .primary-btn');
+  if (btn) btn.disabled = false;
+}
 function prevQuestion() {
   if (state.quizIndex > 0) {
     state.quizIndex--;
@@ -1754,6 +1783,26 @@ async function decide(discordId, decision) {
   }
 }
 
+async function confirmDeleteApp(discordId) {
+  const app = state.applications.find(a => a.discord_id === discordId);
+  if (!app) return;
+  const ok = confirm(
+    `Supprimer définitivement la candidature de ${app.discord_username} ?\n\n` +
+    `Cette action est irréversible. Le candidat pourra alors soumettre une nouvelle candidature.`
+  );
+  if (!ok) return;
+  const { error } = await deleteApplicationByDiscordId(discordId);
+  if (error) {
+    alert('Erreur lors de la suppression : ' + (error.message || error));
+    return;
+  }
+  state.applications = state.applications.filter(a => a.discord_id !== discordId);
+  if (state.modal && state.modal.discord_id === discordId) {
+    state.modal = null;
+  }
+  render();
+}
+
 function enterTestMode() {
   state.testMode = true;
   state.checks = [false, false, false];
@@ -1788,7 +1837,7 @@ Object.assign(window, {
   goDisclaimers, goPersonal, goHelper, goQuizIntro,
   startQuiz, selectOption, prevQuestion, validateQuestion,
   goAdmin, enterTestMode, exitTestMode, openModal, closeModal,
-  setAdminTab, decide
+  setAdminTab, decide, confirmDeleteApp
 });
 
 /* ============================================================
