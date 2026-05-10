@@ -1322,6 +1322,23 @@ function viewDone() {
     </div>`;
 }
 
+function viewClosed() {
+  const hasApplied = state.hasApplied === true;
+  const eyebrow = hasApplied ? '— Candidature reçue' : '— Candidatures fermées';
+  const title = hasApplied ? 'Merci !' : 'Candidatures fermées';
+  const sub = hasApplied
+    ? `Les candidatures sont désormais fermées. Votre candidature a bien été enregistrée — nous reviendrons vers vous d'ici environ une semaine.`
+    : `Les candidatures sont désormais fermées. Il n'est plus possible de postuler pour le moment.`;
+  return `
+    <div class="final">
+      <div class="final-card">
+        <div class="login-eyebrow">${eyebrow}</div>
+        <h1 class="final-title animate-in">${title}</h1>
+        <p class="final-sub animate-in">${sub}</p>
+      </div>
+    </div>`;
+}
+
 function viewProgress(active) {
   
   const steps = ['disclaimers', 'personal', 'helper', 'quiz'];
@@ -1715,6 +1732,7 @@ function render() {
     case 'quizIntro':   body = viewTopbar() + viewQuizIntro(); break;
     case 'quiz':        body = viewTopbar() + viewQuiz(); break;
     case 'done':        body = viewTopbar() + viewDone(); break;
+    case 'closed':      body = viewTopbar() + viewClosed(); break;
   }
   $app().innerHTML = body + viewModal();
 }
@@ -1967,14 +1985,10 @@ async function boot() {
     }
 
     const existing = await fetchExistingApplication(user.id);
-    if (existing) {
-      state.view = 'already';
-      render();
-      return;
-    }
-
-    state.view = 'disclaimers';
+    state.hasApplied = !!existing;
+    state.view = 'closed';
     render();
+    return;
   } catch (e) {
     console.error(e);
     localStorage.removeItem('discord_token');
