@@ -1,956 +1,178 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>True Vanilla – Boutique</title>
-  <meta name="description" content="Le premier SMP Français 90% Vanilla !" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <style>
-    :root{
-      --text:#f5f7ff;
-      --active:#4facff;
-      --dark:#0a0a0a;
-      --card-bg:#1a1a1a;
-      --spacing: clamp(20px, 5vw, 60px);
-    }
-
-    *{box-sizing:border-box;margin:0;padding:0}
-
-    body{
-      font-family:Inter,system-ui,sans-serif;
-      overflow-x:hidden;
-      background:#000;
-      color:var(--text);
-      line-height:1.6;
-      padding-top:90px;
-    }
-
-    .bg-slideshow{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:-3;
-    }
-
-    .bg-slide{
-      position:absolute;
-      inset:0;
-      background-size:cover;
-      background-position:center;
-      background-repeat:no-repeat;
-      opacity:0;
-      transition:opacity 1.5s ease-in-out;
-      filter:brightness(0.7) contrast(1.05);
-    }
-
-    .bg-slide.active{
-      opacity:1;
-    }
-
-    /* HEADER */
-    header{
-      position:fixed;
-      top:0;
-      width:100%;
-      z-index:100;
-      background:rgba(0,0,0,0.8);
-      backdrop-filter:blur(20px);
-      border-bottom:1px solid rgba(79,172,255,0.2);
-    }
-
-    .header-content{
-      max-width:1400px;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:15px 30px;
-      gap:20px;
-    }
-
-    .logo{
-      height:60px;
-      cursor:pointer;
-      transition:transform 0.3s;
-    }
-
-    .logo:hover{transform:scale(1.05)}
-
-    nav{
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
-
-    nav a{
-      text-decoration:none;
-      color:var(--text);
-      padding:8px 16px;
-      border-radius:8px;
-      font-weight:500;
-      font-size:14px;
-      transition:all 0.3s;
-      position:relative;
-    }
-
-    nav a:hover{
-      background:rgba(79,172,255,0.1);
-      color:var(--active);
-    }
-
-    nav a.active{
-      background:var(--active);
-      color:#fff;
-    }
-
-    .server-ip{
-      font-weight:600;
-      padding:8px 16px;
-      border-radius:8px;
-      background:rgba(79,172,255,0.1);
-      border:1px solid rgba(79,172,255,0.3);
-      cursor:pointer;
-      transition:all 0.3s;
-      font-size:14px;
-      position:relative;
-    }
-
-    .server-ip:hover{
-      background:rgba(79,172,255,0.2);
-      transform:scale(1.05);
-    }
-
-    .copy-bubble{
-      position:absolute;
-      top:-35px;
-      left:50%;
-      transform:translateX(-50%) translateY(10px);
-      background:#4facff;
-      color:#fff;
-      font-size:12px;
-      padding:6px 12px;
-      border-radius:8px;
-      opacity:0;
-      pointer-events:none;
-      transition:all 0.3s;
-    }
-
-    .copy-bubble.show{
-      opacity:1;
-      transform:translateX(-50%) translateY(0);
-    }
-
-    .burger{
-      display:none;
-      background:none;
-      border:none;
-      font-size:24px;
-      color:var(--text);
-      cursor:pointer;
-    }
-
-    .mobile-menu{
-      position:fixed;
-      top:0;
-      left:-100%;
-      width:280px;
-      height:100vh;
-      background:rgba(0,0,0,0.95);
-      backdrop-filter:blur(20px);
-      padding:80px 20px 20px;
-      transition:left 0.3s;
-      z-index:1000;
-      overflow-y:auto;
-    }
-
-    .mobile-menu.active{left:0}
-
-    .mobile-menu a{
-      display:block;
-      text-decoration:none;
-      color:var(--text);
-      padding:12px 16px;
-      margin:8px 0;
-      border-radius:8px;
-      background:rgba(255,255,255,0.05);
-      transition:all 0.3s;
-    }
-
-    .mobile-menu a:hover,
-    .mobile-menu a.active{
-      background:var(--active);
-      color:#fff;
-    }
-
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.7);
-      opacity:0;
-      pointer-events:none;
-      transition:opacity 0.3s;
-      z-index:99;
-    }
-
-    .overlay.active{
-      opacity:1;
-      pointer-events:auto;
-    }
-
-    /* MAIN CONTENT */
-    main{
-      max-width:1400px;
-      margin:0 auto;
-      padding:var(--spacing);
-    }
-
-    /* Hero Section */
-    .hero-section{
-      text-align:center;
-      padding:40px 20px;
-      margin-bottom:40px;
-    }
-
-    .hero-section h1{
-      font-size:clamp(32px,5vw,48px);
-      font-weight:800;
-      margin-bottom:20px;
-      background:linear-gradient(90deg,#4facff,#00f2fe);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
-    }
-
-    .hero-section p{
-      font-size:clamp(16px,2vw,20px);
-      opacity:0.9;
-      max-width:800px;
-      margin:0 auto;
-    }
-
-    /* Info Cards */
-    .info-cards{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-      gap:25px;
-      margin-bottom:50px;
-    }
-
-    .info-card{
-      background:rgba(26,26,26,0.8);
-      backdrop-filter:blur(10px);
-      padding:30px;
-      border-radius:16px;
-      border:1px solid rgba(79,172,255,0.2);
-      text-align:center;
-      transition:all 0.3s;
-    }
-
-    .info-card:hover{
-      transform:translateY(-5px);
-      border-color:rgba(79,172,255,0.5);
-      box-shadow:0 10px 40px rgba(79,172,255,0.2);
-    }
-
-    .info-card.warning{
-      border-color:rgba(255,76,76,0.4);
-      background:rgba(255,0,0,0.1);
-    }
-
-    .info-card.warning:hover{
-      border-color:#ff4c4c;
-      box-shadow:0 0 20px rgba(255,76,76,0.3);
-    }
-
-    .info-card i{
-      font-size:3rem;
-      margin-bottom:15px;
-      display:block;
-    }
-
-    .info-card.warning i{
-      color:#ff4c4c;
-    }
-
-    .info-card.donators i{
-      color:#FFD700;
-    }
-
-    .info-card h3{
-      font-size:1.5rem;
-      margin-bottom:15px;
-    }
-
-    .info-card p{
-      opacity:0.9;
-      line-height:1.6;
-    }
-
-    /* Donateurs List */
-    .donateurs-list{
-      list-style:none;
-      padding:0;
-      margin-top:20px;
-    }
-
-    .donateurs-list li{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin:12px 0;
-      padding:12px;
-      background:rgba(255,255,255,0.05);
-      border-radius:8px;
-      transition:all 0.3s;
-    }
-
-    .donateurs-list li:hover{
-      transform:translateX(5px);
-      background:rgba(255,255,255,0.1);
-    }
-
-    .donateur-left{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .donateurs-list li img{
-      border-radius:50%;
-      width:32px;
-      height:32px;
-    }
-
-    .montant{
-      font-weight:700;
-      color:#FFD700;
-    }
-
-    /* VIP Benefits */
-    .vip-benefits{
-      background:rgba(26,26,26,0.8);
-      backdrop-filter:blur(10px);
-      padding:40px;
-      border-radius:16px;
-      margin-bottom:40px;
-      border:2px solid rgba(148,0,211,0.3);
-    }
-
-    .vip-benefits h3{
-      font-size:clamp(24px,4vw,32px);
-      margin-bottom:25px;
-      text-align:center;
-      color:#9400D3;
-      text-shadow:0 0 20px rgba(148,0,211,0.5);
-    }
-
-    .vip-benefits ul{
-      list-style:none;
-      padding:0;
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:15px;
-    }
-
-    .vip-benefits li{
-      padding:15px;
-      background:rgba(255,255,255,0.05);
-      border-radius:10px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      transition:all 0.3s;
-      font-size:0.90rem;
-      font-weight:500;
-    }
-
-    .vip-benefits li:hover{
-      transform:translateX(8px);
-      background:rgba(148,0,211,0.15);
-      box-shadow:0 0 15px rgba(148,0,211,0.3);
-    }
-
-    .vip-benefits li i{
-      color:#9400D3;
-      font-size:1.3rem;
-    }
-
-    /* Packages Grid */
-    .packages-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-      gap:30px;
-      margin-bottom:50px;
-    }
-
-    .package-card{
-      background:rgba(26,26,26,0.8);
-      backdrop-filter:blur(10px);
-      padding:30px;
-      border-radius:16px;
-      border:1px solid rgba(79,172,255,0.2);
-      transition:all 0.3s;
-    }
-
-    .package-card:hover{
-      transform:translateY(-10px);
-      border-color:rgba(79,172,255,0.5);
-      box-shadow:0 20px 50px rgba(79,172,255,0.3);
-    }
-
-    .package-card.don:hover{
-      box-shadow:0 0 30px rgba(255,215,0,0.3);
-    }
-
-    .package-card.vip:hover{
-      box-shadow:0 0 30px rgba(148,0,211,0.3);
-    }
-
-    .package-card.cosmetic:hover{
-      box-shadow:0 0 30px rgba(0,255,200,0.3);
-    }
-
-    .package-header{
-      text-align:center;
-      margin-bottom:25px;
-    }
-
-    .package-icon{
-      font-size:4rem;
-      margin-bottom:15px;
-      display:block;
-    }
-
-    .package-card.don .package-icon{
-      color:#FFD700;
-    }
-
-    .package-card.vip .package-icon{
-      color:#9400D3;
-    }
-
-    .package-card.cosmetic .package-icon{
-      color:#00FFC8;
-    }
-
-    .package-header h3{
-      font-size:2rem;
-      margin-bottom:10px;
-    }
-
-    .package-header p{
-      opacity:0.9;
-      line-height:1.6;
-    }
-
-    .disclaimer{
-      font-size:0.85rem;
-      font-style:italic;
-      opacity:0.7;
-      margin-top:8px;
-    }
-
-    .package-price{
-      text-align:center;
-      font-size:2.5rem;
-      font-weight:800;
-      margin:20px 0;
-      color:#4facff;
-    }
-
-    /* VIP Options */
-    .vip-options{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-      gap:20px;
-      margin-top:20px;
-    }
-
-    .vip-option{
-      background:rgba(255,255,255,0.05);
-      padding:20px;
-      border-radius:12px;
-      border:2px solid rgba(148,0,211,0.3);
-      text-align:center;
-      transition:all 0.3s;
-      position:relative;
-    }
-
-    .vip-option:hover{
-      border-color:#9400D3;
-      background:rgba(148,0,211,0.1);
-      transform:translateY(-5px);
-      box-shadow:0 0 20px rgba(148,0,211,0.4);
-    }
-
-    .vip-option h4{
-      font-size:1.3rem;
-      margin-bottom:15px;
-      color:#9400D3;
-    }
-
-    .vip-option .price{
-      font-size:1.8rem;
-      font-weight:800;
-      color:#4facff;
-      margin-bottom:15px;
-    }
-
-    .bonus-badge{
-      position:absolute;
-      top:-10px;
-      right:-10px;
-      background:linear-gradient(135deg,#FFD700,#FFA500);
-      color:#000;
-      font-size:0.75rem;
-      font-weight:700;
-      padding:6px 10px;
-      border-radius:20px;
-      display:flex;
-      align-items:center;
-      gap:5px;
-      box-shadow:0 4px 15px rgba(255,215,0,0.5);
-      z-index:10;
-    }
-
-    .bonus-badge i{
-      font-size:0.9rem;
-    }
-
-    /* Buttons */
-    .buy-btn{
-      display:block;
-      width:100%;
-      padding:14px 24px;
-      font-size:16px;
-      font-weight:600;
-      color:#fff;
-      background:linear-gradient(135deg,#4facff,#00f2fe);
-      border:none;
-      border-radius:30px;
-      cursor:pointer;
-      text-decoration:none;
-      text-align:center;
-      transition:all 0.3s;
-      box-shadow:0 4px 20px rgba(79,172,255,0.4);
-    }
-
-    .buy-btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 6px 30px rgba(79,172,255,0.6);
-    }
-
-    .usage-unique{
-      display:inline-block;
-      padding:5px 15px;
-      background:rgba(255,0,0,0.3);
-      border-radius:20px;
-      font-weight:700;
-      margin-top:10px;
-      font-size:0.9rem;
-    }
-
-    /* Terms Section */
-    .terms-section{
-      background:rgba(26,26,26,0.8);
-      backdrop-filter:blur(10px);
-      padding:40px;
-      border-radius:16px;
-      border:1px solid rgba(79,172,255,0.2);
-      margin-top:50px;
-    }
-
-    .terms-section h3{
-      font-size:clamp(24px,4vw,32px);
-      margin-bottom:25px;
-      text-align:center;
-      color:#4facff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-    }
-
-    .terms-content{
-      max-width:900px;
-      margin:0 auto;
-      line-height:1.8;
-    }
-
-    .terms-content p{
-      margin-bottom:15px;
-      padding:15px;
-      background:rgba(255,255,255,0.03);
-      border-left:4px solid #4facff;
-      border-radius:8px;
-      transition:all 0.3s;
-    }
-
-    .terms-content p:hover{
-      background:rgba(79,172,255,0.1);
-      transform:translateX(5px);
-    }
-
-    .terms-content strong{
-      color:#4facff;
-      font-weight:700;
-    }
-
-    .terms-warning{
-      border-left-color:#ff0000;
-      background:rgba(255,0,0,0.1);
-    }
-
-    .terms-warning:hover{
-      background:rgba(255,0,0,0.15);
-    }
-
-    .terms-warning strong{
-      color:#ff4444;
-    }
-
-    /* Footer */
-    footer{
-      text-align:center;
-      padding:40px var(--spacing);
-      background:rgba(0,0,0,0.8);
-      border-top:1px solid rgba(79,172,255,0.2);
-      margin-top:80px;
-    }
-
-    /* Loader */
-    #loader{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.9);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      z-index:9999;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity 0.3s;
-    }
-
-    #loader.active{
-      opacity:1;
-      pointer-events:all;
-    }
-
-    .spinner{
-      width:60px;
-      height:60px;
-      border:4px solid rgba(79,172,255,0.2);
-      border-top:4px solid #4facff;
-      border-radius:50%;
-      animation:spin 1s linear infinite;
-    }
-
-    @keyframes spin{
-      to{transform:rotate(360deg)}
-    }
-
-    /* Responsive */
-    @media(max-width:768px){
-      .header-content{
-        padding:15px 20px;
-      }
-      
-      nav{display:none}
-      
-      .burger{display:block}
-      
-      .server-ip{
-        font-size:12px;
-        padding:6px 12px;
-      }
-
-      main{
-        padding:20px;
-      }
-
-      .info-cards{
-        grid-template-columns:1fr;
-      }
-
-      .packages-grid{
-        grid-template-columns:1fr;
-      }
-
-      .vip-options{
-        grid-template-columns:1fr;
-      }
-
-      .vip-benefits{
-        padding:25px;
-      }
-
-      .vip-benefits ul{
-        grid-template-columns:1fr;
-      }
-
-      .terms-section{
-        padding:25px;
-      }
-
-      body{
-        padding-top:80px;
-      }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boutique - True Vanilla</title>
+  <meta name="description" content="Boutique du serveur True Vanilla">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<div class="bg-slideshow" id="bgSlideshow">
-  <div class="bg-slide active" style="background-image:url('diaporama/bg1.png')"></div>
-  <div class="bg-slide" style="background-image:url('diaporama/bg2.png')"></div>
-  <div class="bg-slide" style="background-image:url('diaporama/bg3.png')"></div>
-</div>
-
-<header id="mainHeader">
-  <div class="header-content">
-    <button class="burger" id="burgerBtn"><i class="fas fa-bars"></i></button>
-    
-    <a href="index.html"><img src="https://i.imgur.com/45JHB0E.png" alt="True Vanilla" class="logo"></a>
-    
-    <nav>
-      <a href="index.html">Accueil</a>
-      <a href="rejoindre.html">Rejoindre</a>
-      <a href="boutique.html" class="active">Boutique</a>
-      <a href="infos.html">Infos</a>
-      <a href="murdelahonte.html">Mur de la honte</a>
-    </nav>
-    
-    <div class="server-ip" id="copyIP">
-      play.true-vanilla.fr
-      <span class="copy-bubble" id="copyBubble">Copié !</span>
+  <!-- ===================== AVERTISSEMENT ===================== -->
+  <div class="modal-overlay" id="shop-warning" role="dialog" aria-modal="true" aria-labelledby="shop-warning-title">
+    <div class="panel modal modal--warning">
+      <h2 id="shop-warning-title"><i class="fa-solid fa-triangle-exclamation"></i> Avant d'acheter</h2>
+      <p><strong>Les VIP ne se cumulent pas.</strong> Si vous achetez un VIP alors que vous possédez déjà un grade VIP actif, le nouveau ne s'ajoutera pas au précédent.</p>
+      <p>Dans ce cas de doublon, <strong style="color:var(--r-legend);">aucun remboursement</strong> ne sera effectué, sans exception.</p>
+      <label>
+        <input type="checkbox" id="shop-warning-check">
+        <span>J'ai lu et compris que, en cas de doublon, il n'y aura aucun remboursement.</span>
+      </label>
+      <button class="btn btn--cta" id="shop-warning-btn" disabled>
+        <i class="fa-solid fa-check"></i> J'ai compris
+      </button>
     </div>
   </div>
-</header>
 
-<nav class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Accueil</a>
-  <a href="rejoindre.html">Rejoindre</a>
-  <a href="boutique.html" class="active">Boutique</a>
-  <a href="infos.html">Infos</a>
-  <a href="murdelahonte.html">Mur de la honte</a>
-</nav>
-
-<div class="overlay" id="overlay"></div>
-
-<main>
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <h1>🛒 Boutique True Vanilla</h1>
-    <p>Soutenez le serveur et profitez d'avantages et de cosmétiques exclusifs ! Chaque achat nous aide à maintenir et améliorer votre expérience de jeu.</p>
-  </section>
-
-  <!-- VIP Benefits First -->
-  <section class="vip-benefits">
-    <h3>💎 Avantages VIP</h3>
-    <ul>
-      <li><i class="fas fa-rocket"></i> Téléportations instantanées</li>
-      <li><i class="fas fa-home"></i> 4 homes au lieu de 2</li>
-      <li><i class="fas fa-palette"></i> Couleur de pseudo au choix</li>
-      <li><i class="fas fa-comment"></i> Accès au #ingame-chat sur le Discord</li>
-      <li><i class="fas fa-wand-magic-sparkles"></i> Accès au bundles du /skin</li>
-      <li><i class="fas fa-ticket-alt"></i> Tickets prioritaires</li>
-      <li><i class="fas fa-star"></i> Accès aux exclus des saisons suivantes</li>
-      <li><i class="fa-regular fa-cube"></i>Mod <a href="https://modrinth.com/mod/voxy">Voxy</a> (avec <a href="https://www.curseforge.com/minecraft/mc-mods/tvsmp-voxy-support">TVSMPVoxy</a>)</li>
-    </ul>
-  </section>
-
-  <!-- Important Info Cards -->
-  <section class="info-cards">
-    <div class="info-card warning">
-      <i class="fas fa-exclamation-triangle"></i>
-      <h3>⚠️ Important</h3>
-      <p><strong>Les packs VIP ne se cumulent pas !</strong> Attendez la fin de votre VIP actuel avant d'en acheter un autre.</p>
-    </div>
-    <div class="info-card donators">
-      <i class="fas fa-trophy"></i>
-      <h3>🏆 Top Donateurs</h3>
-      <ul class="donateurs-list">
-        <li>
-          <div class="donateur-left">
-            <img src="https://mc-heads.net/avatar/Gerard2gestapo" alt="Gerard2gestapo">
-            <span>🥇 Gerard2gestapo</span>
-          </div>
-          <span class="montant">67.98€</span>
-        </li>
-        <li>
-          <div class="donateur-left">
-            <img src="https://mc-heads.net/avatar/dym_saphir" alt="dym_saphir">
-            <span>🥈 dym_saphir</span>
-          </div>
-          <span class="montant">39.38€</span>
-        </li>
-        <li>
-          <div class="donateur-left">
-            <img src="https://mc-heads.net/avatar/Ploti78" alt="Ploti78">
-            <span>🥉 Ploti78</span>
-          </div>
-          <span class="montant">19.98€</span>
-        </li>
+  <!-- ===================== NAVIGATION ===================== -->
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html">
+        <img src="assets/favicon.png" alt="Logo True Vanilla">
+        <span>True Vanilla</span>
+      </a>
+      <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      <ul class="nav__links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="boutique.html" class="is-active">Boutique</a></li>
+        <li><a href="about.html">À propos</a></li>
       </ul>
     </div>
+  </header>
+
+  <section>
+    <div class="container" data-tabs-root>
+      <div class="section-head">
+        <span class="eyebrow">Soutenir le serveur</span>
+        <h2>Boutique</h2>
+        <p>Chaque achat finance l'hébergement et le développement de True Vanilla - jamais un avantage de victoire. Le moins pay-to-win possible, c'est notre promesse.</p>
+      </div>
+
+      <!-- ===================== ONGLETS ===================== -->
+      <div class="tabs" data-tabs style="justify-content: center;">
+        <button data-tab="vips" class="is-active"><i class="fa-solid fa-crown"></i> VIPs</button>
+        <button data-tab="autres"><i class="fa-solid fa-gift"></i> Autres</button>
+      </div>
+
+      <!-- ---------- VIPS ---------- -->
+      <div class="tab-panel is-active" data-panel="vips">
+        <div class="vip-grid" style="margin-top: 14px;">
+          <div class="panel vip-card">
+            <span class="dur">1 Mois</span>
+            <span class="price">7,99&nbsp;€</span>
+            <span class="keys"><i class="fa-solid fa-key"></i> 1 clé cosmétique offerte</span>
+            <a href="https://truevanilla.craftingstore.net/package/1406254" class="btn">Acheter</a>
+          </div>
+          <div class="panel vip-card vip-card--reco">
+            <span class="reco">★ Recommandé</span>
+            <span class="dur">3 Mois</span>
+            <span class="price">20,37&nbsp;€</span>
+            <span class="keys"><i class="fa-solid fa-key"></i> 2 clés cosmétiques offertes</span>
+            <a href="https://truevanilla.craftingstore.net/package/1421794" class="btn btn--cta">Acheter</a>
+          </div>
+          <div class="panel vip-card">
+            <span class="dur">6 Mois</span>
+            <span class="price">35,96&nbsp;€</span>
+            <span class="keys"><i class="fa-solid fa-key"></i> 3 clés cosmétiques offertes</span>
+            <a href="https://truevanilla.craftingstore.net/package/1421797" class="btn">Acheter</a>
+          </div>
+          <div class="panel vip-card">
+            <span class="dur">À vie</span>
+            <span class="price">49,99&nbsp;€</span>
+            <span class="keys"><i class="fa-solid fa-key"></i> 5 clés cosmétiques offertes</span>
+            <a href="https://truevanilla.craftingstore.net/package/1421811" class="btn">Acheter</a>
+          </div>
+        </div>
+
+        <h3 class="mt-3"><i class="fa-solid fa-star" style="color:var(--gold);"></i> Les avantages VIP</h3>
+        <ul class="perks">
+          <li><i class="fa-solid fa-bolt"></i><div><strong>Téléportation instantanée</strong><span>Fini le délai de 6 secondes avant chaque TP.</span></div></li>
+          <li><i class="fa-solid fa-house-chimney"></i><div><strong>4 homes au lieu de 2</strong><span>Deux points d'ancrage supplémentaires dans le monde.</span></div></li>
+          <li><i class="fa-solid fa-palette"></i><div><strong>Pseudo coloré</strong><span>Votre nom se démarque dans le chat et le tab.</span></div></li>
+          <li><i class="fa-solid fa-shirt"></i><div><strong>Accès au /skin</strong><span>Personnalisez votre armure en Netherite à souhait.</span></div></li>
+          <li><i class="fa-solid fa-comments"></i><div><strong>Parler en jeu depuis Discord</strong><span>Écrivez dans <code style="background:var(--diamond-soft);border-radius:5px;padding:1px 6px;color:var(--diamond-deep);">#ingame-chat</code>, votre message apparaît en jeu.</span></div></li>
+          <li><i class="fa-solid fa-ticket"></i><div><strong>Tickets prioritaires</strong><span>Vos demandes de support passent en tête de file.</span></div></li>
+          <li><i class="fa-solid fa-eye"></i><div><strong>Accès au salon #leak</strong><span>Découvrez les nouveautés du serveur avant tout le monde.</span></div></li>
+          <li><i class="fa-solid fa-cubes"></i><div><strong>Support du mod Voxy</strong><span>Une distance de rendu démultipliée grâce à <a href="https://www.curseforge.com/minecraft/mc-mods/tvsmp-voxy-support" target="_blank" rel="noopener">notre mod officiel</a>.</span></div></li>
+        </ul>
+      </div>
+
+      <!-- ---------- AUTRES ---------- -->
+      <div class="tab-panel" data-panel="autres">
+        <div class="other-grid" style="margin-top: 14px;">
+          <div class="panel other-card">
+            <i class="fa-solid fa-hand-holding-heart big"></i>
+            <h3>Don</h3>
+            <p>Donnez simplement pour soutenir le serveur et l'aider à grandir : hébergement, développement, events. Aucun avantage en jeu, juste notre gratitude éternelle. Montant libre à partir de <strong>1&nbsp;€</strong>.</p>
+            <div class="don-row">
+            <a href="https://truevanilla.craftingstore.net/package/1406695" class="btn" style="align-self:flex-start;"><i class="fa-solid fa-heart"></i> Faire un don</a>
+            </div>
+          </div>
+          <div class="panel other-card">
+            <i class="fa-solid fa-key big"></i>
+            <h3>Clé cosmétique</h3>
+            <p>Une clé à utiliser sur la <strong>Caisse Cosmétique</strong> au spawn : elle débloque un pet aléatoire qui vous accompagnera dans vos aventures.</p>
+            <span class="price-line">1,20&nbsp;€</span>
+            <a href="https://truevanilla.craftingstore.net/package/1473740" class="btn" style="align-self:flex-start;"><i class="fa-solid fa-cart-shopping"></i> Acheter une clé</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- Main Packages -->
-  <section class="packages-grid">
-    <!-- Don Package -->
-    <div class="package-card don">
-      <div class="package-header">
-        <span class="package-icon">❤️</span>
-        <h3>Faire un Don</h3>
-        <p>Soutenez le serveur et aidez-nous à continuer de proposer du contenu de qualité.</p>
-      </div>
-      <div class="package-price">Libre</div>
-      <a href="https://truevanilla.craftingstore.net/package/1406695" class="buy-btn">Faire un don</a>
-    </div>
-
-    <!-- VIP Package -->
-    <div class="package-card vip">
-      <div class="package-header">
-        <span class="package-icon">💎</span>
-        <h3>Pack VIP</h3>
-        <p>Profitez d'avantages exclusifs pour améliorer votre expérience de jeu sur True Vanilla.</p>
-      </div>
-      <div class="vip-options">
-        <div class="vip-option">
-          <h4>✨ 1 mois</h4>
-          <div class="price">7.99€</div>
-          <a href="https://truevanilla.craftingstore.net/package/1406254" class="buy-btn">Acheter</a>
-          <div class="bonus-badge"><i class="fas fa-key"></i> Inclus: x1</div>
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.png" alt="True Vanilla">
+          <p class="mt-2">play.true-vanilla.fr<br>Version 1.21.8 &bull; Java</p>
         </div>
-        <div class="vip-option">
-          <h4>⭐ 3 mois</h4>
-          <div class="price">20.37€</div>
-          <a href="https://truevanilla.craftingstore.net/package/1421794" class="buy-btn">Acheter</a>
-          <div class="bonus-badge"><i class="fas fa-key"></i> Inclus: x2</div>
+        <div class="footer__col">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="boutique.html">Boutique</a></li>
+            <li><a href="about.html">À propos</a></li>
+          </ul>
         </div>
-        <div class="vip-option">
-          <h4>⚡ 6 mois</h4>
-          <div class="price">35.96€</div>
-          <a href="https://truevanilla.craftingstore.net/package/1421797" class="buy-btn">Acheter</a>
-          <div class="bonus-badge"><i class="fas fa-key"></i> Inclus: x3</div>
+        <div class="footer__col">
+          <h3>Légal</h3>
+          <ul>
+            <li><a href="conditions.html#cgu">CGU</a></li>
+            <li><a href="conditions.html#cgv">CGV</a></li>
+          </ul>
         </div>
-        <div class="vip-option">
-          <h4>👑 À vie</h4>
-          <div class="price">49.99€</div>
-          <a href="https://truevanilla.craftingstore.net/package/1421811" class="buy-btn">Acheter</a>
-          <div class="bonus-badge"><i class="fas fa-key"></i> Inclus: x5</div>
+        <div class="footer__col">
+          <h3>Autres</h3>
+          <ul>
+            <li><a href="avis.html">Laisser un avis</a></li>
+            <li><a href="voicechat.html">Installer le voice chat</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Nous suivre</h3>
+          <div class="footer__socials">
+            <a href="https://instagram.com/truevanillafr" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://tiktok.com/@truevanillafr" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://youtube.com/@truevanillafr" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://reddit.com/r/TrueVanillaSMP" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+            <a href="https://discord.gg/HefFTCS4cp" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Clé Cosmétiques Package -->
-    <div class="package-card cosmetic">
-      <div class="package-header">
-        <span class="package-icon">🔑</span>
-        <h3>Clé Cosmétiques</h3>
-        <p>Un clé qui vous permet d'ouvrir la Caisse à Cosmétique au spawn !</p>
-        <p class="disclaimer">⚠️ Les cosmétiques restent pûrement esthétique ⚠️</p>
+      <div class="footer__legal">
+        © 2026 True Vanilla - Serveur non affilié à Mojang Studios ni à Microsoft.
       </div>
-      <div class="package-price">1.20€</div>
-      <a href="https://truevanilla.craftingstore.net/package/1473740" class="buy-btn">Acheter</a>
     </div>
-  </section>
+  </footer>
 
-  <!-- Terms and Conditions -->
-  <section class="terms-section">
-    <h3><i class="fas fa-file-contract"></i> Conditions d'Achat</h3>
-    <div class="terms-content">
-      <p><strong>Politique de remboursement :</strong> Aucun remboursement ne sera effectué en cas d'achat multiple ou de doublon. Veuillez vérifier attentivement votre panier avant de valider votre commande.</p>
-      
-      <p><strong>Délai de livraison :</strong> Les avantages achetés sont généralement attribués automatiquement dans les 5 minutes suivant la validation du paiement. En cas de retard, veuillez contacter notre support.</p>
-      
-      <p><strong>Cumul des packs VIP :</strong> Les différentes durées de VIP ne peuvent pas être cumulées. Si vous possédez déjà un VIP actif et achetez un nouveau pack, le nouveau remplacera l'ancien sans compensation.</p>
-      
-      <p class="terms-warning"><strong>Litiges et contestations :</strong> Toute contestation de paiement (chargeback) après réception des avantages entraînera la révocation immédiate et définitive de votre VIP. Vous ne pourrez plus effectuer d'achat sur la boutique et pourriez faire l'objet de sanctions sur le serveur.</p>
-      
-      <p><strong>Modification des services :</strong> L'équipe de True Vanilla se réserve le droit de modifier les avantages offerts dans les packs VIP. Les changements seront communiqués à l'avance et ne s'appliqueront qu'aux nouveaux achats.</p>
-      
-      <p><strong>Sanctions et bannissements :</strong> L'achat d'un pack VIP ne vous exempte pas du respect des règles du serveur. En cas de bannissement justifié, aucun remboursement ne sera effectué.</p>
-
-      <p><strong>Changements de pseudos :</strong> Votre grade est lié avec votre pseudo, donc si vous souhaitez changer de pseudo alors que vous avez un VIP en cours, merci d'attendre que votre VIP expire pour ensuite changer de pseudo.</p>
-    </div>
-  </section>
-</main>
-
-<footer>
-  © <span id="year"></span> True Vanilla – Tous droits réservés.
-</footer>
-
-<div id="loader">
-  <div class="spinner"></div>
-</div>
-
-<script>
-// Year
-document.getElementById('year').textContent = new Date().getFullYear();
-
-// Copy IP
-const copyIP = document.getElementById('copyIP');
-const copyBubble = document.getElementById('copyBubble');
-copyIP.addEventListener('click', () => {
-  navigator.clipboard.writeText('play.true-vanilla.fr');
-  copyBubble.classList.add('show');
-  setTimeout(() => copyBubble.classList.remove('show'), 2000);
-});
-
-// Mobile menu
-const burgerBtn = document.getElementById('burgerBtn');
-const mobileMenu = document.getElementById('mobileMenu');
-const overlay = document.getElementById('overlay');
-
-function toggleMenu() {
-  mobileMenu.classList.toggle('active');
-  overlay.classList.toggle('active');
-}
-
-burgerBtn.addEventListener('click', toggleMenu);
-overlay.addEventListener('click', toggleMenu);
-
-document.querySelectorAll('.mobile-menu a').forEach(link => {
-  link.addEventListener('click', toggleMenu);
-});
-
-// Background slideshow
-const slides = document.querySelectorAll('.bg-slide');
-let currentSlide = 0;
-
-function nextSlide() {
-  slides[currentSlide].classList.remove('active');
-  currentSlide = (currentSlide + 1) % slides.length;
-  slides[currentSlide].classList.add('active');
-}
-
-setInterval(nextSlide, 5000);
-
-// Page loader
-  document.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", e => {
-      const href = link.getAttribute("href");
-      if (href && href.endsWith(".html")) {
-        e.preventDefault();
-        document.getElementById("loader").classList.add("active");
-        setTimeout(() => { window.location.href = href; }, 400);
-      }
-    });
-  });
-
-  window.addEventListener("load", () => {
-    document.getElementById("loader").classList.remove("active");
-  });
-</script>
+  <script src="js/main.js"></script>
 </body>
-
 </html>
-
-
-
-

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>À propos - True Vanilla</title>
+  <meta name="description" content="L'équipe et les réseaux du serveur True Vanilla.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html">
+        <img src="assets/favicon.png" alt="Logo True Vanilla">
+        <span>True Vanilla</span>
+      </a>
+      <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      <ul class="nav__links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="boutique.html">Boutique</a></li>
+        <li><a href="a-propos.html" class="is-active">À propos</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ===================== RÉSEAUX ===================== -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">La communauté</span>
+        <h2>Nos réseaux</h2>
+        <p>Suivez la vie du serveur : annonces, coulisses et events avec la communauté.</p>
+      </div>
+      <div class="socials-grid">
+        <a href="https://instagram.com/truevanillafr" target="_blank" rel="noopener" class="panel social-card social-card--ig">
+          <i class="fa-brands fa-instagram"></i>
+          <span class="name">Instagram</span>
+          <span class="count">@truevanillafr</span>
+        </a>
+        <a href="https://tiktok.com/@truevanillafr" target="_blank" rel="noopener" class="panel social-card social-card--tt">
+          <i class="fa-brands fa-tiktok"></i>
+          <span class="name">TikTok</span>
+          <span class="count">@truevanillafr</span>
+        </a>
+        <a href="https://youtube.com/@truevanillafr" target="_blank" rel="noopener" class="panel social-card social-card--yt">
+          <i class="fa-brands fa-youtube"></i>
+          <span class="name">YouTube</span>
+          <span class="count">@truevanillafr</span>
+        </a>
+        <a href="https://reddit.com/r/TrueVanillaSMP" target="_blank" rel="noopener" class="panel social-card social-card--rd">
+          <i class="fa-brands fa-reddit-alien"></i>
+          <span class="name">Reddit</span>
+          <span class="count">r/TrueVanillaSMP</span>
+        </a>
+        <a href="https://discord.gg/HefFTCS4cp" target="_blank" rel="noopener" class="panel social-card social-card--dc">
+          <i class="fa-brands fa-discord"></i>
+          <span class="name">Discord</span>
+          <span class="count">Rejoindre le serveur</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== L'ÉQUIPE ===================== -->
+  <section style="padding-top: 10px;">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Derrière les blocs</span>
+        <h2>L'équipe fondatrice</h2>
+        <p>Trois joueurs, un rêve d'enfance, et des milliers d'heures pour le faire tenir debout.</p>
+      </div>
+      <div class="owners-grid">
+        <div class="panel owner-card owner--purple">
+          <img src="https://mc-heads.net/avatar/az_ttv/72" alt="Tête Minecraft de az_ttv">
+          <h3>az_ttv</h3>
+          <p class="role">Owner - fondateur, développement des plugins et contenu</p>
+        </div>
+        <div class="panel owner-card owner--red">
+          <img src="https://mc-heads.net/avatar/Asolka/72" alt="Tête Minecraft de Asolka">
+          <h3>Asolka</h3>
+          <p class="role">Co-Owner - gestion de la communauté et des idées</p>
+        </div>
+        <div class="panel owner-card owner--bw">
+          <img src="https://mc-heads.net/avatar/Lachimeur/72" alt="Tête Minecraft de Lachimeur">
+          <h3>Lachimeur</h3>
+          <p class="role">Host / Dev - hébergement et infrastructure</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EN DIRECT ===================== -->
+  <section style="padding-top: 10px;">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">En direct</span>
+        <h2>Les stats du serveur</h2>
+        <p>L'activité du serveur Minecraft et du Discord, en temps réel.</p>
+      </div>
+      <div class="live-grid">
+        <!-- Serveur Minecraft -->
+        <div class="panel live-card">
+          <h3><i class="fa-solid fa-cube"></i> Serveur Minecraft</h3>
+          <div class="stat-grid">
+            <div class="stat"><b data-mc-players>-</b><span>joueurs en ligne</span></div>
+            <div class="stat"><b data-mc-max>-</b><span>places au total</span></div>
+            <div class="stat"><b data-mc-version>1.21.8</b><span>version</span></div>
+          </div>
+          <div class="foot">
+            <button class="ip-box" title="Cliquer pour copier l'IP">
+              <i class="fa-solid fa-network-wired" style="color: var(--sky-deep);"></i>
+              <strong>play.true-vanilla.fr</strong>
+              <i class="fa-regular fa-copy"></i>
+              <span class="copied">Copié !</span>
+            </button>
+            <div class="status-pill" data-server-status>
+              <span class="status-dot"></span>
+              <span class="status-label">Vérification…</span>
+            </div>
+          </div>
+        </div>
+        <!-- Discord -->
+        <div class="panel live-card live-card--discord">
+          <h3><i class="fa-brands fa-discord"></i> Discord</h3>
+          <div class="stat-grid">
+            <div class="stat"><b data-dc-members>-</b><span>membres</span></div>
+            <div class="stat"><b data-dc-online>-</b><span>membres en ligne</span></div>
+            <div class="stat"><b data-dc-voice>-</b><span>en vocal</span></div>
+          </div>
+          <div class="foot">
+            <a href="https://discord.gg/HefFTCS4cp" class="btn btn--cta"><i class="fa-brands fa-discord"></i> Rejoindre le Discord</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.png" alt="True Vanilla">
+          <p class="mt-2">play.true-vanilla.fr<br>Version 1.21.8 &bull; Java</p>
+        </div>
+        <div class="footer__col">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="boutique.html">Boutique</a></li>
+            <li><a href="a-propos.html">À propos</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Légal</h3>
+          <ul>
+            <li><a href="conditions.html#cgu">CGU</a></li>
+            <li><a href="conditions.html#cgv">CGV</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Autres</h3>
+          <ul>
+            <li><a href="avis.html">Laisser un avis</a></li>
+            <li><a href="voicechat.html">Installer le voice chat</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Nous suivre</h3>
+          <div class="footer__socials">
+            <a href="https://instagram.com/truevanillafr" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://tiktok.com/@truevanillafr" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://youtube.com/@truevanillafr" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://reddit.com/r/TrueVanillaSMP" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+            <a href="https://discord.gg/HefFTCS4cp" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__legal">
+        © 2026 True Vanilla - Serveur non affilié à Mojang Studios ni à Microsoft.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

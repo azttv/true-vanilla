@@ -1,1355 +1,360 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>True Vanilla – Voice Chat</title>
-  <meta name="description" content="Comment installer le Voicechat !" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installer le voice chat — True Vanilla</title>
+  <meta name="description" content="Tutoriel : installer Simple Voice Chat sur Minecraft 1.21.8 pour jouer avec le chat vocal de proximité sur True Vanilla.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
   <style>
-:root{
-  --text:#f5f7ff;
-  --shadow: 0 10px 30px rgba(20,24,50,0.6);
-  --active:#4facff;
-  --danger:#ff4c4c;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:Inter,system-ui,sans-serif;
-  min-height:100vh;
-  color:var(--text);
-  padding:40px 20px;
-  overflow-x:hidden;
-  background: linear-gradient(-45deg, #1e3c72, #2a5298, #1e3c72, #2a5298);
-  background-size: 400% 400%;
-  animation: gradientMove 12s ease infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-@keyframes gradientMove {
-  0%{ background-position:0% 50%; }
-  50%{ background-position:100% 50%; }
-  100%{ background-position:0% 50%; }
-}
-
-main{ max-width:900px; margin:0 auto; padding:20px; text-align:center; width: 100%; }
-h1{ font-size:2.5rem; margin-bottom:30px; text-align:center; text-shadow: var(--shadow);}
-h2{ font-size:1.8rem; margin-bottom:15px; display:flex; align-items:center; gap:10px; transition: 0.3s; justify-content:center;}
-h2:hover{ text-shadow: 0 0 15px #4facff, 0 0 25px #4facff;}
-p, ul{ font-size:1.2rem; line-height:1.6; margin-bottom:15px; text-align:left; }
-li{ margin-left:20px; margin-bottom:8px; }
-code{ display:block; background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; margin:10px 0; font-family: monospace; text-align:left; }
-.card{ background: linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.35)); border-radius:15px; padding:20px; margin-bottom:25px; transition: transform 0.3s, background 0.3s, box-shadow 0.3s; box-shadow: var(--shadow);}
-.card:hover{ transform: translateY(-5px); background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.5)); box-shadow: 0 15px 40px rgba(20,24,50,0.8);}
-.card-icon{ font-size:1.5rem; color:#4facff; animation: icon-bounce 2s infinite;}
-@keyframes icon-bounce{ 0%, 100%{ transform: translateY(0);} 50%{ transform: translateY(-5px);} }
-
-.btn-container {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  margin: 30px auto;
-  max-width: 831px;
-  flex-wrap: wrap;
-}
-
-.choice-btn {
-  position: relative;
-  padding: 20px 40px;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, rgba(79,172,255,0.3), rgba(0,242,254,0.3));
-  border: 2px solid #4facff;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 20px rgba(79,172,255,0.4);
-}
-
-.choice-btn:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(79,172,255,0.6);
-  background: linear-gradient(135deg, rgba(79,172,255,0.5), rgba(0,242,254,0.5));
-}
-
-.choice-btn .tag {
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  background: #4facff;
-  color: #fff;
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  box-shadow: 0 0 10px #4facff;
-}
-
-.choice-btn .tag.crack {
-  background: #ff9500;
-  box-shadow: 0 0 10px #ff9500;
-}
-
-.hidden {
-  display: none;
-}
-
-.fade-in {
-  animation: fadeIn 0.6s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.attention-box {
-  background-color: var(--danger);
-  color: #fff;
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-weight: 700;
-  text-align: center;
-  box-shadow: 0 0 15px var(--danger), 0 0 30px rgba(255,76,76,0.5);
-  transition: transform 0.2s ease;
-  animation: attention-glow 1.5s infinite alternate;
-  margin: 20px 0;
-}
-
-@keyframes attention-glow {
-  0% { box-shadow: 0 0 15px var(--danger), 0 0 30px rgba(255,76,76,0.5); }
-  50% { box-shadow: 0 0 25px var(--danger), 0 0 45px rgba(255,76,76,0.7); }
-  100% { box-shadow: 0 0 15px var(--danger), 0 0 30px rgba(255,76,76,0.5); }
-}
-
-img {
-  display: block;
-  margin: 20px auto;
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-}
-
-.step {
-  background: rgba(79,172,255,0.1);
-  border-left: 4px solid #4facff;
-  padding: 15px;
-  margin: 15px 0;
-  border-radius: 8px;
-}
-
-.step h3 {
-  color: #4facff;
-  margin-bottom: 10px;
-  font-size: 1.3rem;
-}
+    /* ---------- Styles du guide voice chat (page autonome) ---------- */
+    .vc-wrap { max-width: 720px; margin: 0 auto; }
+    .vc-progress { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .vc-progress .bar { flex: 1; height: 7px; background: var(--bg-2); border-radius: 4px; overflow: hidden; }
+    .vc-progress .bar span { display: block; height: 100%; width: 0; border-radius: 4px;
+      background: linear-gradient(135deg, var(--aqua), var(--sky-deep)); transition: width .3s ease; }
+    .vc-progress .label { font-size: .78rem; font-weight: 700; color: var(--muted); white-space: nowrap; }
+    .vc-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .vc-chips span {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--diamond-soft); color: var(--sky-deep);
+      border-radius: 999px; padding: 4px 12px; font-size: .78rem; font-weight: 600;
+    }
+    .vc-question { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 12px; }
+    .vc-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .vc-options--launchers { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 640px) { .vc-options, .vc-options--launchers { grid-template-columns: repeat(2, 1fr); } }
+    .vc-option {
+      position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 16px 10px; cursor: pointer; font: inherit; color: var(--ink);
+      transition: transform .1s ease, border-color .15s ease, box-shadow .15s ease;
+    }
+    .vc-option:hover { border-color: var(--diamond); transform: translateY(-2px); box-shadow: var(--shadow); }
+    .vc-option i { font-size: 1.5rem; color: var(--sky-deep); }
+    .vc-option .nm { font-weight: 600; font-size: .84rem; text-align: center; }
+    .vc-option .reco {
+      position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+      background: var(--gold); color: #fff; border-radius: 999px;
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: .62rem;
+      padding: 2px 9px; white-space: nowrap;
+    }
+    .vc-actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+    .vc-note {
+      display: flex; gap: 10px; align-items: flex-start;
+      background: var(--diamond-soft); border: 1px solid #bfe4f7; border-radius: var(--radius);
+      padding: 12px 14px; font-size: .86rem; color: var(--muted); margin-bottom: 14px;
+    }
+    .vc-note i { color: var(--sky-deep); margin-top: 2px; }
+    .vc-note b, .vc-note strong { color: var(--ink); }
+    .vc-warn { background: #fdf4e6; border-color: #f3ddb7; }
+    .vc-warn i { color: var(--r-legend); }
+    .vc-tuto h3.vc-title { font-size: 1.15rem; margin-bottom: 12px; }
+    .vc-tuto .steps { margin-bottom: 6px; }
+    .vc-tuto .steps p a { font-weight: 600; }
+    kbd {
+      background: var(--bg); border: 1px solid var(--line); border-bottom-width: 2px;
+      border-radius: 5px; padding: 1px 6px; font-size: .8rem; font-family: inherit;
+    }
   </style>
 </head>
 <body>
-  <main>
-    <div id="launcherChoice" class="fade-in">
-      <h1>Quel launcher préfères-tu ?</h1>
-      <div class="btn-container">
-        <button class="choice-btn" data-launcher="sklauncher">
-          SKLauncher
-          <span class="tag crack">Conseillé Crack</span>
-        </button>
-        <button class="choice-btn" data-launcher="tlauncher">TLauncher</button>
-        <button class="choice-btn" data-launcher="modrinth">
-          Modrinth
-          <span class="tag">Conseillé Premium</span>
-        </button>
-        <button class="choice-btn" data-launcher="curseforge">CurseForge</button>
-        <button class="choice-btn" data-launcher="lunar">Lunar</button>
-        <button class="choice-btn" data-launcher="feather">Feather</button>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html">
+        <img src="assets/favicon.png" alt="Logo True Vanilla">
+        <span>True Vanilla</span>
+      </a>
+      <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      <ul class="nav__links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="boutique.html">Boutique</a></li>
+        <li><a href="about.html">À propos</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section>
+    <div class="container vc-wrap">
+      <div class="section-head">
+        <span class="eyebrow">Simple Voice Chat</span>
+        <h2>Installer le voice chat</h2>
+        <p>Parlez de vive voix aux joueurs autour de vous grâce au chat vocal de proximité. Répondez à 3 questions, on vous guide pas à pas. Totalement optionnel !</p>
+      </div>
+
+      <div class="panel">
+        <div class="vc-progress">
+          <span class="label" id="vc-step-label">Étape 1/3</span>
+          <div class="bar"><span id="vc-bar" style="width: 33%;"></span></div>
+        </div>
+        <div class="vc-chips" id="vc-chips" hidden></div>
+        <div id="vc-view"><!-- rempli par le script --></div>
+        <div class="vc-actions">
+          <button class="btn btn--ghost" id="vc-back" type="button" hidden><i class="fa-solid fa-arrow-left"></i> Retour</button>
+          <button class="btn btn--ghost" id="vc-restart" type="button" hidden><i class="fa-solid fa-rotate-left"></i> Recommencer</button>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div id="modloaderChoice" class="hidden">
-      <h1>Quel modloader préfères-tu ?</h1>
-      <div class="btn-container">
-        <button class="choice-btn" data-modloader="forge">Forge</button>
-        <button class="choice-btn" data-modloader="fabric">Fabric</button>
-        <button class="choice-btn" data-modloader="neoforge">
-          NeoForge
-          <span class="tag">Conseillé</span>
-        </button>
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.png" alt="True Vanilla">
+          <p class="mt-2">play.true-vanilla.fr<br>Version 1.21.8 &bull; Java</p>
+        </div>
+        <div class="footer__col">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="boutique.html">Boutique</a></li>
+            <li><a href="about.html">À propos</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Légal</h3>
+          <ul>
+            <li><a href="conditions.html#cgu">CGU</a></li>
+            <li><a href="conditions.html#cgv">CGV</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Autres</h3>
+          <ul>
+            <li><a href="avis.html">Laisser un avis</a></li>
+            <li><a href="voicechat.html">Installer le voice chat</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Nous suivre</h3>
+          <div class="footer__socials">
+            <a href="https://instagram.com/truevanillafr" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://tiktok.com/@truevanillafr" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://youtube.com/@truevanillafr" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://reddit.com/" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+            <a href="https://discord.gg/HefFTCS4cp" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__legal">
+        © 2026 True Vanilla — true-vanilla.fr. Serveur non affilié à Mojang Studios ni à Microsoft.
       </div>
     </div>
+  </footer>
 
-    <div id="tutorial" class="hidden"></div>
-  </main>
-
-  <!-- CRITICAL FIX: Wrap everything in DOMContentLoaded to ensure DOM is ready -->
+  <script src="js/main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      let selectedLauncher = '';
-      let selectedModloader = '';
+  /* ============================================================
+     Assistant d'installation Simple Voice Chat — MC 1.21.8
+     ============================================================ */
+  (() => {
+    const view = document.querySelector('#vc-view');
+    const chips = document.querySelector('#vc-chips');
+    const backBtn = document.querySelector('#vc-back');
+    const restartBtn = document.querySelector('#vc-restart');
+    const bar = document.querySelector('#vc-bar');
+    const stepLabel = document.querySelector('#vc-step-label');
 
-      const tutorials = {
-      tlauncher: {
-        forge: {
-          title: 'Installation de Simple Voice Chat avec TLauncher et Forge',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>TLauncher installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Forge pour Minecraft 1.21.8</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
+    const MC = '1.21.8';
+    const SVC = 'https://modrinth.com/plugin/simple-voice-chat/versions?g=' + MC;
 
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Installer Forge</h2>
-              <div class="step">
-                <h3>1.1 - Ouvrir TLauncher</h3>
-                <p>Lancez TLauncher sur votre ordinateur.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Sélectionner la version Forge</h3>
-                <p>Dans TLauncher, cliquez sur l'icône d'engrenage à côté du bouton "Jouer".</p>
-                <p>Dans la liste des versions, recherchez <strong>"release 1.21.8-forge"</strong> ou installez Forge manuellement :</p>
-                <ul>
-                  <li>Téléchargez Forge 1.21.8 depuis <a href="https://files.minecraftforge.net/" target="_blank" style="color:#4facff;">files.minecraftforge.net</a></li>
-                  <li>Exécutez le fichier .jar téléchargé</li>
-                  <li>Sélectionnez "Install client" et cliquez sur "OK"</li>
-                  <li>Retournez dans TLauncher et sélectionnez la version Forge 1.21.8 nouvellement installée</li>
-                </ul>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer Forge une première fois</h3>
-                <p>Cliquez sur "Jouer" pour lancer Minecraft avec Forge. Cela créera le dossier "mods" nécessaire.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
+    const OSES = [
+      { id: 'windows', nm: 'Windows', ic: 'fa-brands fa-windows' },
+      { id: 'macos',   nm: 'macOS',   ic: 'fa-brands fa-apple' },
+      { id: 'linux',   nm: 'Linux',   ic: 'fa-brands fa-linux' },
+    ];
+    const LAUNCHERS = [
+      { id: 'vanilla',    nm: 'Minecraft Launcher' },
+      { id: 'lunar',      nm: 'Lunar Client' },
+      { id: 'dawn',       nm: 'Dawn Client' },
+      { id: 'modrinth',   nm: 'Modrinth App' },
+      { id: 'prism',      nm: 'Prism Launcher', reco: true },
+      { id: 'sklauncher', nm: 'SKLauncher' },
+      { id: 'badlion',    nm: 'Badlion Client' },
+      { id: 'curseforge', nm: 'CurseForge' },
+      { id: 'feather',    nm: 'Feather Client' },
+    ];
+    const LOADERS = [
+      { id: 'forge',    nm: 'Forge',    url: 'https://files.minecraftforge.net' },
+      { id: 'fabric',   nm: 'Fabric',   url: 'https://fabricmc.net/use/installer/' },
+      { id: 'neoforge', nm: 'NeoForge', url: 'https://neoforged.net', reco: true },
+      { id: 'quilt',    nm: 'Quilt',    url: 'https://quiltmc.org/en/install/client/' },
+    ];
 
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Télécharger Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Accéder à CurseForge ou Modrinth</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-              </div>
-              <div class="step">
-                <h3>2.2 - Télécharger la version correcte</h3>
-                <p>Téléchargez <strong>Simple Voice Chat version 2.6.6</strong> pour <strong>Minecraft 1.21.8</strong> et <strong>Forge</strong>.</p>
-                <div class="attention-box">⚠️ Attention ! Assurez-vous de télécharger la version compatible avec Forge 1.21.8</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-folder-open card-icon"></i> Étape 3 : Installer le mod</h2>
-              <div class="step">
-                <h3>3.1 - Localiser le dossier mods</h3>
-                <p>Ouvrez TLauncher et cliquez sur l'icône de dossier en bas à gauche pour ouvrir le répertoire .minecraft.</p>
-                <p>Alternativement, appuyez sur <strong>Windows + R</strong>, tapez <code>%appdata%\.minecraft</code> et appuyez sur Entrée.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Placer le mod dans le dossier mods</h3>
-                <p>Ouvrez le dossier <strong>mods</strong> (créé automatiquement après avoir lancé Forge une fois).</p>
-                <p>Copiez le fichier <strong>voicechat-forge-1.21.8-2.6.6.jar</strong> téléchargé dans ce dossier.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 4 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>4.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans TLauncher et lancez Minecraft avec la version Forge 1.21.8.</p>
-              </div>
-              <div class="step">
-                <h3>4.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Simple Voice Chat apparaît dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>4.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        },
-        fabric: {
-          title: 'Installation de Simple Voice Chat avec TLauncher et Fabric',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>TLauncher installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Fabric Loader pour Minecraft 1.21.8</li>
-                <li>Fabric API</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Installer Fabric</h2>
-              <div class="step">
-                <h3>1.1 - Télécharger Fabric Loader</h3>
-                <p>Rendez-vous sur <a href="https://fabricmc.net/use/" target="_blank" style="color:#4facff;">fabricmc.net</a>.</p>
-                <p>Téléchargez le Fabric Installer pour votre système d'exploitation.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Installer Fabric</h3>
-                <p>Lancez le Fabric Installer que vous venez de télécharger.</p>
-                <p>Sélectionnez la version <strong>1.21.8</strong> dans le menu déroulant.</p>
-                <p>Assurez-vous que l'option "Client" est sélectionnée.</p>
-                <p>Cliquez sur "Install".</p>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer Fabric dans TLauncher</h3>
-                <p>Ouvrez TLauncher et sélectionnez la version <strong>fabric-loader-1.21.8</strong> dans la liste des versions.</p>
-                <p>Cliquez sur "Jouer" pour lancer Minecraft avec Fabric. Cela créera le dossier "mods" nécessaire.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Télécharger Fabric API et Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Télécharger Fabric API</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/fabric-api" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/fabric-api" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-                <p>Téléchargez <strong>Fabric API</strong> pour <strong>Minecraft 1.21.8</strong>.</p>
-                <div class="attention-box">⚠️ Fabric API est OBLIGATOIRE pour que Simple Voice Chat fonctionne avec Fabric !</div>
-              </div>
-              <div class="step">
-                <h3>2.2 - Télécharger Simple Voice Chat</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-                <p>Téléchargez <strong>Simple Voice Chat version 2.6.6</strong> pour <strong>Minecraft 1.21.8</strong> et <strong>Fabric</strong>.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-folder-open card-icon"></i> Étape 3 : Installer les mods</h2>
-              <div class="step">
-                <h3>3.1 - Localiser le dossier mods</h3>
-                <p>Ouvrez TLauncher et cliquez sur l'icône de dossier en bas à gauche pour ouvrir le répertoire .minecraft.</p>
-                <p>Alternativement, appuyez sur <strong>Windows + R</strong>, tapez <code>%appdata%\.minecraft</code> et appuyez sur Entrée.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Placer les mods dans le dossier mods</h3>
-                <p>Ouvrez le dossier <strong>mods</strong>.</p>
-                <p>Copiez les deux fichiers téléchargés dans ce dossier :</p>
-                <ul>
-                  <li><strong>fabric-api-[version].jar</strong></li>
-                  <li><strong>voicechat-fabric-1.21.8-2.6.6.jar</strong></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 4 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>4.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans TLauncher et lancez Minecraft avec la version Fabric 1.21.8.</p>
-              </div>
-              <div class="step">
-                <h3>4.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Fabric API et Simple Voice Chat apparaissent dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>4.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        },
-        neoforge: {
-          title: 'Installation de Simple Voice Chat avec TLauncher et NeoForge',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>TLauncher installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>NeoForge pour Minecraft 1.21.8</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Installer NeoForge</h2>
-              <div class="step">
-                <h3>1.1 - Télécharger NeoForge</h3>
-                <p>Rendez-vous sur <a href="https://neoforged.net/" target="_blank" style="color:#4facff;">neoforged.net</a>.</p>
-                <p>Téléchargez le NeoForge Installer pour <strong>Minecraft 1.21.8</strong>.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Installer NeoForge</h3>
-                <p>Exécutez le fichier .jar téléchargé.</p>
-                <p>Sélectionnez "Install client" et cliquez sur "OK".</p>
-                <p>L'installateur créera automatiquement un profil NeoForge dans votre launcher.</p>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer NeoForge dans TLauncher</h3>
-                <p>Ouvrez TLauncher et sélectionnez la version <strong>neoforge-1.21.8</strong> dans la liste des versions.</p>
-                <p>Cliquez sur "Jouer" pour lancer Minecraft avec NeoForge. Cela créera le dossier "mods" nécessaire.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Télécharger Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Accéder à CurseForge ou Modrinth</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-              </div>
-              <div class="step">
-                <h3>2.2 - Télécharger la version correcte</h3>
-                <p>Téléchargez <strong>Simple Voice Chat version 2.6.6</strong> pour <strong>Minecraft 1.21.8</strong> et <strong>NeoForge</strong>.</p>
-                <div class="attention-box">⚠️ Attention ! Assurez-vous de télécharger la version compatible avec NeoForge 1.21.8</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-folder-open card-icon"></i> Étape 3 : Installer le mod</h2>
-              <div class="step">
-                <h3>3.1 - Localiser le dossier mods</h3>
-                <p>Ouvrez TLauncher et cliquez sur l'icône de dossier en bas à gauche pour ouvrir le répertoire .minecraft.</p>
-                <p>Alternativement, appuyez sur <strong>Windows + R</strong>, tapez <code>%appdata%\.minecraft</code> et appuyez sur Entrée.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Placer le mod dans le dossier mods</h3>
-                <p>Ouvrez le dossier <strong>mods</strong> (créé automatiquement après avoir lancé NeoForge une fois).</p>
-                <p>Copiez le fichier <strong>voicechat-neoforge-1.21.8-2.6.6.jar</strong> téléchargé dans ce dossier.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 4 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>4.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans TLauncher et lancez Minecraft avec la version NeoForge 1.21.8.</p>
-              </div>
-              <div class="step">
-                <h3>4.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Simple Voice Chat apparaît dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>4.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        }
-      },
-      sklauncher: {
-        forge: {
-          title: 'Installation de Simple Voice Chat avec SKLauncher et Forge',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>SKLauncher installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Forge pour Minecraft 1.21.8</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Installer Forge</h2>
-              <div class="step">
-                <h3>1.1 - Ouvrir SKLauncher</h3>
-                <p>Lancez SKLauncher sur votre ordinateur.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Installer Forge depuis SKLauncher</h3>
-                <p>Dans SKLauncher, cliquez sur l'onglet <strong>"Versions"</strong> ou <strong>"Installer"</strong>.</p>
-                <p>Recherchez <strong>Forge 1.21.8</strong> dans la liste des versions disponibles.</p>
-                <p>Cliquez sur "Installer" pour télécharger et installer automatiquement Forge.</p>
-                <p>Si Forge n'est pas disponible dans SKLauncher :</p>
-                <ul>
-                  <li>Téléchargez Forge 1.21.8 depuis <a href="https://files.minecraftforge.net/" target="_blank" style="color:#4facff;">files.minecraftforge.net</a></li>
-                  <li>Exécutez le fichier .jar téléchargé</li>
-                  <li>Sélectionnez "Install client" et cliquez sur "OK"</li>
-                  <li>Retournez dans SKLauncher et sélectionnez la version Forge 1.21.8</li>
-                </ul>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer Forge une première fois</h3>
-                <p>Dans SKLauncher, sélectionnez la version Forge 1.21.8.</p>
-                <p>Cliquez sur "Jouer" pour lancer Minecraft avec Forge. Cela créera le dossier "mods" nécessaire.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Télécharger Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Accéder à CurseForge ou Modrinth</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-              </div>
-              <div class="step">
-                <h3>2.2 - Télécharger la version correcte</h3>
-                <p>Téléchargez <strong>Simple Voice Chat version 2.6.6</strong> pour <strong>Minecraft 1.21.8</strong> et <strong>Forge</strong>.</p>
-                <div class="attention-box">⚠️ Attention ! Assurez-vous de télécharger la version compatible avec Forge 1.21.8</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-folder-open card-icon"></i> Étape 3 : Installer le mod</h2>
-              <div class="step">
-                <h3>3.1 - Localiser le dossier mods</h3>
-                <p>Dans SKLauncher, cliquez sur l'icône de dossier ou sur "Ouvrir le dossier du jeu" pour accéder au répertoire .minecraft.</p>
-                <p>Alternativement, appuyez sur <strong>Windows + R</strong>, tapez <code>%appdata%\.minecraft</code> et appuyez sur Entrée.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Placer le mod dans le dossier mods</h3>
-                <p>Ouvrez le dossier <strong>mods</strong> (créé automatiquement après avoir lancé Forge une fois).</p>
-                <p>Copiez le fichier <strong>voicechat-forge-1.21.8-2.6.6.jar</strong> téléchargé dans ce dossier.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 4 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>4.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans SKLauncher et lancez Minecraft avec la version Forge 1.21.8.</p>
-              </div>
-              <div class="step">
-                <h3>4.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Simple Voice Chat apparaît dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>4.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        },
-        fabric: {
-          title: 'Installation de Simple Voice Chat avec SKLauncher et Fabric',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>SKLauncher installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Fabric Loader pour Minecraft 1.21.8</li>
-                <li>Fabric API</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Installer Fabric</h2>
-              <div class="step">
-                <h3>1.1 - Télécharger Fabric Loader</h3>
-                <p>Rendez-vous sur <a href="https://fabricmc.net/use/" target="_blank" style="color:#4facff;">fabricmc.net</a>.</p>
-                <p>Téléchargez le Fabric Installer pour votre système d'exploitation.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Installer Fabric</h3>
-                <p>Lancez le Fabric Installer que vous venez de télécharger.</p>
-                <p>Sélectionnez la version <strong>1.21.8</strong> dans le menu déroulant.</p>
-                <p>Assurez-vous que l'option "Client" est sélectionnée.</p>
-                <p>Cliquez sur "Install".</p>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer Fabric dans SKLauncher</h3>
-                <p>Ouvrez SKLauncher et sélectionnez la version <strong>fabric-loader-1.21.8</strong> dans la liste des versions.</p>
-                <p>Cliquez sur "Jouer" pour lancer Minecraft avec Fabric. Cela créera le dossier "mods" nécessaire.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Télécharger Fabric API et Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Télécharger Fabric API</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/fabric-api" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/fabric-api" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-                <p>Téléchargez <strong>Fabric API</strong> pour <strong>Minecraft 1.21.8</strong>.</p>
-                <div class="attention-box">⚠️ Fabric API est OBLIGATOIRE pour que Simple Voice Chat fonctionne avec Fabric !</div>
-              </div>
-              <div class="step">
-                <h3>2.2 - Télécharger Simple Voice Chat</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-                <p>Téléchargez <strong>Simple Voice Chat version 2.6.6</strong> pour <strong>Minecraft 1.21.8</strong> et <strong>Fabric</strong>.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-folder-open card-icon"></i> Étape 3 : Installer les mods</h2>
-              <div class="step">
-                <h3>3.1 - Localiser le dossier mods</h3>
-                <p>Dans SKLauncher, cliquez sur l'icône de dossier ou sur "Ouvrir le dossier du jeu".</p>
-                <p>Alternativement, appuyez sur <strong>Windows + R</strong>, tapez <code>%appdata%\.minecraft</code> et appuyez sur Entrée.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Placer les mods dans le dossier mods</h3>
-                <p>Ouvrez le dossier <strong>mods</strong>.</p>
-                <p>Copiez les deux fichiers téléchargés dans ce dossier :</p>
-                <ul>
-                  <li><strong>fabric-api-[version].jar</strong></li>
-                  <li><strong>voicechat-fabric-1.21.8-2.6.6.jar</strong></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 4 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>4.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans SKLauncher et lancez Minecraft avec la version Fabric 1.21.8.</p>
-              </div>
-              <div class="step">
-                <h3>4.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Fabric API et Simple Voice Chat apparaissent dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>4.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        },
-        neoforge: {
-          title: 'Installation de Simple Voice Chat avec SKLauncher et NeoForge',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>SKLauncher installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>NeoForge pour Minecraft 1.21.8</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Installer NeoForge</h2>
-              <div class="step">
-                <h3>1.1 - Télécharger NeoForge</h3>
-                <p>Rendez-vous sur <a href="https://neoforged.net/" target="_blank" style="color:#4facff;">neoforged.net</a>.</p>
-                <p>Téléchargez le NeoForge Installer pour <strong>Minecraft 1.21.8</strong>.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Installer NeoForge</h3>
-                <p>Exécutez le fichier .jar téléchargé.</p>
-                <p>Sélectionnez "Install client" et cliquez sur "OK".</p>
-                <p>L'installateur créera automatiquement un profil NeoForge dans votre launcher.</p>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer NeoForge dans SKLauncher</h3>
-                <p>Ouvrez SKLauncher et sélectionnez la version <strong>neoforge-1.21.8</strong> dans la liste des versions.</p>
-                <p>Cliquez sur "Jouer" pour lancer Minecraft avec NeoForge. Cela créera le dossier "mods" nécessaire.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Télécharger Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Accéder à CurseForge ou Modrinth</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-              </div>
-              <div class="step">
-                <h3>2.2 - Télécharger la version correcte</h3>
-                <p>Téléchargez <strong>Simple Voice Chat version 2.6.6</strong> pour <strong>Minecraft 1.21.8</strong> et <strong>NeoForge</strong>.</p>
-                <div class="attention-box">⚠️ Attention ! Assurez-vous de télécharger la version compatible avec NeoForge 1.21.8</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-folder-open card-icon"></i> Étape 3 : Installer le mod</h2>
-              <div class="step">
-                <h3>3.1 - Localiser le dossier mods</h3>
-                <p>Dans SKLauncher, cliquez sur l'icône de dossier ou sur "Ouvrir le dossier du jeu".</p>
-                <p>Alternativement, appuyez sur <strong>Windows + R</strong>, tapez <code>%appdata%\.minecraft</code> et appuyez sur Entrée.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Placer le mod dans le dossier mods</h3>
-                <p>Ouvrez le dossier <strong>mods</strong> (créé automatiquement après avoir lancé NeoForge une fois).</p>
-                <p>Copiez le fichier <strong>voicechat-neoforge-1.21.8-2.6.6.jar</strong> téléchargé dans ce dossier.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 4 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>4.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans SKLauncher et lancez Minecraft avec la version NeoForge 1.21.8.</p>
-              </div>
-              <div class="step">
-                <h3>4.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Simple Voice Chat apparaît dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>4.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        }
-      },
-      modrinth: {
-        forge: {
-          title: 'Installation de Simple Voice Chat avec Modrinth et Forge',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>Modrinth App installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Un compte Minecraft Premium</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Créer un profil avec Forge</h2>
-              <div class="step">
-                <h3>1.1 - Ouvrir Modrinth App</h3>
-                <p>Lancez Modrinth App sur votre ordinateur.</p>
-                <p>Si vous ne l'avez pas encore, téléchargez-le sur <a href="https://modrinth.com/app" target="_blank" style="color:#4facff;">modrinth.com/app</a>.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Créer un nouveau profil</h3>
-                <p>Dans Modrinth App, cliquez sur le bouton <strong>"+"</strong> ou <strong>"Créer un profil"</strong>.</p>
-                <p>Donnez un nom à votre profil (par exemple : "True Vanilla Forge").</p>
-                <p>Sélectionnez <strong>Minecraft 1.21.8</strong> comme version.</p>
-                <p>Sélectionnez <strong>Forge</strong> comme modloader.</p>
-                <p>Cliquez sur "Créer".</p>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer le profil une première fois</h3>
-                <p>Une fois le profil créé, cliquez sur "Jouer" pour lancer Minecraft avec Forge.</p>
-                <p>Cela créera le dossier "mods" et initialisera Forge correctement.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Installer Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Rechercher le mod dans Modrinth</h3>
-                <p>Dans Modrinth App, retournez sur votre profil Forge.</p>
-                <p>Cliquez sur l'onglet <strong>"Mods"</strong> ou <strong>"Parcourir"</strong>.</p>
-                <p>Dans la barre de recherche, tapez <strong>"Simple Voice Chat"</strong>.</p>
-              </div>
-              <div class="step">
-                <h3>2.2 - Installer le mod</h3>
-                <p>Trouvez <strong>Simple Voice Chat</strong> dans les résultats.</p>
-                <p>Assurez-vous de sélectionner la version <strong>2.6.6</strong> compatible avec <strong>Minecraft 1.21.8</strong> et <strong>Forge</strong>.</p>
-                <p>Cliquez sur <strong>"Installer"</strong> ou <strong>"Ajouter au profil"</strong>.</p>
-                <div class="attention-box">⚠️ Modrinth App téléchargera et installera automatiquement le mod dans votre profil !</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 3 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>3.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans Modrinth App et cliquez sur "Jouer" sur votre profil Forge.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Simple Voice Chat apparaît dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>3.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        },
-        fabric: {
-          title: 'Installation de Simple Voice Chat avec Modrinth et Fabric',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>Modrinth App installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Un compte Minecraft Premium</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Créer un profil avec Fabric</h2>
-              <div class="step">
-                <h3>1.1 - Ouvrir Modrinth App</h3>
-                <p>Lancez Modrinth App sur votre ordinateur.</p>
-                <p>Si vous ne l'avez pas encore, téléchargez-le sur <a href="https://modrinth.com/app" target="_blank" style="color:#4facff;">modrinth.com/app</a>.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Créer un nouveau profil</h3>
-                <p>Dans Modrinth App, cliquez sur le bouton <strong>"+"</strong> ou <strong>"Créer un profil"</strong>.</p>
-                <p>Donnez un nom à votre profil (par exemple : "True Vanilla Fabric").</p>
-                <p>Sélectionnez <strong>Minecraft 1.21.8</strong> comme version.</p>
-                <p>Sélectionnez <strong>Fabric</strong> comme modloader.</p>
-                <p>Cliquez sur "Créer".</p>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer le profil une première fois</h3>
-                <p>Une fois le profil créé, cliquez sur "Jouer" pour lancer Minecraft avec Fabric.</p>
-                <p>Cela créera le dossier "mods" et initialisera Fabric correctement.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Installer Fabric API et Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Installer Fabric API</h3>
-                <p>Dans Modrinth App, retournez sur votre profil Fabric.</p>
-                <p>Cliquez sur l'onglet <strong>"Mods"</strong> ou <strong>"Parcourir"</strong>.</p>
-                <p>Dans la barre de recherche, tapez <strong>"Fabric API"</strong>.</p>
-                <p>Cliquez sur <strong>"Installer"</strong> pour ajouter Fabric API à votre profil.</p>
-                <div class="attention-box">⚠️ Fabric API est OBLIGATOIRE pour que Simple Voice Chat fonctionne avec Fabric !</div>
-              </div>
-              <div class="step">
-                <h3>2.2 - Installer Simple Voice Chat</h3>
-                <p>Dans la barre de recherche, tapez maintenant <strong>"Simple Voice Chat"</strong>.</p>
-                <p>Trouvez <strong>Simple Voice Chat</strong> dans les résultats.</p>
-                <p>Assurez-vous de sélectionner la version <strong>2.6.6</strong> compatible avec <strong>Minecraft 1.21.8</strong> et <strong>Fabric</strong>.</p>
-                <p>Cliquez sur <strong>"Installer"</strong> ou <strong>"Ajouter au profil"</strong>.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 3 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>3.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans Modrinth App et cliquez sur "Jouer" sur votre profil Fabric.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Fabric API et Simple Voice Chat apparaissent dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>3.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        },
-        neoforge: {
-          title: 'Installation de Simple Voice Chat avec Modrinth et NeoForge',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>Modrinth App installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Un compte Minecraft Premium</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Créer un profil avec NeoForge</h2>
-              <div class="step">
-                <h3>1.1 - Ouvrir Modrinth App</h3>
-                <p>Lancez Modrinth App sur votre ordinateur.</p>
-                <p>Si vous ne l'avez pas encore, téléchargez-le sur <a href="https://modrinth.com/app" target="_blank" style="color:#4facff;">modrinth.com/app</a>.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Créer un nouveau profil</h3>
-                <p>Dans Modrinth App, cliquez sur le bouton <strong>"+"</strong> ou <strong>"Créer un profil"</strong>.</p>
-                <p>Donnez un nom à votre profil (par exemple : "True Vanilla NeoForge").</p>
-                <p>Sélectionnez <strong>Minecraft 1.21.8</strong> comme version.</p>
-                <p>Sélectionnez <strong>NeoForge</strong> comme modloader.</p>
-                <p>Cliquez sur "Créer".</p>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer le profil une première fois</h3>
-                <p>Une fois le profil créé, cliquez sur "Jouer" pour lancer Minecraft avec NeoForge.</p>
-                <p>Cela créera le dossier "mods" et initialisera NeoForge correctement.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Installer Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Rechercher le mod dans Modrinth</h3>
-                <p>Dans Modrinth App, retournez sur votre profil NeoForge.</p>
-                <p>Cliquez sur l'onglet <strong>"Mods"</strong> ou <strong>"Parcourir"</strong>.</p>
-                <p>Dans la barre de recherche, tapez <strong>"Simple Voice Chat"</strong>.</p>
-              </div>
-              <div class="step">
-                <h3>2.2 - Installer le mod</h3>
-                <p>Trouvez <strong>Simple Voice Chat</strong> dans les résultats.</p>
-                <p>Assurez-vous de sélectionner la version <strong>2.6.6</strong> compatible avec <strong>Minecraft 1.21.8</strong> et <strong>NeoForge</strong>.</p>
-                <p>Cliquez sur <strong>"Installer"</strong> ou <strong>"Ajouter au profil"</strong>.</p>
-                <div class="attention-box">⚠️ Modrinth App téléchargera et installera automatiquement le mod dans votre profil !</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 3 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>3.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans Modrinth App et cliquez sur "Jouer" sur votre profil NeoForge.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Simple Voice Chat apparaît dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>3.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        }
-      },
-      curseforge: {
-        forge: {
-          title: 'Installation de Simple Voice Chat avec CurseForge et Forge',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>CurseForge App installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Un compte Minecraft Premium</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Créer un profil avec Forge</h2>
-              <div class="step">
-                <h3>1.1 - Ouvrir CurseForge App</h3>
-                <p>Lancez CurseForge App sur votre ordinateur.</p>
-                <p>Si vous ne l'avez pas encore, téléchargez-le sur <a href="https://www.curseforge.com/download/app" target="_blank" style="color:#4facff;">curseforge.com/download/app</a>.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Créer un nouveau profil</h3>
-                <p>Dans CurseForge App, cliquez sur <strong>"Minecraft"</strong> dans le menu de gauche.</p>
-                <p>Cliquez sur <strong>"Créer un profil personnalisé"</strong> ou le bouton <strong>"+"</strong>.</p>
-                <p>Donnez un nom à votre profil (par exemple : "True Vanilla Forge").</p>
-                <p>Sélectionnez <strong>Minecraft 1.21.8</strong> comme version.</p>
-                <p>Sélectionnez <strong>Forge</strong> comme modloader.</p>
-                <p>Cliquez sur "Créer".</p>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer le profil une première fois</h3>
-                <p>Une fois le profil créé, cliquez sur "Jouer" pour lancer Minecraft avec Forge.</p>
-                <p>Cela créera le dossier "mods" et initialisera Forge correctement.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Installer Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Rechercher le mod dans CurseForge</h3>
-                <p>Dans CurseForge App, cliquez sur votre profil Forge.</p>
-                <p>Cliquez sur <strong>"Ajouter plus de contenu"</strong> ou l'icône <strong>"+"</strong>.</p>
-                <p>Dans la barre de recherche, tapez <strong>"Simple Voice Chat"</strong>.</p>
-              </div>
-              <div class="step">
-                <h3>2.2 - Installer le mod</h3>
-                <p>Trouvez <strong>Simple Voice Chat</strong> dans les résultats.</p>
-                <p>Cliquez sur le mod pour voir les versions disponibles.</p>
-                <p>Assurez-vous de sélectionner la version <strong>2.6.6</strong> compatible avec <strong>Minecraft 1.21.8</strong> et <strong>Forge</strong>.</p>
-                <p>Cliquez sur <strong>"Installer"</strong>.</p>
-                <div class="attention-box">⚠️ CurseForge App téléchargera et installera automatiquement le mod dans votre profil !</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 3 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>3.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans CurseForge App et cliquez sur "Jouer" sur votre profil Forge.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Simple Voice Chat apparaît dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>3.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        },
-        fabric: {
-          title: 'Installation de Simple Voice Chat avec CurseForge et Fabric',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>CurseForge App installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Un compte Minecraft Premium</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Créer un profil avec Fabric</h2>
-              <div class="step">
-                <h3>1.1 - Ouvrir CurseForge App</h3>
-                <p>Lancez CurseForge App sur votre ordinateur.</p>
-                <p>Si vous ne l'avez pas encore, téléchargez-le sur <a href="https://www.curseforge.com/download/app" target="_blank" style="color:#4facff;">curseforge.com/download/app</a>.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Créer un nouveau profil</h3>
-                <p>Dans CurseForge App, cliquez sur <strong>"Minecraft"</strong> dans le menu de gauche.</p>
-                <p>Cliquez sur <strong>"Créer un profil personnalisé"</strong> ou le bouton <strong>"+"</strong>.</p>
-                <p>Donnez un nom à votre profil (par exemple : "True Vanilla Fabric").</p>
-                <p>Sélectionnez <strong>Minecraft 1.21.8</strong> comme version.</p>
-                <p>Sélectionnez <strong>Fabric</strong> comme modloader.</p>
-                <p>Cliquez sur "Créer".</p>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer le profil une première fois</h3>
-                <p>Une fois le profil créé, cliquez sur "Jouer" pour lancer Minecraft avec Fabric.</p>
-                <p>Cela créera le dossier "mods" et initialisera Fabric correctement.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Installer Fabric API et Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Installer Fabric API</h3>
-                <p>Dans CurseForge App, cliquez sur votre profil Fabric.</p>
-                <p>Cliquez sur <strong>"Ajouter plus de contenu"</strong> ou l'icône <strong>"+"</strong>.</p>
-                <p>Dans la barre de recherche, tapez <strong>"Fabric API"</strong>.</p>
-                <p>Cliquez sur <strong>"Installer"</strong> pour ajouter Fabric API à votre profil.</p>
-                <div class="attention-box">⚠️ Fabric API est OBLIGATOIRE pour que Simple Voice Chat fonctionne avec Fabric !</div>
-              </div>
-              <div class="step">
-                <h3>2.2 - Installer Simple Voice Chat</h3>
-                <p>Dans la barre de recherche, tapez maintenant <strong>"Simple Voice Chat"</strong>.</p>
-                <p>Trouvez <strong>Simple Voice Chat</strong> dans les résultats.</p>
-                <p>Cliquez sur le mod pour voir les versions disponibles.</p>
-                <p>Assurez-vous de sélectionner la version <strong>2.6.6</strong> compatible avec <strong>Minecraft 1.21.8</strong> et <strong>Fabric</strong>.</p>
-                <p>Cliquez sur <strong>"Installer"</strong>.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 3 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>3.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans CurseForge App et cliquez sur "Jouer" sur votre profil Fabric.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Fabric API et Simple Voice Chat apparaissent dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>3.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        },
-        neoforge: {
-          title: 'Installation de Simple Voice Chat avec CurseForge et NeoForge',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>CurseForge App installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Un compte Minecraft Premium</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Créer un profil avec NeoForge</h2>
-              <div class="step">
-                <h3>1.1 - Ouvrir CurseForge App</h3>
-                <p>Lancez CurseForge App sur votre ordinateur.</p>
-                <p>Si vous ne l'avez pas encore, téléchargez-le sur <a href="https://www.curseforge.com/download/app" target="_blank" style="color:#4facff;">curseforge.com/download/app</a>.</p>
-              </div>
-              <div class="step">
-                <h3>1.2 - Créer un nouveau profil</h3>
-                <p>Dans CurseForge App, cliquez sur <strong>"Minecraft"</strong> dans le menu de gauche.</p>
-                <p>Cliquez sur <strong>"Créer un profil personnalisé"</strong> ou le bouton <strong>"+"</strong>.</p>
-                <p>Donnez un nom à votre profil (par exemple : "True Vanilla NeoForge").</p>
-                <p>Sélectionnez <strong>Minecraft 1.21.8</strong> comme version.</p>
-                <p>Sélectionnez <strong>NeoForge</strong> comme modloader.</p>
-                <p>Cliquez sur "Créer".</p>
-              </div>
-              <div class="step">
-                <h3>1.3 - Lancer le profil une première fois</h3>
-                <p>Une fois le profil créé, cliquez sur "Jouer" pour lancer Minecraft avec NeoForge.</p>
-                <p>Cela créera le dossier "mods" et initialisera NeoForge correctement.</p>
-                <p>Une fois le jeu chargé, vous pouvez le fermer.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-puzzle-piece card-icon"></i> Étape 2 : Installer Simple Voice Chat</h2>
-              <div class="step">
-                <h3>2.1 - Rechercher le mod dans CurseForge</h3>
-                <p>Dans CurseForge App, cliquez sur votre profil NeoForge.</p>
-                <p>Cliquez sur <strong>"Ajouter plus de contenu"</strong> ou l'icône <strong>"+"</strong>.</p>
-                <p>Dans la barre de recherche, tapez <strong>"Simple Voice Chat"</strong>.</p>
-              </div>
-              <div class="step">
-                <h3>2.2 - Installer le mod</h3>
-                <p>Trouvez <strong>Simple Voice Chat</strong> dans les résultats.</p>
-                <p>Cliquez sur le mod pour voir les versions disponibles.</p>
-                <p>Assurez-vous de sélectionner la version <strong>2.6.6</strong> compatible avec <strong>Minecraft 1.21.8</strong> et <strong>NeoForge</strong>.</p>
-                <p>Cliquez sur <strong>"Installer"</strong>.</p>
-                <div class="attention-box">⚠️ CurseForge App téléchargera et installera automatiquement le mod dans votre profil !</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 3 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>3.1 - Démarrer Minecraft</h3>
-                <p>Retournez dans CurseForge App et cliquez sur "Jouer" sur votre profil NeoForge.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, cliquez sur "Mods" pour vérifier que Simple Voice Chat apparaît dans la liste.</p>
-              </div>
-              <div class="step">
-                <h3>3.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        }
-      },
-      lunar: {
-        fabric: {
-          title: 'Installation de Simple Voice Chat avec Lunar Client',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-info-circle card-icon"></i> Important</h2>
-              <p>Lunar Client intègre nativement Fabric, ce qui facilite grandement l'installation de mods.</p>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>Lunar Client installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Un compte Minecraft Premium</li>
-                <li>Fabric API</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Télécharger les mods</h2>
-              <div class="step">
-                <h3>1.1 - Télécharger Fabric API</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/fabric-api" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/fabric-api" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-                <p>Téléchargez <strong>Fabric API</strong> pour <strong>Minecraft 1.21.8</strong>.</p>
-                <div class="attention-box">⚠️ Fabric API est OBLIGATOIRE pour que Simple Voice Chat fonctionne !</div>
-              </div>
-              <div class="step">
-                <h3>1.2 - Télécharger Simple Voice Chat</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-                <p>Téléchargez <strong>Simple Voice Chat version 2.6.6</strong> pour <strong>Minecraft 1.21.8</strong> et <strong>Fabric</strong>.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-folder-open card-icon"></i> Étape 2 : Installer les mods</h2>
-              <div class="step">
-                <h3>2.1 - Localiser le dossier .lunarclient</h3>
-                <p>Appuyez sur <strong>Windows + R</strong>, tapez <code>%userprofile%\\.lunarclient</code> et appuyez sur Entrée.</p>
-                <p>Naviguez vers le dossier : <code>offline\\multiver\\1.21.8\\mods</code></p>
-                <p>Si le dossier "mods" n'existe pas, créez-le.</p>
-              </div>
-              <div class="step">
-                <h3>2.2 - Placer les mods dans le dossier</h3>
-                <p>Copiez les deux fichiers téléchargés dans le dossier mods :</p>
-                <ul>
-                  <li><strong>fabric-api-[version].jar</strong></li>
-                  <li><strong>voicechat-fabric-1.21.8-2.6.6.jar</strong></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 3 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>3.1 - Démarrer Lunar Client</h3>
-                <p>Ouvrez Lunar Client et sélectionnez <strong>Minecraft 1.21.8</strong>.</p>
-                <p>Cliquez sur "Launch" pour démarrer le jeu.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, appuyez sur la touche <strong>V</strong> pour vérifier que Simple Voice Chat est bien chargé.</p>
-                <p>Vous pouvez aussi vérifier dans le menu des mods si disponible.</p>
-              </div>
-              <div class="step">
-                <h3>3.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        }
-      },
-      feather: {
-        fabric: {
-          title: 'Installation de Simple Voice Chat avec Feather Client',
-          content: `
-            <div class="card">
-              <h2><i class="fas fa-info-circle card-icon"></i> Important</h2>
-              <p>Feather Client supporte les mods Fabric, ce qui permet d'installer facilement Simple Voice Chat.</p>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-check-circle card-icon"></i> Prérequis</h2>
-              <ul>
-                <li>Feather Client installé sur votre ordinateur</li>
-                <li>Connexion Internet stable</li>
-                <li>Minecraft 1.21.8</li>
-                <li>Un compte Minecraft Premium</li>
-                <li>Fabric API</li>
-                <li>Le mod Simple Voice Chat version 2.6.6</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-download card-icon"></i> Étape 1 : Télécharger les mods</h2>
-              <div class="step">
-                <h3>1.1 - Télécharger Fabric API</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/fabric-api" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/fabric-api" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-                <p>Téléchargez <strong>Fabric API</strong> pour <strong>Minecraft 1.21.8</strong>.</p>
-                <div class="attention-box">⚠️ Fabric API est OBLIGATOIRE pour que Simple Voice Chat fonctionne !</div>
-              </div>
-              <div class="step">
-                <h3>1.2 - Télécharger Simple Voice Chat</h3>
-                <p>Rendez-vous sur <a href="https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat" target="_blank" style="color:#4facff;">CurseForge</a> ou <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" style="color:#4facff;">Modrinth</a>.</p>
-                <p>Téléchargez <strong>Simple Voice Chat version 2.6.6</strong> pour <strong>Minecraft 1.21.8</strong> et <strong>Fabric</strong>.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-folder-open card-icon"></i> Étape 2 : Installer les mods</h2>
-              <div class="step">
-                <h3>2.1 - Localiser le dossier Feather</h3>
-                <p>Appuyez sur <strong>Windows + R</strong>, tapez <code>%appdata%\.minecraft</code> et appuyez sur Entrée.</p>
-                <p>Naviguez vers le dossier : <code>Feather\\1.21.8\mods</code></p>
-                <p>Si le dossier "mods" n'existe pas, créez-le.</p>
-                <p><strong>Alternative :</strong> Ouvrez Feather Client, allez dans les paramètres et cherchez l'option pour ouvrir le dossier des mods.</p>
-              </div>
-              <div class="step">
-                <h3>2.2 - Placer les mods dans le dossier</h3>
-                <p>Copiez les deux fichiers téléchargés dans le dossier mods :</p>
-                <ul>
-                  <li><strong>fabric-api-[version].jar</strong></li>
-                  <li><strong>voicechat-fabric-1.21.8-2.6.6.jar</strong></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2><i class="fas fa-play card-icon"></i> Étape 3 : Lancer le jeu</h2>
-              <div class="step">
-                <h3>3.1 - Démarrer Feather Client</h3>
-                <p>Ouvrez Feather Client et sélectionnez <strong>Minecraft 1.21.8</strong>.</p>
-                <p>Cliquez sur "Play" pour démarrer le jeu.</p>
-              </div>
-              <div class="step">
-                <h3>3.2 - Vérifier l'installation</h3>
-                <p>Une fois dans le menu principal, appuyez sur la touche <strong>V</strong> pour vérifier que Simple Voice Chat est bien chargé.</p>
-                <p>Vous pouvez aussi accéder au menu des mods dans Feather pour confirmer l'installation.</p>
-              </div>
-              <div class="step">
-                <h3>3.3 - Configuration du mod</h3>
-                <p>Dans le jeu, appuyez sur la touche <strong>V</strong> (par défaut) pour ouvrir les paramètres de Simple Voice Chat.</p>
-                <p>Configurez votre microphone et vos préférences audio.</p>
-                <p>Rejoignez le serveur <strong>play.true-vanilla.fr</strong> et profitez du voice chat !</p>
-              </div>
-            </div>
-          `
-        }
-      }
+    const MODS_PATH = {
+      windows: '<code>%appdata%\\.minecraft\\mods</code> (touche <kbd>Win</kbd> + <kbd>R</kbd>, tapez <code>%appdata%</code>)',
+      macos: '<code>~/Library/Application Support/minecraft/mods</code> (Finder → <kbd>Cmd</kbd> + <kbd>Maj</kbd> + <kbd>G</kbd>)',
+      linux: '<code>~/.minecraft/mods</code>',
     };
-    // Launcher choice
-      document.querySelectorAll('[data-launcher]').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          selectedLauncher = this.getAttribute('data-launcher');
-          
-          if (selectedLauncher === 'lunar' || selectedLauncher === 'feather') {
-            const tutorial = tutorials[selectedLauncher].fabric;
-            
-            document.getElementById('launcherChoice').classList.add('hidden');
-            
-            const tutorialDiv = document.getElementById('tutorial');
-            tutorialDiv.innerHTML = '<h1 class="fade-in">' + tutorial.title + '</h1>' + tutorial.content;
-            tutorialDiv.classList.remove('hidden');
-            tutorialDiv.classList.add('fade-in');
-          } else {
-            document.getElementById('launcherChoice').classList.add('hidden');
-            document.getElementById('modloaderChoice').classList.remove('hidden');
-            document.getElementById('modloaderChoice').classList.add('fade-in');
-          }
-        });
-      });
+    const RUN_INSTALLER = {
+      windows: "Double-cliquez sur le fichier <code>.jar</code> téléchargé (Java requis).",
+      macos: "Clic droit sur le fichier <code>.jar</code> → <em>Ouvrir</em> (pour passer l'avertissement de sécurité, Java requis).",
+      linux: "Dans un terminal : <code>java -jar nom-de-l-installateur.jar</code>",
+    };
 
-      // Modloader choice event listeners
-      document.querySelectorAll('[data-modloader]').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          selectedModloader = this.getAttribute('data-modloader');
-          const tutorial = tutorials[selectedLauncher][selectedModloader];
-          
-          document.getElementById('modloaderChoice').classList.add('hidden');
-          
-          const tutorialDiv = document.getElementById('tutorial');
-          tutorialDiv.innerHTML = '<h1 class="fade-in">' + tutorial.title + '</h1>' + tutorial.content;
-          tutorialDiv.classList.remove('hidden');
-          tutorialDiv.classList.add('fade-in');
+    const state = { step: 1, os: null, launcher: null, loader: null };
+
+    const opt = (o) => `
+      <button class="vc-option" type="button" data-id="${o.id}">
+        ${o.reco ? '<span class="reco">★ Recommandé</span>' : ''}
+        ${o.ic ? `<i class="${o.ic}"></i>` : '<i class="fa-solid fa-rocket"></i>'}
+        <span class="nm">${o.nm}</span>
+      </button>`;
+
+    const note = (html, warn) => `
+      <div class="vc-note${warn ? ' vc-warn' : ''}">
+        <i class="fa-solid ${warn ? 'fa-triangle-exclamation' : 'fa-circle-info'}"></i>
+        <span>${html}</span>
+      </div>`;
+
+    const li = (t, h) => `<li><div><h3>${t}</h3><p>${h}</p></div></li>`;
+
+    const nameOf = (list, id) => list.find((x) => x.id === id)?.nm ?? id;
+
+    // ---------- Génération du tutoriel ----------
+    function buildTutorial() {
+      const { os, launcher, loader } = state;
+      const svcLink = `<a href="${SVC}&l=${loader}" target="_blank" rel="noopener">Simple Voice Chat sur Modrinth</a>`;
+      let html = `<div class="vc-tuto"><h3 class="vc-title"><i class="fa-solid fa-microphone-lines" style="color:var(--sky-deep);"></i> Installation sur ${MC}</h3>`;
+
+      // Clients fermés : pas de mods externes
+      if (launcher === 'lunar' || launcher === 'badlion') {
+        html += note(`<strong>${nameOf(LAUNCHERS, launcher)} n'accepte pas les mods externes</strong> : Simple Voice Chat ne peut pas y être installé. Utilisez le bouton <em>Retour</em> pour choisir un autre launcher — on vous conseille <strong>Prism Launcher</strong> (gratuit, simple, compatible partout).`, true);
+        html += '</div>';
+        return html;
+      }
+
+      if (launcher === 'dawn') {
+        html += note(`Le support des mods externes par <strong>Dawn Client</strong> n'est pas garanti. Si votre version de Dawn propose un dossier <em>mods</em>, suivez les étapes ci-dessous ; sinon, revenez en arrière et choisissez <strong>Prism Launcher</strong>.`, true);
+      }
+
+      const effLoader = loader;
+      const effLoaderNm = nameOf(LOADERS, effLoader);
+      const effLoaderUrl = LOADERS.find((l) => l.id === effLoader)?.url;
+
+      let steps = [];
+
+      if (launcher === 'vanilla' || launcher === 'dawn') {
+        steps = [
+          li(`Installez ${effLoaderNm}`, `Téléchargez l'installateur ${effLoaderNm} pour Minecraft <strong>${MC}</strong> sur <a href="${effLoaderUrl}" target="_blank" rel="noopener">le site officiel</a>. ${RUN_INSTALLER[os]} Choisissez <em>Install client</em> puis validez.`),
+          li('Téléchargez Simple Voice Chat', `Récupérez la version <strong>${effLoaderNm} ${MC}</strong> du mod sur ${svcLink}.`),
+          li('Placez le mod dans le dossier mods', `Ouvrez ${MODS_PATH[os]} et glissez-y le fichier <code>.jar</code> du mod (créez le dossier <code>mods</code> s'il n'existe pas).`),
+          li('Lancez le bon profil', `Dans ${launcher === 'dawn' ? 'Dawn Client' : 'le Minecraft Launcher'}, sélectionnez le profil <strong>${effLoaderNm} ${MC}</strong> puis lancez le jeu.`),
+        ];
+      } else if (launcher === 'modrinth') {
+        steps = [
+          li('Créez une instance', `Dans l'app Modrinth : <em>Create instance</em> → version <strong>${MC}</strong> → loader <strong>${effLoaderNm}</strong>.`),
+          li('Ajoutez le mod', `Ouvrez l'instance → onglet <em>Content</em> → <em>Install content</em> → cherchez <strong>Simple Voice Chat</strong> → <em>Install</em>. L'app choisit automatiquement la bonne version.`),
+          li('Lancez le jeu', `Cliquez sur <em>Play</em> depuis l'instance.`),
+        ];
+      } else if (launcher === 'prism') {
+        steps = [
+          li('Créez une instance', `<em>Add Instance</em> → version <strong>${MC}</strong>, puis dans la colonne de droite choisissez le loader <strong>${effLoaderNm}</strong> → OK.`),
+          li('Ajoutez le mod', `Clic droit sur l'instance → <em>Edit</em> → onglet <em>Mods</em> → <em>Download mods</em> → source <strong>Modrinth</strong> → cherchez <strong>Simple Voice Chat</strong> → sélectionnez → <em>Review and confirm</em>.`),
+          li('Lancez le jeu', `Double-cliquez sur l'instance. Prism télécharge tout ce qu'il faut au premier lancement.`),
+        ];
+      } else if (launcher === 'curseforge') {
+        steps = [
+          li('Créez un profil personnalisé', `Dans l'app CurseForge, onglet Minecraft → <em>Create Custom Profile</em> → version <strong>${MC}</strong> → loader <strong>${effLoaderNm}</strong>.`),
+          li('Ajoutez le mod', `Ouvrez le profil → <em>Add More Content</em> → cherchez <strong>Simple Voice Chat</strong> → <em>Install</em>.`),
+          li('Lancez le jeu', `Bouton <em>Play</em> sur le profil.`),
+        ];
+      } else if (launcher === 'sklauncher') {
+        steps = [
+          li(`Créez un profil ${effLoaderNm}`, `Dans SKLauncher, ouvrez la liste des versions et choisissez <strong>${effLoaderNm} ${MC}</strong> : le launcher installe le loader automatiquement. Lancez une première fois le jeu puis fermez-le.`),
+          li('Téléchargez Simple Voice Chat', `Récupérez la version <strong>${effLoaderNm} ${MC}</strong> du mod sur ${svcLink}.`),
+          li('Placez le mod dans le dossier mods', `Ouvrez ${MODS_PATH[os]} et glissez-y le fichier <code>.jar</code> du mod.`),
+          li('Relancez le jeu', `Sélectionnez à nouveau le profil <strong>${effLoaderNm} ${MC}</strong> et lancez.`),
+        ];
+      } else if (launcher === 'feather') {
+        steps = [
+          li('Créez un profil moddé', `Dans Feather, créez/sélectionnez un profil <strong>${MC}</strong> avec le loader <strong>${effLoaderNm}</strong> (si NeoForge n'apparaît pas, prenez Fabric ou Forge).`),
+          li('Ajoutez le mod depuis le store', `Ouvrez le menu <em>Mods</em> de Feather et cherchez <strong>Simple Voice Chat</strong> → activez-le. S'il n'est pas dans le store, téléchargez-le sur ${svcLink} et placez le <code>.jar</code> dans ${MODS_PATH[os]}.`),
+          li('Lancez le jeu', `Démarrez le profil moddé depuis Feather.`),
+        ];
+      }
+
+      // Étapes communes de fin
+      steps.push(
+        li('Rejoignez True Vanilla', `Connectez-vous à <code>play.true-vanilla.fr</code>. Le serveur détecte le mod automatiquement : un message de connexion du voice chat apparaît en bas à gauche.`),
+        li('Réglez votre micro', `Appuyez sur <kbd>V</kbd> en jeu pour ouvrir le menu vocal : choisissez votre micro et casque, le mode d'activation (activation vocale ou appuyer-pour-parler) et testez le niveau. Les joueurs proches de vous vous entendent, et plus vous êtes loin, moins fort ils vous entendent !`),
+      );
+
+      html += `<ol class="steps">${steps.join('')}</ol>`;
+      html += note(`Un souci ? Ouvrez un ticket sur notre <a href="https://discord.gg/HefFTCS4cp" target="_blank" rel="noopener">Discord</a>, on vous aide avec plaisir.`);
+      html += '</div>';
+      return html;
+    }
+
+    // ---------- Rendu des étapes ----------
+    function render() {
+      const total = 3;
+      const pct = state.step === 4 ? 100 : Math.round((state.step / total) * 100) - 8;
+      bar.style.width = `${state.step === 4 ? 100 : pct}%`;
+      stepLabel.textContent = state.step === 4 ? 'Tutoriel' : `Étape ${state.step}/${total}`;
+
+      // Chips récapitulatives
+      const parts = [];
+      if (state.os) parts.push(`<span><i class="fa-solid fa-display"></i> ${nameOf(OSES, state.os)}</span>`);
+      if (state.launcher) parts.push(`<span><i class="fa-solid fa-rocket"></i> ${nameOf(LAUNCHERS, state.launcher)}</span>`);
+      if (state.loader) parts.push(`<span><i class="fa-solid fa-cubes"></i> ${nameOf(LOADERS, state.loader)}</span>`);
+      chips.innerHTML = parts.join('');
+      chips.hidden = parts.length === 0;
+
+      backBtn.hidden = state.step === 1;
+      restartBtn.hidden = state.step !== 4;
+
+      if (state.step === 1) {
+        view.innerHTML = `<div class="vc-question">Quel est votre système d'exploitation ?</div>
+          <div class="vc-options">${OSES.map(opt).join('')}</div>`;
+      } else if (state.step === 2) {
+        view.innerHTML = `<div class="vc-question">Quel launcher utilisez-vous ?</div>
+          <div class="vc-options vc-options--launchers">${LAUNCHERS.map(opt).join('')}</div>`;
+      } else if (state.step === 3) {
+        view.innerHTML = `<div class="vc-question">Quel modloader préférez-vous ?</div>
+          <div class="vc-options">${LOADERS.map((l) => opt({ ...l, ic: 'fa-solid fa-cubes' })).join('')}</div>`;
+      } else {
+        view.innerHTML = buildTutorial();
+        view.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      view.querySelectorAll('.vc-option').forEach((b) => {
+        b.addEventListener('click', () => {
+          const id = b.dataset.id;
+          if (state.step === 1) state.os = id;
+          else if (state.step === 2) state.launcher = id;
+          else if (state.step === 3) state.loader = id;
+          state.step += 1;
+          render();
         });
       });
+    }
+
+    backBtn.addEventListener('click', () => {
+      if (state.step <= 1) return;
+      state.step -= 1;
+      if (state.step === 1) state.os = null;
+      if (state.step === 2) state.launcher = null;
+      if (state.step === 3) state.loader = null;
+      render();
     });
+
+    restartBtn.addEventListener('click', () => {
+      state.step = 1; state.os = state.launcher = state.loader = null;
+      render();
+    });
+
+    render();
+  })();
   </script>
 </body>
 </html>
-
