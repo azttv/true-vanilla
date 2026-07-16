@@ -45,6 +45,48 @@
   --shadow: 0 2px 10px rgba(16, 40, 60, .08);
 }
 
+/* ---------- Mode sombre ---------- */
+[data-theme="dark"] {
+  --bg:    #0d1826;
+  --bg-2:  #132234;
+  --panel: #17293d;
+  --line:  #2a4056;
+
+  --ink:   #e7f1fb;
+  --muted: #9fb6cb;
+
+  --diamond-soft: #16303f;
+  --grass-soft:   #16311d;
+
+  --shadow: 0 2px 12px rgba(0, 0, 0, .45);
+}
+[data-theme="dark"] body { background: var(--bg); color: var(--ink); }
+
+/* Hero « ciel de nuit » */
+[data-theme="dark"] .hero {
+  background: linear-gradient(180deg, #08111e 0%, #0e2035 45%, #143253 80%, #1b3d5e 100%);
+}
+[data-theme="dark"] .cloud .px { background: #26405a; }
+
+/* Surfaces à fond blanc codé en dur → sombre */
+[data-theme="dark"] .hero__tag { background: rgba(23, 41, 61, .93); }
+[data-theme="dark"] .server-card .tag,
+[data-theme="dark"] .carousel__slide .tag { background: rgba(23, 41, 61, .92); color: var(--diamond); }
+
+/* Fondu des couleurs pendant la bascule jour/nuit (hors soleil/lune) */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-switching *:not(.sun-px):not(.moon-px),
+  html.theme-switching *:not(.sun-px):not(.moon-px)::before,
+  html.theme-switching *:not(.sun-px):not(.moon-px)::after {
+    transition: background-color .5s ease, color .5s ease,
+                border-color .5s ease, box-shadow .5s ease, fill .5s ease !important;
+  }
+}
+/* Clics soleil/lune bloqués pendant la transition */
+html.theme-switching .sun-px,
+html.theme-switching .moon-px,
+html.theme-switching .nav__theme { pointer-events: none !important; }
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 [hidden] { display: none !important; }
@@ -153,8 +195,22 @@ section { padding: 44px 0; }
   color: var(--ink); font-size: 1.05rem; padding: 7px 11px; cursor: pointer;
 }
 
+/* Bouton thème (mobile) : lune en clair, soleil en sombre */
+.nav__mobile { display: flex; align-items: center; gap: 8px; }
+.nav__theme {
+  display: none; background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  color: var(--ink); font-size: 1.05rem; padding: 7px 11px; cursor: pointer;
+  line-height: 1;
+}
+.nav__theme i { transition: transform .3s ease; }
+.nav__theme:hover i { transform: rotate(20deg) scale(1.1); }
+.nav__theme-sun { display: none; }
+[data-theme="dark"] .nav__theme-moon { display: none; }
+[data-theme="dark"] .nav__theme-sun  { display: inline-block; }
+
 @media (max-width: 720px) {
   .nav__burger { display: block; }
+  .nav__theme { display: inline-flex; align-items: center; justify-content: center; }
   .nav__links {
     display: none; position: absolute; top: var(--nav-h); left: 0; right: 0;
     flex-direction: column; align-items: stretch; text-align: center;
@@ -172,20 +228,53 @@ section { padding: 44px 0; }
 }
 .hero .container { position: relative; z-index: 5; }
 
-/* Soleil pixel */
+/* Soleil pixel (cliquable → mode sombre) */
 .sun-px {
   position: absolute; top: 9%; right: 10%; width: 84px; height: 84px;
-  background: var(--sun); z-index: 1;
+  border: 0; padding: 0; appearance: none; cursor: pointer;
+  background: var(--sun); z-index: 0;
   box-shadow: 0 0 0 12px rgba(255, 215, 94, .28), 0 0 60px 30px rgba(255, 215, 94, .35);
   animation: sunPulse 5s ease-in-out infinite;
+  transition: transform .9s cubic-bezier(.55,0,.9,.6), opacity .9s ease;
 }
+.sun-px:hover { transform: scale(1.08); }
 @keyframes sunPulse {
   0%, 100% { box-shadow: 0 0 0 12px rgba(255,215,94,.28), 0 0 60px 30px rgba(255,215,94,.35); }
   50%      { box-shadow: 0 0 0 16px rgba(255,215,94,.32), 0 0 80px 40px rgba(255,215,94,.45); }
 }
 
+/* Lune pixel (cliquable → mode clair) */
+.moon-px {
+  position: absolute; top: 9%; left: 10%; width: 84px; height: 84px;
+  border: 0; padding: 0; appearance: none; cursor: pointer;
+  background: #e9eef7; z-index: 0;
+  box-shadow: 0 0 0 12px rgba(210, 224, 255, .22), 0 0 60px 30px rgba(180, 205, 255, .30);
+  opacity: 0; transform: translateY(340px); pointer-events: none;
+  transition: transform .9s cubic-bezier(.16,.84,.44,1), opacity .9s ease;
+  animation: moonPulse 6s ease-in-out infinite;
+}
+.moon-px:hover { transform: translateY(0) scale(1.08); }
+/* Cratères pixel */
+.moon-px::before, .moon-px::after {
+  content: ""; position: absolute; background: #cdd6e6;
+}
+.moon-px::before { width: 20px; height: 20px; top: 16px; left: 18px; }
+.moon-px::after  { width: 14px; height: 14px; top: 46px; left: 48px; }
+@keyframes moonPulse {
+  0%, 100% { box-shadow: 0 0 0 12px rgba(210,224,255,.22), 0 0 60px 30px rgba(180,205,255,.30); }
+  50%      { box-shadow: 0 0 0 16px rgba(210,224,255,.26), 0 0 80px 40px rgba(180,205,255,.40); }
+}
+
+/* --- Bascule jour/nuit : le soleil se couche, la lune se lève --- */
+[data-theme="dark"] .sun-px {
+  transform: translateY(340px); opacity: 0; pointer-events: none;
+}
+[data-theme="dark"] .moon-px {
+  transform: translateY(0); opacity: 1; pointer-events: auto;
+}
+
 /* Nuages pixel (gros) */
-.cloud { position: absolute; animation: drift linear infinite; opacity: .95; z-index: 1; }
+.cloud { position: absolute; animation: drift linear infinite; opacity: .95; z-index: 1; pointer-events: none; }
 .cloud .px { position: absolute; background: var(--cloud); width: 36px; height: 36px; }
 .cloud.small .px { width: 26px; height: 26px; }
 .cloud.c1 { top: 12%; animation-duration: 70s; }
@@ -205,10 +294,15 @@ section { padding: 44px 0; }
   background: repeating-linear-gradient(90deg, var(--grass-t) 0 48px);
 }
 
-/* Séparateur pixel hero → serveurs */
+/* Séparateur pixel hero → serveurs (couleur = .section--aqua = var(--bg-2))
+   Masque en data-URI inline → aucune dépendance de chemin, marche partout. */
 .hero__separator {
   position: absolute; bottom: -40px; left: 0; right: 0; z-index: 3;
-  width: 100%; display: block; pointer-events: none;
+  width: 100%; aspect-ratio: 1920 / 180; height: auto;
+  pointer-events: none;
+  background-color: var(--bg-2);
+  -webkit-mask: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxOTIwIDE4MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PHBhdGggZD0nTTE4MjUuNTIgOTcuOTE4N0gxOTIwVjE3OS41SDBWOTcuOTE4N1Y2NC41Njk0SDU0LjgyMzdWOTcuOTE4N0gxMTQuMzEzVjEzMy4zOTdIMTY0LjQ3MVY5Ny45MTg3SDYwOC44OTRWNjQuNTY5NEg3MjAuODc1Vjk3LjkxODdINzc0LjUzMlY2NC41Njk0TDg3MS4zNDkgNjYuNjk4MVYzNS40Nzc0SDkyOC41MDVWOTcuOTE4N0g5OTEuNDk1VjMxLjkyOTZIMTA0OS44MlY2NC41Njk0SDExNTkuNDdWMzEuOTI5NkgxMjE3Ljc5VjY0LjU2OTRIMTI2OS4xMVYzMS45Mjk2SDEzMjcuNDRWMEgxMzg2LjkzVjMxLjkyOTZIMTQzNy4wOFY5Ny45MTg3SDE0OTYuNTdWNjQuNTY5NEgxNTUwLjIzVjMxLjkyOTZIMTYwMy44OVY2NC41Njk0SDE4MjUuNTJWOTcuOTE4N1onIGZpbGw9JyNmZmYnLz48L3N2Zz4=") bottom center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxOTIwIDE4MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PHBhdGggZD0nTTE4MjUuNTIgOTcuOTE4N0gxOTIwVjE3OS41SDBWOTcuOTE4N1Y2NC41Njk0SDU0LjgyMzdWOTcuOTE4N0gxMTQuMzEzVjEzMy4zOTdIMTY0LjQ3MVY5Ny45MTg3SDYwOC44OTRWNjQuNTY5NEg3MjAuODc1Vjk3LjkxODdINzc0LjUzMlY2NC41Njk0TDg3MS4zNDkgNjYuNjk4MVYzNS40Nzc0SDkyOC41MDVWOTcuOTE4N0g5OTEuNDk1VjMxLjkyOTZIMTA0OS44MlY2NC41Njk0SDExNTkuNDdWMzEuOTI5NkgxMjE3Ljc5VjY0LjU2OTRIMTI2OS4xMVYzMS45Mjk2SDEzMjcuNDRWMEgxMzg2LjkzVjMxLjkyOTZIMTQzNy4wOFY5Ny45MTg3SDE0OTYuNTdWNjQuNTY5NEgxNTUwLjIzVjMxLjkyOTZIMTYwMy44OVY2NC41Njk0SDE4MjUuNTJWOTcuOTE4N1onIGZpbGw9JyNmZmYnLz48L3N2Zz4=") bottom center / 100% 100% no-repeat;
 }
 
 .hero__logo { width: min(520px, 90vw); margin: 0 auto 20px; }

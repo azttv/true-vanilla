@@ -2,6 +2,40 @@
    TRUE VANILLA — main.js (v2)
    ============================================================ */
 
+// ---------- Mode jour / nuit (soleil ↔ lune) ----------
+(() => {
+  const root = document.documentElement;
+  const store = {
+    get() { try { return localStorage.getItem('tv-theme'); } catch (e) { return null; } },
+    set(v) { try { localStorage.setItem('tv-theme', v); } catch (e) {} },
+  };
+  const apply = (theme) => {
+    if (theme === 'dark') root.dataset.theme = 'dark';
+    else delete root.dataset.theme;
+    store.set(theme);
+  };
+  apply(store.get() === 'dark' ? 'dark' : 'light'); // état initial (sans animation)
+
+  const LOCK = 900; // durée du coucher/lever (cf. transition CSS)
+  let switching = false;
+  const toggle = (theme) => {
+    if (switching) return;                 // clics bloqués pendant la transition
+    switching = true;
+    root.classList.add('theme-switching'); // active le fondu des couleurs
+    apply(theme);
+    setTimeout(() => {
+      root.classList.remove('theme-switching');
+      switching = false;
+    }, LOCK);
+  };
+
+  document.querySelector('.sun-px')?.addEventListener('click', () => toggle('dark'));
+  document.querySelector('.moon-px')?.addEventListener('click', () => toggle('light'));
+  document.querySelector('.nav__theme')?.addEventListener('click', () => {
+    toggle(root.dataset.theme === 'dark' ? 'light' : 'dark');
+  });
+})();
+
 // ---------- Menu burger ----------
 const burger = document.querySelector('.nav__burger');
 const navLinks = document.querySelector('.nav__links');

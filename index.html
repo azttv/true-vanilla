@@ -20,6 +20,13 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         />
         <link rel="stylesheet" href="css/style.css" />
+        <script>
+            // Applique le thème avant le rendu (évite le flash)
+            try {
+                if (localStorage.getItem("tv-theme") === "dark")
+                    document.documentElement.dataset.theme = "dark";
+            } catch (e) {}
+        </script>
     </head>
     <body>
         <!-- ===================== NAVIGATION ===================== -->
@@ -29,13 +36,23 @@
                     <img src="assets/favicon.png" alt="Logo True Vanilla" />
                     <span>True Vanilla</span>
                 </a>
-                <button
-                    class="nav__burger"
-                    aria-label="Ouvrir le menu"
-                    aria-expanded="false"
-                >
-                    <i class="fa-solid fa-bars"></i>
-                </button>
+                <div class="nav__mobile">
+                    <button
+                        class="nav__theme"
+                        type="button"
+                        aria-label="Changer de thème"
+                    >
+                        <i class="fa-solid fa-moon nav__theme-moon"></i>
+                        <i class="fa-solid fa-sun nav__theme-sun"></i>
+                    </button>
+                    <button
+                        class="nav__burger"
+                        aria-label="Ouvrir le menu"
+                        aria-expanded="false"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
                 <ul class="nav__links">
                     <li><a href="index.html" class="is-active">Accueil</a></li>
                     <li><a href="boutique.html">Boutique</a></li>
@@ -46,7 +63,16 @@
 
         <!-- ===================== HERO ===================== -->
         <section class="hero">
-            <div class="sun-px"></div>
+            <button
+                class="sun-px"
+                type="button"
+                aria-label="Passer en mode sombre"
+            ></button>
+            <button
+                class="moon-px"
+                type="button"
+                aria-label="Passer en mode clair"
+            ></button>
             <div class="cloud c1">
                 <div class="px" style="left: 0; top: 36px"></div>
                 <div class="px" style="left: 36px; top: 36px"></div>
@@ -85,12 +111,7 @@
                 <div class="px" style="left: 52px; top: 0"></div>
             </div>
             <div class="terrain"></div>
-            <img
-                class="hero__separator"
-                src="assets/separator.svg"
-                alt=""
-                aria-hidden="true"
-            />
+            <div class="hero__separator" aria-hidden="true"></div>
 
             <div class="container">
                 <div class="hero__logo">
