@@ -364,6 +364,7 @@ section { padding: 44px 0; }
 .season-pips span { width: 22px; height: 7px; background: var(--bg-2); border-radius: 4px; }
 .season-pips span.done { background: linear-gradient(135deg, var(--aqua), var(--sky-deep)); }
 .season-banner small { color: var(--muted); font-size: .74rem; }
+.season-banner__discord { margin-top: 6px; padding: 8px 16px; font-size: .88rem; }
 
 /* ---------- Cartes des 3 serveurs ---------- */
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
