@@ -1,5 +1,5 @@
 /* ============================================================
-   TRUE VANILLA — main.js (v2)
+   TRUE VANILLA - main.js (v2)
    ============================================================ */
 
 // ---------- Mode jour / nuit (soleil ↔ lune) ----------
@@ -74,7 +74,7 @@ async function fetchServerStatus() {
         pill.classList.remove('offline');
         const on = data.players?.online ?? 0;
         const max = data.players?.max ?? 0;
-        label.textContent = `En ligne — ${on}/${max} joueurs`;
+        label.textContent = `En ligne - ${on}/${max} joueurs`;
       } else {
         pill.classList.add('offline');
         pill.classList.remove('online');
@@ -82,8 +82,8 @@ async function fetchServerStatus() {
       }
     });
     if (data.online) {
-      if (elPlayers) elPlayers.textContent = data.players?.online ?? '—';
-      if (elMax) elMax.textContent = data.players?.max ?? '—';
+      if (elPlayers) elPlayers.textContent = data.players?.online ?? '-';
+      if (elMax) elMax.textContent = data.players?.max ?? '-';
       if (elVersion && data.version?.name_clean) {
         // Ne garder que le numéro de version (ex. « Paper 1.21.8 » → « 1.21.8 »)
         const num = data.version.name_clean.match(/\d+(?:\.\d+)+/);

@@ -1,5 +1,5 @@
 /* ============================================================
-   TRUE VANILLA — avis.js
+   TRUE VANILLA - avis.js
    Connexion Discord (OAuth2 implicite) + envoi d'avis via webhook.
 
    CONFIGURATION :
@@ -130,7 +130,7 @@ if (gate && panel) {
     sendBtn.disabled = true;
     setStatus('Envoi en cours…');
 
-    const stars = rating > 0 ? '⭐'.repeat(rating) : '—';
+    const stars = rating > 0 ? '⭐'.repeat(rating) : '-';
     const payload = {
       username: 'Avis',
       embeds: [{

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Installer le voice chat — True Vanilla</title>
+  <title>Installer le voice chat - True Vanilla</title>
   <meta name="description" content="Tutoriel : installer Simple Voice Chat sur Minecraft 1.21.8 pour jouer avec le chat vocal de proximité sur True Vanilla.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -132,6 +132,7 @@
           <ul>
             <li><a href="avis.html">Laisser un avis</a></li>
             <li><a href="voicechat.html">Installer le voice chat</a></li>
+            <li><a href="wiki.html">Wiki</a></li>
           </ul>
         </div>
         <div class="footer__col">
@@ -146,7 +147,7 @@
         </div>
       </div>
       <div class="footer__legal">
-        © 2026 True Vanilla — true-vanilla.fr. Serveur non affilié à Mojang Studios ni à Microsoft.
+        © 2026 True Vanilla - true-vanilla.fr. Serveur non affilié à Mojang Studios ni à Microsoft.
       </div>
     </div>
   </footer>
@@ -154,7 +155,7 @@
   <script src="js/main.js"></script>
   <script>
   /* ============================================================
-     Assistant d'installation Simple Voice Chat — MC 1.21.8
+     Assistant d'installation Simple Voice Chat - MC 1.21.8
      ============================================================ */
   (() => {
     const view = document.querySelector('#vc-view');
@@ -228,7 +229,7 @@
 
       // Clients fermés : pas de mods externes
       if (launcher === 'lunar' || launcher === 'badlion') {
-        html += note(`<strong>${nameOf(LAUNCHERS, launcher)} n'accepte pas les mods externes</strong> : Simple Voice Chat ne peut pas y être installé. Utilisez le bouton <em>Retour</em> pour choisir un autre launcher — on vous conseille <strong>Prism Launcher</strong> (gratuit, simple, compatible partout).`, true);
+        html += note(`<strong>${nameOf(LAUNCHERS, launcher)} n'accepte pas les mods externes</strong> : Simple Voice Chat ne peut pas y être installé. Utilisez le bouton <em>Retour</em> pour choisir un autre launcher - on vous conseille <strong>Prism Launcher</strong> (gratuit, simple, compatible partout).`, true);
         html += '</div>';
         return html;
       }
