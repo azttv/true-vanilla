@@ -356,6 +356,29 @@
             @media (max-width: 720px) {
                 .nav__back { justify-content: center; }
             }
+            /* ---------- Système d'étoiles ---------- */
+            .star-grid {
+                display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr));
+                gap: 12px; margin: 14px 0 18px;
+            }
+            .star-card {
+                background: var(--panel); border: 1px solid var(--line);
+                border-top: 3px solid var(--gold);
+                border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow);
+                display: flex; flex-direction: column; gap: 6px;
+            }
+            .star-card--max { border-top-color: var(--aqua); }
+            .star-row { font-size: 1.2rem; letter-spacing: 4px; line-height: 1; }
+            .star-row .on { color: var(--gold); }
+            .star-row .off { color: var(--line); }
+            .star-card--max .star-row .on { color: var(--aqua); }
+            .star-card b {
+                font-family: 'Bricolage Grotesque', sans-serif;
+                font-size: .92rem; color: var(--ink);
+            }
+            .star-card .star-cond { font-size: .78rem; color: var(--muted); }
+            .star-card ul { margin: 4px 0 0; padding-left: 17px; font-size: .82rem; }
+
             /* ---------- Liste des succès ---------- */
             .ach-toolbar {
                 display: flex; flex-direction: column; gap: 10px;
@@ -557,6 +580,7 @@
                             <li><a href="#pvp" data-kw="pvp combat log deconnexion zombie perle ender"><i class="fa-solid fa-khanda"></i> PvP & Combat Log</a></li>
                             <li><a href="#afk" data-kw="afk inactif deconnexion automatique ferme afk"><i class="fa-solid fa-bed"></i> Système AFK</a></li>
                             <li><a href="#succes" data-kw="succes advancement achievements etoiles categories liste netherite exploration collections combat skill craft tech endurance fun"><i class="fa-solid fa-trophy"></i> Succès personnalisés</a></li>
+                            <li><a href="#etoiles" data-kw="etoiles star systeme completion categories paliers recompenses boost xp coeur netherite lingot palier 100%"><i class="fa-solid fa-star-half-stroke"></i> Système d'étoiles</a></li>
                             <li><a href="#events" data-kw="events evenements tribunal pillars battle royale minijeux"><i class="fa-solid fa-star"></i> Événements</a></li>
                         </ul>
                     </div>
@@ -2001,15 +2025,17 @@
                     <ul>
                         <li>Les succès se débloquent en jouant, sans commande à taper.</li>
                         <li>Ils sont répartis en <strong>catégories</strong> thématiques (exploration, combat, endurance, fun...).</li>
-                        <li>Chaque succès remplis un taux de complétion, résumé par un système d'<strong>étoiles</strong>.</li>
+                        <li>Chaque succès remplis un taux de complétion, résumé par un <a href="#etoiles">système d'<strong>étoiles</strong></a>.</li>
                         <li>La liste des succès peut être affichés dans le menu <strong>Vanilla</strong> des succès.</li>
                     </ul>
 
                     <h2><i class="fa-solid fa-ranking-star"></i> À quoi ça sert</h2>
                     <p>
-                        Les succès n'apportent aucun avantage de jeu : c'est un objectif de complétion, une source
-                        de fierté et un excellent prétexte pour explorer des mécaniques vanilla oubliées. Certains
-                        succès rares donnent lieu à une annonce publique dans le chat.
+                        Pris un par un, les succès n'apportent aucun avantage de jeu : c'est un objectif de
+                        complétion, une source de fierté et un excellent prétexte pour explorer des mécaniques
+                        vanilla oubliées. Certains succès rares donnent lieu à une annonce publique dans le chat.
+                        En revanche, terminer des <strong>catégories entières</strong> fait monter votre
+                        <a href="#etoiles">compteur d'étoiles</a>, et là il y a des récompenses.
                     </p>
 
                     <div class="adm adm--tip">
@@ -2027,7 +2053,7 @@
                     <div class="wk-kv">
                         <div><b>81</b><span>succès personnalisés</span></div>
                         <div><b>8</b><span>catégories</span></div>
-                        <div><b>0</b><span>avantage de jeu à la clé</span></div>
+                        <div><b>3</b><span>étoiles à décrocher</span></div>
                     </div>
 
                     <div class="ach-toolbar">
@@ -2672,6 +2698,150 @@
                         </div>
                     </section>
 
+                </article>
+
+                <!-- ============ SYSTÈME D'ÉTOILES ============ -->
+                <article class="wk-page" id="page-etoiles">
+                    <h1>Système d'étoiles</h1>
+                    <p class="wk-lead">
+                        Les étoiles résument votre progression sur <strong>l'ensemble</strong> des succès du
+                        serveur, vanilla comme personnalisés. Elles s'affichent à côté de votre pseudo, et chaque
+                        palier franchi débloque une récompense — une seule fois, définitivement.
+                    </p>
+
+                    <h2><i class="fa-solid fa-layer-group"></i> Ce qui est compté : les catégories</h2>
+                    <p>
+                        Ce n'est pas le nombre total de succès qui fait monter les étoiles, mais le nombre de
+                        <strong>catégories entièrement terminées</strong>. Une catégorie est validée quand
+                        <em>tous</em> ses succès sont débloqués. Il y a <strong>7 catégories</strong> :
+                    </p>
+                    <div class="wk-table-wrap">
+                        <table class="wk-table">
+                            <thead>
+                                <tr><th>Catégorie</th><th>Ce qu'elle regroupe</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Minecraft</td><td>L'onglet vanilla « Minecraft » : la progression de base du jeu.</td></tr>
+                                <tr><td>Nether</td><td>L'onglet vanilla du Nether.</td></tr>
+                                <tr><td>The End</td><td>L'onglet vanilla de l'End, dragon compris.</td></tr>
+                                <tr><td>Adventure</td><td>L'onglet vanilla « Aventure » : exploration, combat, villages.</td></tr>
+                                <tr><td>Husbandry</td><td>L'onglet vanilla « Élevage » : animaux, nourriture, agriculture.</td></tr>
+                                <tr><td>True Vanilla</td><td>Les <a href="#succes">81 succès personnalisés</a> du serveur.</td></tr>
+                                <tr><td>Heads Collection</td><td>La collection complète des têtes de mobs.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="adm adm--tip">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <div>
+                            <b>Ce qui ne compte pas</b>
+                            <p>
+                                Les succès de <strong>recettes</strong> (ceux qui apparaissent quand vous
+                                débloquez un craft) et les succès techniques invisibles sont ignorés : ils ne
+                                bloquent jamais une catégorie à 99&nbsp;%.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2><i class="fa-solid fa-star-half-stroke"></i> Les paliers</h2>
+                    <p>
+                        Tant que vous avez moins de 2 catégories terminées, l'affichage reste gris
+                        (<span style="letter-spacing:3px">☆☆☆</span>). Ensuite&nbsp;:
+                    </p>
+                    <div class="star-grid">
+                        <div class="star-card">
+                            <div class="star-row"><span class="on">★</span><span class="off">☆☆</span></div>
+                            <b>Première étoile</b>
+                            <span class="star-cond">2 catégories terminées</span>
+                            <ul>
+                                <li><strong>+20&nbsp;% d'XP</strong> pendant 24&nbsp;h</li>
+                                <li>1 cœur au hasard : Wither, Abysses ou Néant</li>
+                            </ul>
+                        </div>
+                        <div class="star-card">
+                            <div class="star-row"><span class="on">★★</span><span class="off">☆</span></div>
+                            <b>Deuxième étoile</b>
+                            <span class="star-cond">4 catégories terminées</span>
+                            <ul>
+                                <li><strong>+30&nbsp;% d'XP</strong> pendant 24&nbsp;h</li>
+                                <li>1 cœur au hasard : Wither, Abysses ou Néant</li>
+                            </ul>
+                        </div>
+                        <div class="star-card">
+                            <div class="star-row"><span class="on">★★★</span></div>
+                            <b>Troisième étoile</b>
+                            <span class="star-cond">6 catégories terminées</span>
+                            <ul>
+                                <li><strong>+50&nbsp;% d'XP</strong> pendant 24&nbsp;h</li>
+                                <li>1 lingot de Netherite</li>
+                            </ul>
+                        </div>
+                        <div class="star-card star-card--max">
+                            <div class="star-row"><span class="on">★★★</span></div>
+                            <b>100&nbsp;% — les 7 catégories</b>
+                            <span class="star-cond">Tout est terminé, sans exception</span>
+                            <ul>
+                                <li><strong>+80&nbsp;% d'XP</strong> pendant 24&nbsp;h</li>
+                                <li>3 lingots de Netherite</li>
+                                <li>Étoiles affichées en <strong>arc-en-ciel</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="adm adm--warn">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                        <div>
+                            <b>Le boost d'XP est à usage unique</b>
+                            <p>
+                                Il multiplie <strong>toute</strong> l'expérience gagnée (mobs, minage, fours,
+                                élevage…) et démarre immédiatement au moment où le palier est atteint. Les 24&nbsp;h
+                                s'écoulent en temps réel : pensez à avoir une ferme ou un projet en cours avant de
+                                valider votre dernière catégorie.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2><i class="fa-solid fa-gift"></i> Récapitulatif des récompenses</h2>
+                    <div class="wk-table-wrap">
+                        <table class="wk-table">
+                            <thead>
+                                <tr><th>Palier</th><th>Condition</th><th>Boost d'XP</th><th>Objet</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>★☆☆</td><td>2 catégories</td><td>+20&nbsp;% / 24&nbsp;h</td><td>1 cœur aléatoire</td></tr>
+                                <tr><td>★★☆</td><td>4 catégories</td><td>+30&nbsp;% / 24&nbsp;h</td><td>1 cœur aléatoire</td></tr>
+                                <tr><td>★★★</td><td>6 catégories</td><td>+50&nbsp;% / 24&nbsp;h</td><td>1 lingot de Netherite</td></tr>
+                                <tr><td>★★★ <span class="pill pill--all">100&nbsp;%</span></td><td>7 catégories</td><td>+80&nbsp;% / 24&nbsp;h</td><td>3 lingots de Netherite</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        Les trois cœurs sont ceux de la <a href="#fonctionnalites">route du Netherite</a> :
+                        <strong>Cœur du Wither</strong>, <strong>Cœur des Abysses</strong> et
+                        <strong>Cœur du Néant</strong>. Aux paliers 1 et 2, le serveur en tire un au hasard.
+                    </p>
+
+                    <h2><i class="fa-solid fa-circle-question"></i> Bon à savoir</h2>
+                    <ul>
+                        <li>Chaque palier ne se déclenche <strong>qu'une seule fois</strong> par joueur.</li>
+                        <li>Franchir un palier déclenche une <strong>annonce dans le chat</strong> et un son pour tout le monde.</li>
+                        <li>Les paliers ne se cumulent pas rétroactivement : atteindre directement 4 catégories déclenche le palier correspondant, pas les précédents.</li>
+                        <li>Les étoiles sont liées à la saison en cours : elles repartent de zéro à chaque reset.</li>
+                        <li>Rien ne se perd : un succès débloqué le reste, même après une mort ou un changement de monde.</li>
+                    </ul>
+
+                    <div class="adm adm--tip">
+                        <i class="fa-solid fa-trophy"></i>
+                        <div>
+                            <b>Par où commencer ?</b>
+                            <p>
+                                Les catégories vanilla (Minecraft, Nether, Husbandry) sont de loin les plus rapides
+                                à boucler. <em>Heads Collection</em> et <em>True Vanilla</em> sont les deux plus
+                                longues : gardez-les pour la fin.
+                            </p>
+                        </div>
+                    </div>
                 </article>
 
                 <!-- ============ ÉVÉNEMENTS ============ -->
