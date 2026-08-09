@@ -10,15 +10,19 @@
    politiques RLS définies dans schema.sql.
    ============================================================ */
 
+
 const SUPABASE_URL = 'https://lnszzmonnomfdkxaldyw.supabase.co'; // ← à remplacer
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxuc3p6bW9ubm9tZmRreGFsZHl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkyMzg1MzksImV4cCI6MjA4NDgxNDUzOX0.JxslMDVBhGziQ2JfqOAgm9KdvMBE_w9xfHVXYlYmFNw';              // ← à remplacer
-
 const STAFF_IDS = ['217271015892451328', '303167270891290625'];
 
 // Badges de rôle Discord
 const DISCORD_GUILD_ID = '1389693675541631077';
 const ROLE_NITRO = '1444503323146453002';   // badge Nitro
 const ROLE_VIP   = '1389715059479023677';   // badge VIP
+// Annonce Discord au lancement d'un sondage
+const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1536033108036554763/f4FTMcWzpinq0bmvduGxhrKMbZtpl6NAHCKCuC1_XWqNgdDJGntyENpmBIZAUvcEf-JF';
+const VOTE_URL = 'https://www.true-vanilla.fr/sondage';
+
 const BADGE_IMG  = {
   vip:   'assets/badge-vip.png',
   nitro: 'assets/badge-nitro.png',
@@ -61,6 +65,7 @@ const el = {
   spQuestion: $('#sp-question'), spMode: $('#sp-mode'), spDuration: $('#sp-duration'),
   spOptions: $('#sp-options'), spAddOption: $('#sp-add-option'),
   spSave: $('#sp-save'), spStart: $('#sp-start'), spClose: $('#sp-close'),
+  spTestAnnounce: $('#sp-test-announce'),
   spSimCount: $('#sp-sim-count'), spSimulate: $('#sp-simulate'),
   spHistory: $('#sp-history'), spStatus: $('#sp-status'),
   spClearHistory: $('#sp-clear-history'), scClearChat: $('#sc-clear-chat'),
@@ -545,10 +550,22 @@ async function refreshPollRow() {
    7. RENDU DU CHAT
    ============================================================ */
 
+// Le message me cite-t-il (@pseudo) ou répond-il à l'un des miens ?
+function mentionsMe(m) {
+  if (!state.me) return false;
+  if (m.discord_id === state.me.id) return false;
+  if (m.reply_discord_id && m.reply_discord_id === state.me.id) return true;
+
+  const name = state.me.username.toLowerCase();
+  return new RegExp('@' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i')
+    .test(String(m.content || '').toLowerCase());
+}
+
 function messageHTML(m) {
   const c = userColors(m.discord_id);
   const staff = isStaffId(m.discord_id);
   const badge = badgesFor(m.discord_id);
+  const mentioned = mentionsMe(m);
   const pin = state.me?.staff
     ? `<button class="msg__action msg__pin" data-pin="${m.id}" title="Épingler"><i class="fa-solid fa-thumbtack"></i></button>`
     : '';
@@ -562,7 +579,7 @@ function messageHTML(m) {
         <span class="what">${esc(m.reply_content || 'Message supprimé')}</span>
       </div>` : '';
   return `
-    <div class="msg${staff ? ' msg--staff' : ''}" data-message="${m.id}">
+    <div class="msg${staff ? ' msg--staff' : ''}${mentioned ? ' msg--mention' : ''}" data-message="${m.id}">
       <span class="msg__time">${reply}${pin}${fmtTime(m.created_at)}</span>${quoted}
       ${badge.left}<span class="msg__user" style="--u-light:${c.light};--u-dark:${c.dark}"
             data-user="${esc(m.discord_id)}">${esc(m.username)}</span>${badge.right}<span class="msg__text"> : ${esc(m.content)}</span>
@@ -696,7 +713,7 @@ const COMMANDS = [
   { name: '/unpin', usage: '/unpin', desc: 'Retirer le message épinglé.' },
   { name: '/filter', usage: '/filter <mot>', desc: 'Ajouter un mot au filtre automatique.' },
   { name: '/clear', usage: '/clear', desc: 'Vider définitivement le chat.' },
-  { name: '/clearpolls', usage: '/clearpolls', desc: 'Supprimer tous les sondages terminés et leurs votes.' },
+  { name: '/clearpolls', usage: '/clearpolls', desc: 'Supprimer tous les sondages et leurs votes.' },
   { name: '/help', usage: '/help', desc: 'Afficher la liste des commandes.' },
 ];
 
@@ -843,7 +860,7 @@ async function runCommand(raw) {
 
   if (cmd === '/clearpolls') {
     const n = await clearPollHistory();
-    if (n !== null) systemMessage(`${plural(n, 'sondage')} supprimé${n > 1 ? 's' : ''} de l'historique.`);
+    if (n !== null) systemMessage(`${plural(n, 'sondage')} supprimé${n > 1 ? 's' : ''}.`);
     return;
   }
 
@@ -1051,6 +1068,41 @@ el.spStart?.addEventListener('click', async () => {
   el.spStatus.textContent = 'Sondage lancé en direct.';
   await refreshAll();
   loadDraft();
+
+  try {
+    await announcePoll({
+      question: el.spQuestion.value.trim() || state.poll?.question || 'Nouveau sondage',
+      options: draftOptions().length ? draftOptions() : state.options.map((o) => o.label),
+      multiple: el.spMode.value === 'multiple',
+      endsAt: state.poll?.ends_at || new Date(Date.now() + minutes * 60000).toISOString(),
+      everyone: true,
+    });
+    el.spStatus.textContent = 'Sondage lancé et annonce envoyée sur Discord.';
+  } catch (e) {
+    el.spStatus.textContent = "Sondage lancé, mais l'annonce Discord a échoué : " + e.message;
+  }
+});
+
+el.spTestAnnounce?.addEventListener('click', async () => {
+  const question = el.spQuestion.value.trim() || state.poll?.question || 'Question de test';
+  const options = draftOptions().length ? draftOptions() : state.options.map((o) => o.label);
+  if (options.length < 2) { el.spStatus.textContent = 'Il faut au moins deux choix pour tester.'; return; }
+
+  const minutes = Number(el.spDuration.value) || 1440;
+  el.spTestAnnounce.disabled = true;
+  try {
+    await announcePoll({
+      question,
+      options,
+      multiple: el.spMode.value === 'multiple',
+      endsAt: new Date(Date.now() + minutes * 60000).toISOString(),
+      everyone: false,
+    });
+    el.spStatus.textContent = 'Annonce de test envoyée (sans @everyone).';
+  } catch (e) {
+    el.spStatus.textContent = 'Échec de l\'annonce : ' + e.message;
+  }
+  el.spTestAnnounce.disabled = false;
 });
 
 el.spClose?.addEventListener('click', async () => {
@@ -1068,6 +1120,135 @@ el.spSimulate?.addEventListener('click', async () => {
   await Promise.all([loadOptions(), refreshPollRow()]);
   renderPoll();
 });
+
+/* ============================================================
+   10 bis. ANNONCE DISCORD
+   ============================================================ */
+
+// Dessine une image du sondage (question, choix, durée) pour l'embed.
+function drawPollImage({ question, options, multiple, endsAt }) {
+  const W = 1000, PAD = 48, ROW = 74, GAP = 14, LINE = 46;
+  const INNER = W - PAD * 2 - 24;
+
+  // 1er passage : découpage de la question pour connaître la hauteur
+  const probe = document.createElement('canvas').getContext('2d');
+  probe.font = '700 36px Inter, Arial, sans-serif';
+  const lines = [];
+  let line = '';
+  question.split(/\s+/).forEach((word) => {
+    const test = line ? line + ' ' + word : word;
+    if (probe.measureText(test).width > INNER && line) { lines.push(line); line = word; }
+    else line = test;
+  });
+  if (line) lines.push(line);
+
+  const qTop = PAD + 132;
+  const optTop = qTop + lines.length * LINE + 18;
+  const H = optTop + options.length * (ROW + GAP) + 92;
+
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const g = cv.getContext('2d');
+
+  const round = (x, y, w, h, r) => {
+    g.beginPath();
+    g.moveTo(x + r, y);
+    g.arcTo(x + w, y, x + w, y + h, r);
+    g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r);
+    g.arcTo(x, y, x + w, y, r);
+    g.closePath();
+  };
+
+  // Fond
+  g.fillStyle = '#0d1826'; g.fillRect(0, 0, W, H);
+  g.fillStyle = '#17293d'; round(PAD / 2, PAD / 2, W - PAD, H - PAD, 24); g.fill();
+  g.strokeStyle = '#2a4056'; g.lineWidth = 2; g.stroke();
+
+  // Bandeau
+  g.fillStyle = '#3fb9ee';
+  g.font = '700 24px Inter, Arial, sans-serif';
+  g.fillText('SONDAGE EN DIRECT', PAD + 12, PAD + 46);
+
+  g.fillStyle = '#9fb6cb';
+  g.font = '600 20px Inter, Arial, sans-serif';
+  g.fillText(multiple ? 'Choix multiples' : 'Choix unique', PAD + 12, PAD + 78);
+
+  // Question
+  g.fillStyle = '#e7f1fb';
+  g.font = '700 36px Inter, Arial, sans-serif';
+  lines.forEach((l, i) => g.fillText(l, PAD + 12, qTop + i * LINE));
+
+  // Choix
+  let oy = optTop;
+  options.forEach((label) => {
+    g.fillStyle = '#0d1826';
+    round(PAD + 12, oy, INNER, ROW, 14); g.fill();
+    g.strokeStyle = '#2a4056'; g.lineWidth = 2; g.stroke();
+
+    g.fillStyle = '#3fb9ee';
+    round(PAD + 34, oy + ROW / 2 - 11, 22, 22, multiple ? 6 : 11); g.fill();
+
+    g.fillStyle = '#e7f1fb';
+    g.font = '600 26px Inter, Arial, sans-serif';
+    let text = label;
+    while (g.measureText(text + '…').width > INNER - 100 && text.length > 4) text = text.slice(0, -2);
+    if (text !== label) text += '…';
+    g.fillText(text, PAD + 76, oy + ROW / 2 + 9);
+    oy += ROW + GAP;
+  });
+
+  // Pied
+  const footY = H - PAD / 2 - 26;
+  g.fillStyle = '#9fb6cb';
+  g.font = '600 22px Inter, Arial, sans-serif';
+  g.fillText('Fin dans ' + fmtLeft(new Date(endsAt) - Date.now()), PAD + 12, footY);
+  const right = 'play.true-vanilla.fr';
+  g.fillStyle = '#3fb9ee';
+  g.fillText(right, W - PAD - 12 - g.measureText(right).width, footY);
+
+  return new Promise((resolve) => cv.toBlob(resolve, 'image/png'));
+}
+
+// Envoie l'annonce sur le webhook Discord.
+async function announcePoll({ question, options, multiple, endsAt, everyone }) {
+  const image = await drawPollImage({ question, options, multiple, endsAt });
+  const unix = Math.floor(new Date(endsAt).getTime() / 1000);
+
+  const embed = {
+    title: question,
+    description: options.map((o, i) => `**${i + 1}.** ${o}`).join('\n'),
+    color: 0x3fb9ee,
+    fields: [
+      { name: 'Type de vote', value: multiple ? 'Choix multiples' : 'Choix unique', inline: true },
+      { name: 'Fin du vote', value: `<t:${unix}:R> (<t:${unix}:f>)`, inline: true },
+    ],
+    image: { url: 'attachment://sondage.png' },
+    footer: { text: 'True Vanilla • play.true-vanilla.fr' },
+    timestamp: new Date().toISOString(),
+  };
+
+  const form = new FormData();
+  form.append('payload_json', JSON.stringify({
+    content: everyone ? '||@everyone||' : '',
+    embeds: [embed],
+    allowed_mentions: { parse: everyone ? ['everyone'] : [] },
+  }));
+  form.append('files[0]', image, 'sondage.png');
+
+  const res = await fetch(DISCORD_WEBHOOK + '?wait=true', { method: 'POST', body: form });
+  if (!res.ok) throw new Error('Webhook Discord : ' + res.status);
+
+  // Second message : le lien de vote apparaît sous l'embed.
+  await fetch(DISCORD_WEBHOOK, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      content: `Votez : ${VOTE_URL}`,
+      allowed_mentions: { parse: [] },
+    }),
+  });
+}
 
 async function loadStaffData() {
   if (!state.me?.staff) return;
@@ -1176,6 +1357,7 @@ async function clearChat() {
 
 async function clearPollHistory() {
   const { data, error } = await sb.rpc('tv_clear_polls');
+  state.draftId = null;
   if (error) {
     const msg = rpcMessage(error, "Impossible de vider l'historique.");
     el.spStatus.textContent = msg;
@@ -1183,8 +1365,14 @@ async function clearPollHistory() {
     toast(msg);
     return null;
   }
+  state.poll = null;
+  state.options = [];
+  state.picked.clear();
+  state.hasVoted = false;
+  state.myOptions = [];
   await refreshAll();
   loadStaffData();
+  loadDraft();
   return data ?? 0;
 }
 
@@ -1195,7 +1383,7 @@ el.scClearChat?.addEventListener('click', async () => {
 });
 
 el.spClearHistory?.addEventListener('click', async () => {
-  if (!confirm('Supprimer tous les sondages terminés et leurs votes ? Cette action est définitive.')) return;
+  if (!confirm('Supprimer TOUS les sondages (en direct, brouillons et terminés) et leurs votes ? Cette action est définitive.')) return;
   const n = await clearPollHistory();
   if (n !== null) el.spStatus.textContent = `${plural(n, 'sondage')} supprimé${n > 1 ? 's' : ''}.`;
 });

@@ -408,3 +408,12 @@
   color: var(--muted); padding: 0;
 }
 .reply-bar button:hover { color: var(--live); }
+
+/* ---------- Message qui me cite ou me répond ---------- */
+.msg--mention {
+  background: color-mix(in srgb, var(--gold) 12%, var(--bg));
+  border-color: var(--gold);
+  border-left: 3px solid var(--gold);
+}
+[data-theme="dark"] .msg--mention { background: color-mix(in srgb, var(--gold) 16%, var(--bg)); }
+.msg--mention.msg--staff { border-left-color: var(--live); }
