@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sondage - True Vanilla</title>
+  <title>Sondage en direct - True Vanilla</title>
   <meta name="description" content="Votez en direct et discutez avec la communauté True Vanilla pendant les sondages du serveur.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,6 +32,7 @@
       <ul class="nav__links">
         <li><a href="index.html">Accueil</a></li>
         <li><a href="boutique.html">Boutique</a></li>
+        <li><a href="sondage.html" class="is-active">Sondage</a></li>
         <li><a href="about.html">À propos</a></li>
       </ul>
     </div>
@@ -81,7 +82,7 @@
 
         <!-- ---------- Colonne sondage ---------- -->
         <div class="live-col">
-          <div class="panel card">
+          <div class="panel card card--main">
             <div class="card__head">
               <h2>Sondage</h2>
               <span class="spacer"></span>
@@ -176,6 +177,10 @@
               <div>
                 <h3>Sondages précédents</h3>
                 <div class="mod-list" id="sp-history"></div>
+                <div class="btns" style="margin-top:8px">
+                  <button class="btn btn--ghost" id="sp-clear-history" type="button"><i class="fa-solid fa-trash"></i> Vider l'historique</button>
+                </div>
+                <p class="staff-note">Supprime définitivement les sondages terminés et leurs votes. Le sondage en direct et les brouillons sont conservés.</p>
               </div>
 
               <p class="staff-note" id="sp-status"></p>
@@ -185,7 +190,7 @@
 
         <!-- ---------- Colonne chat ---------- -->
         <div class="live-col">
-          <div class="panel card chat">
+          <div class="panel card card--main chat">
             <div class="card__head">
               <h2>Chat en direct</h2>
               <span class="spacer"></span>
@@ -216,6 +221,12 @@
 
               <div class="chat__composer">
                 <div class="cmd-list" id="cmd-list" hidden></div>
+
+                <div class="reply-bar" id="reply-bar" hidden>
+                  <i class="fa-solid fa-reply"></i>
+                  <span>Répondre à <b id="reply-target"></b> :</span>
+                  <button type="button" id="reply-cancel" aria-label="Annuler la réponse"><i class="fa-solid fa-xmark"></i></button>
+                </div>
 
                 <div class="chat__input-row" id="chat-input-row">
                   <textarea id="chat-input" maxlength="400" rows="1" placeholder="Votre message…" autocomplete="off"></textarea>
@@ -272,6 +283,7 @@
 
               <div class="btns">
                 <button class="btn btn--ghost" id="sc-unpin" type="button"><i class="fa-solid fa-thumbtack-slash"></i> Retirer l'épingle</button>
+                <button class="btn btn--ghost" id="sc-clear-chat" type="button"><i class="fa-solid fa-broom"></i> Vider le chat</button>
               </div>
 
               <p class="staff-note" id="sc-status"></p>

@@ -27,10 +27,33 @@ create table if not exists public.staff (
   created_at timestamptz not null default now()
 );
 
+-- Compatibilité : une table « staff » créée précédemment peut avoir d'autres colonnes.
+alter table public.staff add column if not exists label      text;
+alter table public.staff add column if not exists created_at timestamptz not null default now();
+
+-- Rend facultatives les colonnes héritées d'une ancienne table « staff »
+-- (username, etc.) pour que l'insertion ci-dessous passe.
+do $$
+declare c record;
+begin
+  for c in
+    select column_name from information_schema.columns
+    where table_schema = 'public' and table_name = 'staff'
+      and column_name <> 'discord_id'
+      and is_nullable = 'NO' and column_default is null
+  loop
+    execute format('alter table public.staff alter column %I drop not null', c.column_name);
+  end loop;
+end $$;
+
 insert into public.staff (discord_id, label) values
   ('217271015892451328', 'Staff'),
   ('303167270891290625', 'Staff')
 on conflict (discord_id) do nothing;
+
+alter table public.staff enable row level security;
+drop policy if exists "staff lisible" on public.staff;
+create policy "staff lisible" on public.staff for select using (true);
 
 create or replace function public.tv_is_staff()
 returns boolean
@@ -68,8 +91,13 @@ create table if not exists public.profiles (
   discord_id text unique not null,
   username   text not null,
   avatar_url text,
+  is_vip     boolean not null default false,   -- rôle VIP sur le Discord
+  is_nitro   boolean not null default false,   -- rôle Nitro sur le Discord
   updated_at timestamptz not null default now()
 );
+
+alter table public.profiles add column if not exists is_vip   boolean not null default false;
+alter table public.profiles add column if not exists is_nitro boolean not null default false;
 
 alter table public.profiles enable row level security;
 
@@ -172,7 +200,7 @@ create table if not exists public.moderation (
   id         uuid primary key default gen_random_uuid(),
   discord_id text not null,
   username   text,
-  kind       text not null check (kind in ('ban', 'timeout')),
+  kind       text not null check (kind in ('ban', 'timeout', 'blacklist')),
   reason     text not null default 'Non précisé',
   expires_at timestamptz,
   active     boolean not null default true,
@@ -193,6 +221,18 @@ create policy "staff gère les sanctions"
   on public.moderation for all to authenticated
   using (public.tv_is_staff()) with check (public.tv_is_staff());
 
+-- Compte sur liste noire : ne voit plus ni le sondage ni le chat.
+create or replace function public.tv_is_blacklisted(p_discord_id text default null)
+returns boolean
+language sql stable security definer set search_path = public
+as $$
+  select exists (
+    select 1 from public.moderation m
+    where m.discord_id = coalesce(p_discord_id, public.tv_discord_id())
+      and m.active and m.kind = 'blacklist'
+  );
+$$;
+
 -- Sanction active d'un joueur (le timeout expiré est ignoré).
 create or replace function public.tv_active_sanction(p_discord_id text)
 returns public.moderation
@@ -201,8 +241,8 @@ as $$
   select m.* from public.moderation m
   where m.discord_id = p_discord_id
     and m.active
-    and (m.kind = 'ban' or m.expires_at > now())
-  order by (m.kind = 'ban') desc, m.created_at desc
+    and (m.kind in ('ban', 'blacklist') or m.expires_at > now())
+  order by (m.kind = 'blacklist') desc, (m.kind = 'ban') desc, m.created_at desc
   limit 1;
 $$;
 
@@ -238,12 +278,17 @@ create table if not exists public.chat_messages (
   username   text not null,
   avatar_url text,
   content    text not null check (char_length(content) between 1 and 400),
+  reply_to         uuid references public.chat_messages (id) on delete set null,
+  reply_discord_id text,
+  reply_username   text,
+  reply_content  text,
   pinned     boolean not null default false,
   deleted    boolean not null default false,
   created_at timestamptz not null default now()
 );
 
 create index if not exists chat_created_idx on public.chat_messages (created_at desc);
+create index if not exists chat_reply_idx   on public.chat_messages (reply_to);
 alter table public.chat_messages replica identity full;
 alter table public.chat_messages enable row level security;
 
@@ -445,7 +490,10 @@ declare
 begin
   if not public.tv_is_staff() then raise exception 'NON_AUTORISE'; end if;
 
-  v_id := public.tv_resolve_user(p_target);
+  v_id := coalesce(
+    public.tv_resolve_user(p_target),
+    case when p_target ~ '^[0-9]{15,25}$' then p_target end
+  );
   if v_id is null then raise exception 'JOUEUR_INTROUVABLE'; end if;
   if exists (select 1 from public.staff where discord_id = v_id) then
     raise exception 'CIBLE_STAFF';
@@ -504,7 +552,13 @@ end;
 $$;
 
 -- Le staff peut écrire même hors sondage : passage par une fonction dédiée.
-create or replace function public.tv_staff_message(p_content text)
+create or replace function public.tv_staff_message(
+  p_content        text,
+  p_reply_to         uuid default null,
+  p_reply_discord_id text default null,
+  p_reply_username text default null,
+  p_reply_content  text default null
+)
 returns void
 language plpgsql security definer set search_path = public
 as $$
@@ -514,18 +568,52 @@ begin
   if not public.tv_is_staff() then raise exception 'NON_AUTORISE'; end if;
   select id into v_poll from public.polls where status = 'live' order by starts_at desc limit 1;
 
-  insert into public.chat_messages (poll_id, discord_id, username, avatar_url, content)
+  insert into public.chat_messages (poll_id, discord_id, username, avatar_url, content,
+                                    reply_to, reply_discord_id, reply_username, reply_content)
   values (
     v_poll,
     public.tv_discord_id(),
     coalesce((select username from public.profiles where discord_id = public.tv_discord_id()), 'Staff'),
     (select avatar_url from public.profiles where discord_id = public.tv_discord_id()),
-    p_content
+    p_content,
+    p_reply_to, p_reply_discord_id, p_reply_username, p_reply_content
   );
 end;
 $$;
 
+-- Vide l'historique des sondages terminés (staff).
+create or replace function public.tv_clear_polls()
+returns integer
+language plpgsql security definer set search_path = public
+as $$
+declare
+  v_count integer;
+begin
+  if not public.tv_is_staff() then raise exception 'NON_AUTORISE'; end if;
+  with removed as (delete from public.polls where status = 'closed' returning 1)
+  select count(*) into v_count from removed;
+  return v_count;
+end;
+$$;
+
+-- Vide définitivement le chat (staff).
+create or replace function public.tv_clear_chat()
+returns integer
+language plpgsql security definer set search_path = public
+as $$
+declare
+  v_count integer;
+begin
+  if not public.tv_is_staff() then raise exception 'NON_AUTORISE'; end if;
+  with removed as (delete from public.chat_messages returning 1)
+  select count(*) into v_count from removed;
+  return v_count;
+end;
+$$;
+
 grant execute on function
+  public.tv_clear_polls(),
+  public.tv_clear_chat(),
   public.tv_expire_polls(),
   public.tv_cast_vote(uuid, uuid[]),
   public.tv_start_poll(uuid, integer),
@@ -535,13 +623,34 @@ grant execute on function
   public.tv_unsanction(text),
   public.tv_resolve_user(text),
   public.tv_active_sanction(text),
+  public.tv_is_blacklisted(text),
   public.tv_pin_message(uuid),
   public.tv_unpin_all(),
-  public.tv_staff_message(text)
+  public.tv_staff_message(text, uuid, text, text, text)
 to anon, authenticated;
 
 -- ============================================================
--- 8. TEMPS RÉEL
+-- 8. RESTRICTIONS DE LA LISTE NOIRE
+--    (appliquées ici : la table moderation doit déjà exister)
+-- ============================================================
+
+drop policy if exists "sondages publics visibles" on public.polls;
+create policy "sondages publics visibles"
+  on public.polls for select
+  using ((status <> 'draft' and not public.tv_is_blacklisted()) or public.tv_is_staff());
+
+drop policy if exists "options visibles" on public.poll_options;
+create policy "options visibles"
+  on public.poll_options for select
+  using (not public.tv_is_blacklisted() or public.tv_is_staff());
+
+drop policy if exists "chat lisible" on public.chat_messages;
+create policy "chat lisible"
+  on public.chat_messages for select
+  using (not public.tv_is_blacklisted() or public.tv_is_staff());
+
+-- ============================================================
+-- 9. TEMPS RÉEL
 -- ============================================================
 
 do $$

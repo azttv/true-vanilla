@@ -324,3 +324,87 @@
 
 /* Choix déjà validés par le joueur : case cochée même après rechargement */
 .opt.is-mine .opt__box { background: var(--diamond-deep); border-color: var(--diamond-deep); }
+
+/* ---------- Personnes connectées au chat ---------- */
+.online-count {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--muted); font-size: .78rem; font-weight: 600;
+  margin-right: 10px;
+}
+.online-count i { font-size: .72rem; }
+.online-count b { color: var(--ink); }
+
+/* ---------- Messages du staff ---------- */
+.msg--staff {
+  background: var(--live-soft);
+  border-color: var(--live);
+  border-left-width: 3px;
+}
+
+/* ---------- Colonnes de même taille ---------- */
+.live-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.card--main { height: 640px; }
+.card--main > .card__body { flex: 1; min-height: 0; overflow-y: auto; }
+.chat .chat__body { height: auto; flex: 1; min-height: 0; }
+@media (max-width: 960px) { .card--main { height: auto; min-height: 520px; } }
+
+/* ---------- Badges de rôle ---------- */
+.msg__badge {
+  display: inline-block;
+  height: 15px; width: auto; vertical-align: -3px;
+  margin-right: 4px;
+}
+.msg__badge + .msg__badge { margin-left: -1px; }
+.profile__badges { display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; }
+.profile__badges img { display: inline-block; height: 20px; width: auto; }
+
+/* ---------- Réponses dans le chat ---------- */
+.msg { position: relative; }
+.msg__action {
+  background: none; border: none; cursor: pointer; padding: 0;
+  color: var(--muted); font-size: .72rem; margin-left: 8px;
+  opacity: 0; transition: opacity .15s ease, color .15s ease;
+}
+.msg:hover .msg__action, .msg__action:focus-visible { opacity: 1; }
+.msg__action:hover { color: var(--diamond-deep); }
+.msg__pin:hover { color: var(--pin); }
+@media (hover: none) { .msg__action { opacity: 1; } }
+
+.msg__replied {
+  display: flex; align-items: center; gap: 6px;
+  position: relative; padding-left: 16px; margin-bottom: 4px;
+  font-size: .77rem; color: var(--muted); cursor: pointer;
+}
+.msg__replied::before {
+  content: ''; position: absolute; left: 3px; top: 50%; bottom: -2px;
+  width: 9px;
+  border-left: 2px solid var(--line);
+  border-top: 2px solid var(--line);
+  border-top-left-radius: 6px;
+}
+.msg__replied i { font-size: .68rem; }
+.msg__replied .who { font-weight: 700; color: var(--u-light); }
+[data-theme="dark"] .msg__replied .who { color: var(--u-dark); }
+.msg__replied .what { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.msg__replied:hover .what { color: var(--ink); }
+
+.msg.is-flash { animation: flash 1.2s ease; }
+@keyframes flash {
+  0%, 40% { background: var(--diamond-soft); border-color: var(--diamond); }
+  100% { background: var(--bg); }
+}
+
+.reply-bar {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg-2); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 7px 11px; margin-bottom: 8px;
+  font-size: .8rem; color: var(--muted);
+}
+.reply-bar[hidden] { display: none; }
+.reply-bar i { font-size: .74rem; }
+.reply-bar b { color: var(--ink); }
+.reply-bar button {
+  margin-left: auto; background: none; border: none; cursor: pointer;
+  color: var(--muted); padding: 0;
+}
+.reply-bar button:hover { color: var(--live); }
