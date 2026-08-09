@@ -10,8 +10,8 @@
    politiques RLS définies dans schema.sql.
    ============================================================ */
 
-const SUPABASE_URL = 'https://VOTRE-PROJET.supabase.co'; // ← à remplacer
-const SUPABASE_ANON_KEY = 'VOTRE_CLE_ANON';              // ← à remplacer
+const SUPABASE_URL = 'https://lnszzmonnomfdkxaldyw.supabase.co'; // ← à remplacer
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxuc3p6bW9ubm9tZmRreGFsZHl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkyMzg1MzksImV4cCI6MjA4NDgxNDUzOX0.JxslMDVBhGziQ2JfqOAgm9KdvMBE_w9xfHVXYlYmFNw';              // ← à remplacer
 
 const STAFF_IDS = ['217271015892451328', '303167270891290625'];
 
