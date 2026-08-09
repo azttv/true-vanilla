@@ -49,26 +49,36 @@
       <small class="muted" id="gate-error"></small>
     </div>
   </div>
- 
+
+  <!-- ===================== ACCÈS REFUSÉ ===================== -->
+  <div class="gate" id="blocked-screen" hidden aria-modal="true" role="dialog">
+    <div class="panel gate__box">
+      <i class="fa-solid fa-user-slash lock" style="color:var(--live)"></i>
+      <h2>Accès refusé</h2>
+      <p>Votre compte n'a plus accès au sondage ni au chat en direct.</p>
+      <p><b id="blocked-reason"></b></p>
+    </div>
+  </div>
+
   <!-- ===================== CONTENU ===================== -->
   <section>
     <div class="live-wrap">
- 
+
       <div class="section-head">
         <span class="eyebrow">Communauté</span>
         <h2>Sondage en direct</h2>
         <p>Donnez votre avis sur les prochaines nouveautés du serveur et suivez les résultats en temps réel.</p>
       </div>
- 
+
       <div class="panel me-bar" id="me-bar" hidden>
         <img id="me-avatar" src="" alt="">
         <span>Connecté en tant que <b id="me-username">-</b></span>
         <span class="tag-staff" id="me-staff" hidden>Staff</span>
         <button class="logout" id="me-logout" type="button">Se déconnecter</button>
       </div>
- 
+
       <div class="live-grid">
- 
+
         <!-- ---------- Colonne sondage ---------- -->
         <div class="live-col">
           <div class="panel card">
@@ -77,7 +87,7 @@
               <span class="spacer"></span>
               <span class="live-pill is-off" id="poll-pill"><span class="dot"></span><span id="poll-pill-text">Hors ligne</span></span>
             </div>
- 
+
             <div class="card__body" id="poll-body">
               <!-- Squelette de chargement -->
               <div id="poll-skeleton">
@@ -89,13 +99,13 @@
                 <div class="skeleton sk-row"></div>
                 <div class="skeleton sk-line w-50" style="margin-top:16px"></div>
               </div>
- 
+
               <!-- État vide -->
               <div class="empty" id="poll-empty" hidden>
                 <i class="fa-solid fa-square-poll-vertical"></i>
                 Aucun sondage n'est en cours.
               </div>
- 
+
               <!-- Sondage -->
               <div id="poll-live" hidden>
                 <h3 class="poll__question" id="poll-question"></h3>
@@ -110,7 +120,7 @@
               </div>
             </div>
           </div>
- 
+
           <!-- Panneau staff : sondage -->
           <details class="panel card staff" id="staff-poll" hidden>
             <summary><i class="fa-solid fa-sliders"></i> Gestion du sondage <i class="fa-solid fa-chevron-down chev"></i></summary>
@@ -119,7 +129,7 @@
                 <label for="sp-question">Question</label>
                 <input type="text" id="sp-question" maxlength="180" placeholder="Quelle nouveauté voulez-vous pour la saison 6 ?">
               </div>
- 
+
               <div class="row">
                 <div>
                   <label for="sp-mode">Type de vote</label>
@@ -140,19 +150,19 @@
                   </select>
                 </div>
               </div>
- 
+
               <div>
                 <label>Choix</label>
                 <div id="sp-options"></div>
                 <button class="btn btn--ghost" id="sp-add-option" type="button"><i class="fa-solid fa-plus"></i> Ajouter un choix</button>
               </div>
- 
+
               <div class="btns">
                 <button class="btn btn--ghost" id="sp-save" type="button"><i class="fa-solid fa-floppy-disk"></i> Enregistrer le brouillon</button>
                 <button class="btn btn--cta" id="sp-start" type="button"><i class="fa-solid fa-tower-broadcast"></i> Lancer en direct</button>
                 <button class="btn btn--ghost" id="sp-close" type="button"><i class="fa-solid fa-flag-checkered"></i> Terminer le sondage</button>
               </div>
- 
+
               <div class="row">
                 <div>
                   <label for="sp-sim-count">Votes à simuler</label>
@@ -162,32 +172,33 @@
                   <button class="btn btn--ghost" id="sp-simulate" type="button"><i class="fa-solid fa-flask"></i> Simuler</button>
                 </div>
               </div>
- 
+
               <div>
                 <h3>Sondages précédents</h3>
                 <div class="mod-list" id="sp-history"></div>
               </div>
- 
+
               <p class="staff-note" id="sp-status"></p>
             </div>
           </details>
         </div>
- 
+
         <!-- ---------- Colonne chat ---------- -->
         <div class="live-col">
           <div class="panel card chat">
             <div class="card__head">
               <h2>Chat en direct</h2>
               <span class="spacer"></span>
+              <span class="online-count" id="chat-online" hidden><i class="fa-solid fa-user-group"></i> <b id="chat-online-n">0</b> en ligne</span>
               <span class="live-pill is-off" id="chat-pill"><span class="dot"></span><span id="chat-pill-text">Fermé</span></span>
             </div>
- 
+
             <div class="chat__body">
               <div class="chat__pin" id="chat-pin" hidden>
                 <i class="fa-solid fa-thumbtack"></i>
                 <div><span class="who" id="pin-user"></span> : <span id="pin-text"></span></div>
               </div>
- 
+
               <div class="chat__list" id="chat-list">
                 <!-- Squelette de chargement -->
                 <div id="chat-skeleton">
@@ -202,17 +213,17 @@
                   Chat activé uniquement lors d'un sondage.
                 </div>
               </div>
- 
+
               <div class="chat__composer">
                 <div class="cmd-list" id="cmd-list" hidden></div>
- 
+
                 <div class="chat__input-row" id="chat-input-row">
                   <textarea id="chat-input" maxlength="400" rows="1" placeholder="Votre message…" autocomplete="off"></textarea>
                   <button class="btn btn--cta" id="chat-send" type="button" aria-label="Envoyer">
                     <i class="fa-solid fa-paper-plane"></i>
                   </button>
                 </div>
- 
+
                 <div class="chat__locked" id="chat-locked" hidden>
                   <span class="alert" id="lock-title"></span>
                   <span class="detail" id="lock-reason"></span>
@@ -221,7 +232,7 @@
               </div>
             </div>
           </div>
- 
+
           <!-- Panneau staff : modération -->
           <details class="panel card staff" id="staff-chat" hidden>
             <summary><i class="fa-solid fa-shield-halved"></i> Modération du chat <i class="fa-solid fa-chevron-down chev"></i></summary>
@@ -230,12 +241,25 @@
                 <h3>Bannis</h3>
                 <div class="mod-list" id="sc-bans"></div>
               </div>
- 
+
               <div>
                 <h3>Exclusions temporaires</h3>
                 <div class="mod-list" id="sc-timeouts"></div>
               </div>
- 
+
+              <div>
+                <h3>Liste noire</h3>
+                <p class="staff-note">Accès au sondage et au chat totalement bloqué.</p>
+                <div class="row">
+                  <input type="text" id="sc-bl-id" placeholder="Identifiant Discord ou pseudo">
+                  <input type="text" id="sc-bl-reason" placeholder="Raison">
+                </div>
+                <div class="btns" style="margin-top:8px">
+                  <button class="btn btn--ghost" id="sc-bl-add" type="button"><i class="fa-solid fa-user-slash"></i> Blacklister</button>
+                </div>
+                <div class="mod-list" id="sc-blacklist" style="margin-top:8px"></div>
+              </div>
+
               <div>
                 <h3>Filtre de mots</h3>
                 <div class="row">
@@ -245,20 +269,20 @@
                 <p class="staff-note">Mots ajoutés depuis le site (la liste de base vient de <code>filter.yml</code>).</p>
                 <div class="chips" id="sc-words"></div>
               </div>
- 
+
               <div class="btns">
                 <button class="btn btn--ghost" id="sc-unpin" type="button"><i class="fa-solid fa-thumbtack-slash"></i> Retirer l'épingle</button>
               </div>
- 
+
               <p class="staff-note" id="sc-status"></p>
             </div>
           </details>
         </div>
- 
+
       </div>
     </div>
   </section>
- 
+
   <!-- ===================== MODALE PROFIL ===================== -->
   <div class="modal-overlay" id="profile-modal">
     <div class="panel modal" style="max-width:520px">
@@ -274,7 +298,7 @@
       <div class="profile__msgs" id="profile-msgs"></div>
     </div>
   </div>
- 
+
   <!-- ===================== MODALE MESSAGE BLOQUÉ ===================== -->
   <div class="modal-overlay" id="blocked-modal">
     <div class="panel modal modal--blocked">
@@ -285,9 +309,9 @@
       <p class="staff-note" style="margin-top:12px">Reformulez votre message pour pouvoir l'envoyer.</p>
     </div>
   </div>
- 
+
   <div class="toast" id="toast"></div>
- 
+
   <!-- ===================== FOOTER ===================== -->
   <footer>
     <div class="container">
@@ -335,7 +359,7 @@
       </div>
     </div>
   </footer>
- 
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="js/main.js"></script>
   <script src="js/filter.js"></script>
