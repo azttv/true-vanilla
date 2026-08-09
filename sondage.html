@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sondage en direct - True Vanilla</title>
+  <meta name="description" content="Votez en direct et discutez avec la communauté True Vanilla pendant les sondages du serveur.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/sondage.css">
+</head>
+<body>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html">
+        <img src="assets/favicon.png" alt="Logo True Vanilla">
+        <span>True Vanilla</span>
+      </a>
+      <div class="nav__mobile">
+        <button class="nav__theme" aria-label="Changer de thème">
+          <i class="fa-solid fa-moon nav__theme-moon"></i>
+          <i class="fa-solid fa-sun nav__theme-sun"></i>
+        </button>
+        <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      </div>
+      <ul class="nav__links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="boutique.html">Boutique</a></li>
+        <li><a href="sondage.html" class="is-active">Sondage</a></li>
+        <li><a href="about.html">À propos</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ===================== MODALE DE CONNEXION ===================== -->
+  <div class="gate" id="gate" aria-modal="true" role="dialog" aria-labelledby="gate-title">
+    <div class="panel gate__box">
+      <i class="fa-solid fa-lock lock"></i>
+      <h2 id="gate-title">Connexion requise</h2>
+      <p>Connectez-vous avec Discord pour voter et participer au chat en direct. Un seul vote par compte.</p>
+      <button class="btn btn--discord" id="gate-login" type="button">
+        <i class="fa-brands fa-discord"></i> Se connecter avec Discord
+      </button>
+      <small class="muted" id="gate-error"></small>
+    </div>
+  </div>
+
+  <!-- ===================== CONTENU ===================== -->
+  <section>
+    <div class="live-wrap">
+
+      <div class="section-head">
+        <span class="eyebrow">Communauté</span>
+        <h2>Sondage en direct</h2>
+        <p>Donnez votre avis sur les prochaines nouveautés du serveur et suivez les résultats en temps réel.</p>
+      </div>
+
+      <div class="panel me-bar" id="me-bar" hidden>
+        <img id="me-avatar" src="" alt="">
+        <span>Connecté en tant que <b id="me-username">-</b></span>
+        <span class="tag-staff" id="me-staff" hidden>Staff</span>
+        <button class="logout" id="me-logout" type="button">Se déconnecter</button>
+      </div>
+
+      <div class="live-grid">
+
+        <!-- ---------- Colonne sondage ---------- -->
+        <div class="live-col">
+          <div class="panel card">
+            <div class="card__head">
+              <h2>Sondage</h2>
+              <span class="spacer"></span>
+              <span class="live-pill is-off" id="poll-pill"><span class="dot"></span><span id="poll-pill-text">Hors ligne</span></span>
+            </div>
+
+            <div class="card__body" id="poll-body">
+              <!-- Squelette de chargement -->
+              <div id="poll-skeleton">
+                <div class="skeleton sk-line w-70"></div>
+                <div class="skeleton sk-line w-35"></div>
+                <div style="height:14px"></div>
+                <div class="skeleton sk-row"></div>
+                <div class="skeleton sk-row"></div>
+                <div class="skeleton sk-row"></div>
+                <div class="skeleton sk-line w-50" style="margin-top:16px"></div>
+              </div>
+
+              <!-- État vide -->
+              <div class="empty" id="poll-empty" hidden>
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                Aucun sondage n'est en cours.
+              </div>
+
+              <!-- Sondage -->
+              <div id="poll-live" hidden>
+                <h3 class="poll__question" id="poll-question"></h3>
+                <div class="poll__mode"><i class="fa-solid fa-list-check"></i><span id="poll-mode"></span></div>
+                <div class="poll__options" id="poll-options"></div>
+                <div class="poll__foot">
+                  <span class="poll__meta" id="poll-meta"></span>
+                  <button class="btn btn--cta" id="poll-vote" type="button" disabled>
+                    <i class="fa-solid fa-check"></i> Voter
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panneau staff : sondage -->
+          <details class="panel card staff" id="staff-poll" hidden>
+            <summary><i class="fa-solid fa-sliders"></i> Gestion du sondage <i class="fa-solid fa-chevron-down chev"></i></summary>
+            <div class="staff__body">
+              <div>
+                <label for="sp-question">Question</label>
+                <input type="text" id="sp-question" maxlength="180" placeholder="Quelle nouveauté voulez-vous pour la saison 6 ?">
+              </div>
+
+              <div class="row">
+                <div>
+                  <label for="sp-mode">Type de vote</label>
+                  <select id="sp-mode">
+                    <option value="single">Choix unique</option>
+                    <option value="multiple">Choix multiples</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="sp-duration">Durée (minutes)</label>
+                  <input type="number" id="sp-duration" min="1" max="20160" value="60">
+                </div>
+              </div>
+
+              <div>
+                <label>Choix</label>
+                <div id="sp-options"></div>
+                <button class="btn btn--ghost" id="sp-add-option" type="button"><i class="fa-solid fa-plus"></i> Ajouter un choix</button>
+              </div>
+
+              <div class="btns">
+                <button class="btn btn--ghost" id="sp-save" type="button"><i class="fa-solid fa-floppy-disk"></i> Enregistrer le brouillon</button>
+                <button class="btn btn--cta" id="sp-start" type="button"><i class="fa-solid fa-tower-broadcast"></i> Lancer en direct</button>
+                <button class="btn btn--ghost" id="sp-close" type="button"><i class="fa-solid fa-flag-checkered"></i> Terminer le sondage</button>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label for="sp-sim-count">Votes à simuler</label>
+                  <input type="number" id="sp-sim-count" min="1" max="500" value="25">
+                </div>
+                <div style="align-self:flex-end">
+                  <button class="btn btn--ghost" id="sp-simulate" type="button"><i class="fa-solid fa-flask"></i> Simuler</button>
+                </div>
+              </div>
+
+              <div>
+                <h3>Sondages précédents</h3>
+                <div class="mod-list" id="sp-history"></div>
+              </div>
+
+              <p class="staff-note" id="sp-status"></p>
+            </div>
+          </details>
+        </div>
+
+        <!-- ---------- Colonne chat ---------- -->
+        <div class="live-col">
+          <div class="panel card chat">
+            <div class="card__head">
+              <h2>Chat en direct</h2>
+              <span class="spacer"></span>
+              <span class="live-pill is-off" id="chat-pill"><span class="dot"></span><span id="chat-pill-text">Fermé</span></span>
+            </div>
+
+            <div class="chat__body">
+              <div class="chat__pin" id="chat-pin" hidden>
+                <i class="fa-solid fa-thumbtack"></i>
+                <div><span class="who" id="pin-user"></span> : <span id="pin-text"></span></div>
+              </div>
+
+              <div class="chat__list" id="chat-list">
+                <!-- Squelette de chargement -->
+                <div id="chat-skeleton">
+                  <div class="skeleton sk-msg"></div>
+                  <div class="skeleton sk-msg" style="width:80%"></div>
+                  <div class="skeleton sk-msg" style="width:92%"></div>
+                  <div class="skeleton sk-msg" style="width:70%"></div>
+                  <div class="skeleton sk-msg" style="width:86%"></div>
+                </div>
+                <div class="empty" id="chat-empty" hidden>
+                  <i class="fa-regular fa-comments"></i>
+                  Chat activé uniquement lors d'un sondage.
+                </div>
+              </div>
+
+              <div class="chat__composer">
+                <div class="cmd-list" id="cmd-list" hidden></div>
+
+                <div class="chat__input-row" id="chat-input-row">
+                  <textarea id="chat-input" maxlength="400" rows="1" placeholder="Votre message…" autocomplete="off"></textarea>
+                  <button class="btn btn--cta" id="chat-send" type="button" aria-label="Envoyer">
+                    <i class="fa-solid fa-paper-plane"></i>
+                  </button>
+                </div>
+
+                <div class="chat__locked" id="chat-locked" hidden>
+                  <span class="alert" id="lock-title"></span>
+                  <span class="detail" id="lock-reason"></span>
+                  <span class="detail" id="lock-duration"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panneau staff : modération -->
+          <details class="panel card staff" id="staff-chat" hidden>
+            <summary><i class="fa-solid fa-shield-halved"></i> Modération du chat <i class="fa-solid fa-chevron-down chev"></i></summary>
+            <div class="staff__body">
+              <div>
+                <h3>Bannis</h3>
+                <div class="mod-list" id="sc-bans"></div>
+              </div>
+
+              <div>
+                <h3>Exclusions temporaires</h3>
+                <div class="mod-list" id="sc-timeouts"></div>
+              </div>
+
+              <div>
+                <h3>Filtre de mots</h3>
+                <div class="row">
+                  <input type="text" id="sc-word" placeholder="Mot à ajouter au filtre">
+                  <button class="btn btn--ghost" id="sc-word-add" type="button"><i class="fa-solid fa-plus"></i> Ajouter</button>
+                </div>
+                <p class="staff-note">Mots ajoutés depuis le site (la liste de base vient de <code>filter.yml</code>).</p>
+                <div class="chips" id="sc-words"></div>
+              </div>
+
+              <div class="btns">
+                <button class="btn btn--ghost" id="sc-unpin" type="button"><i class="fa-solid fa-thumbtack-slash"></i> Retirer l'épingle</button>
+              </div>
+
+              <p class="staff-note" id="sc-status"></p>
+            </div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MODALE PROFIL ===================== -->
+  <div class="modal-overlay" id="profile-modal">
+    <div class="panel modal" style="max-width:520px">
+      <button class="modal__close" type="button" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+      <div class="profile__head">
+        <img id="profile-avatar" src="" alt="">
+        <div>
+          <h2 id="profile-name">-</h2>
+          <small id="profile-id"></small>
+        </div>
+      </div>
+      <h3 style="margin-bottom:8px">Derniers messages</h3>
+      <div class="profile__msgs" id="profile-msgs"></div>
+    </div>
+  </div>
+
+  <!-- ===================== MODALE MESSAGE BLOQUÉ ===================== -->
+  <div class="modal-overlay" id="blocked-modal">
+    <div class="panel modal modal--blocked">
+      <button class="modal__close" type="button" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+      <h2><i class="fa-solid fa-triangle-exclamation"></i> Message bloqué</h2>
+      <p>Votre message n'a pas été envoyé : il est considéré comme offensant par la modération automatique.</p>
+      <div id="blocked-words"></div>
+      <p class="staff-note" style="margin-top:12px">Reformulez votre message pour pouvoir l'envoyer.</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.png" alt="True Vanilla">
+          <p class="mt-2">play.true-vanilla.fr<br>Version 1.21.8 &bull; Java</p>
+        </div>
+        <div class="footer__col">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="boutique.html">Boutique</a></li>
+            <li><a href="about.html">À propos</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Légal</h3>
+          <ul>
+            <li><a href="conditions.html#cgu">CGU</a></li>
+            <li><a href="conditions.html#cgv">CGV</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Autres</h3>
+          <ul>
+            <li><a href="avis.html">Laisser un avis</a></li>
+            <li><a href="sondage.html">Sondage en direct</a></li>
+            <li><a href="voicechat.html">Installer le voice chat</a></li>
+            <li><a href="wiki.html">Wiki</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Nous suivre</h3>
+          <div class="footer__socials">
+            <a href="https://instagram.com/truevanillafr" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://tiktok.com/@truevanillafr" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://youtube.com/@truevanillafr" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://discord.gg/HefFTCS4cp" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__legal">
+        © 2026 True Vanilla - true-vanilla.fr. Serveur non affilié à Mojang Studios ni à Microsoft.
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/filter.js"></script>
+  <script src="js/sondage.js"></script>
+</body>
+</html>
