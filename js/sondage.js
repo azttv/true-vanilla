@@ -1,17 +1,5 @@
-/* ============================================================
-   TRUE VANILLA - sondage.js
-   Sondage en direct + chat en direct (Supabase Realtime).
-
-   CONFIGURATION (voir GUIDE-SONDAGE.md) :
-   1. Créez un projet Supabase, exécutez supabase/schema.sql.
-   2. Activez le fournisseur Discord dans Authentication → Providers.
-   3. Renseignez SUPABASE_URL et SUPABASE_ANON_KEY ci-dessous.
-   La clé « anon » est publique : toute la sécurité repose sur les
-   politiques RLS définies dans schema.sql.
-   ============================================================ */
-
-const SUPABASE_URL = 'https://VOTRE-PROJET.supabase.co'; // ← à remplacer
-const SUPABASE_ANON_KEY = 'VOTRE_CLE_ANON';              // ← à remplacer
+const SUPABASE_URL = 'https://lnszzmonnomfdkxaldyw.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxuc3p6bW9ubm9tZmRreGFsZHl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkyMzg1MzksImV4cCI6MjA4NDgxNDUzOX0.JxslMDVBhGziQ2JfqOAgm9KdvMBE_w9xfHVXYlYmFNw';              // ← à remplacer
 
 const STAFF_IDS = ['217271015892451328', '303167270891290625'];
 
