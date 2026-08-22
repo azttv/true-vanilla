@@ -785,3 +785,61 @@ footer {
   .reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
   .reveal.in { opacity: 1; transform: translateY(0); }
 }
+
+/* ============================================================
+   PANNEAU TVUTILS (hero)
+   Planté dans l'herbe, texte en police Minecraft.
+   ============================================================ */
+.hero-sign {
+  position: absolute;
+  bottom: 170px;
+  right: clamp(16px, 800px, 300px);
+  z-index: 3;
+  width: clamp(200px, 17vw, 260px);
+  line-height: 0;
+  filter: drop-shadow(0 8px 12px rgba(14, 42, 71, .35));
+}
+
+.hero-sign__wood {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+/* La planche occupe les ~45 % supérieurs de l'image */
+.hero-sign__text {
+  position: absolute;
+  top: 3%;
+  left: 5%;
+  right: 5%;
+  height: 41%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  text-align: center;
+  font-family: 'Minecraft', 'Minecraftia', 'Press Start 2P', monospace;
+  font-size: clamp(.6rem, 1vw, .8rem);
+  line-height: 1.42;
+  color: #fdfdfd;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, .55);
+}
+.hero-sign__text span,
+.hero-sign__text a { display: block; white-space: nowrap; }
+
+.hero-sign__text a {
+  color: #6ea8ff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.hero-sign__text a:hover { color: #a9caff; }
+
+[data-theme="dark"] .hero-sign__text { color: #fdfdfd; }
+
+/* Trop à l'étroit sur mobile : le panneau chevaucherait le logo */
+@media (max-width: 900px) {
+  .hero-sign { display: none; }
+}

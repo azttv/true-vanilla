@@ -565,6 +565,7 @@
                             <li><a href="#liaison" data-kw="liaison discord code 4 chiffres bot lier compte premium"><i class="fa-solid fa-link"></i> Liaison Discord</a></li>
                             <li><a href="#voicechat" data-kw="voice chat vocal simple voice chat mod micro proximite"><i class="fa-solid fa-microphone-lines"></i> Simple Voice Chat</a></li>
                             <li><a href="#voxy" data-kw="voxy lod distance de rendu mod fabric vip tvsmp voxy support curseforge chunks"><i class="fa-solid fa-mountain-sun"></i> Mod Voxy (LOD)</a></li>
+                            <li><a href="#tvutils" data-kw="tvutils tv utils mod client officiel minimap carte waypoints boussole freecam legit fair play curseforge modrinth fabric touches raccourcis"><i class="fa-solid fa-compass"></i> TVUtils (mod client)</a></li>
                             <li><a href="#mods" data-kw="mods autorises interdits cheat client optifine sodium minimap"><i class="fa-solid fa-puzzle-piece"></i> Mods & performances</a></li>
                         </ul>
                     </div>
@@ -1116,6 +1117,204 @@
                             <p>
                                 Voir les montagnes, les océans et les bases lointaines à des milliers de blocs.
                                 Idéal pour les captures d'écran, les voyages en élytres et pour sauvegarder une plus grande partie de la map.
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ============ TVUTILS ============ -->
+                <article class="wk-page" id="page-tvutils">
+                    <h1>TVUtils, le mod client officiel</h1>
+                    <p class="wk-lead">
+                        <strong>TVUtils</strong> regroupe les outils de confort de True Vanilla dans un seul mod :
+                        minimap, carte plein écran, waypoints, boussole, Freecam et Infos HUD. Il est
+                        <strong>entièrement côté client</strong> et <strong>totalement facultatif</strong> :
+                        rien n'est envoyé au serveur, et jouer sans lui ne pénalise personne.
+                    </p>
+
+                    <div class="adm adm--tip">
+                        <i class="fa-solid fa-download"></i>
+                        <div>
+                            <b>TVUtils</b>
+                            <p>
+                                Fabric, Minecraft 1.21.8, Fabric API requis.
+                                <a href="https://www.curseforge.com/minecraft/mc-mods/tvutils" target="_blank" rel="noopener">
+                                    CurseForge <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+                                &nbsp;·&nbsp;
+                                <a href="https://modrinth.com/mod/tvutils" target="_blank" rel="noopener">
+                                    Modrinth <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2><i class="fa-solid fa-keyboard"></i> Les touches</h2>
+                    <div class="wk-table-wrap">
+                    <table class="wk-table">
+                        <thead><tr><th>Touche</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>,</code></td><td>Ouvrir la carte plein écran</td></tr>
+                            <tr><td><code>B</code></td><td>Créer un waypoint à votre position</td></tr>
+                            <tr><td><code>U</code></td><td>Ouvrir la liste des waypoints</td></tr>
+                            <tr><td><code>F4</code></td><td>Activer ou couper la Freecam</td></tr>
+                            <tr><td><code>W</code></td><td>Maintenir pour zoomer (touche reconfigurable)</td></tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <p>
+                        Toutes ces touches sont modifiables dans les options de contrôle de Minecraft,
+                        catégorie <strong>TVUtils</strong>. La touche de zoom se change directement
+                        dans les paramètres de la Minimap.
+                    </p>
+
+                    <h2><i class="fa-solid fa-map-location-dot"></i> Minimap</h2>
+                    <p>
+                        Une minimap dessinée avec les couleurs de carte vanilla : ce que vous voyez
+                        correspond exactement au monde. Les chunks explorés sont enregistrés sur votre
+                        disque et restent visibles une fois la zone quittée.
+                    </p>
+                    <ul>
+                        <li><strong>Forme</strong> : carré ou cercle, configurable.</li>
+                        <li><strong>Taille</strong> : taille de 0.1× à 2×.</li>
+                        <li><strong>Rotation</strong> : suit votre vue, ou reste orientée au nord. En mode
+                            nord, une flèche autour de votre tête indique la direction de votre regard.</li>
+                        <li><strong>Affichages</strong> : coordonnées, biome, heure du jeu, waypoints,
+                            grille des chunks.</li>
+                        <li><strong>Zoom</strong> : maintenir la touche de zoom double la surface affichée.</li>
+                    </ul>
+
+                    <div class="adm adm--tip">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        <div>
+                            <b>Pensée fair-play</b>
+                            <p>
+                                La minimap n'affiche <strong>ni joueurs ni entités</strong>, et ne dessine
+                                <strong>rien sous Y 55</strong> dans l'Overworld. Impossible de repérer une
+                                base souterraine, un joueur caché ou une ferme à mobs : elle ne montre que
+                                la surface, comme une carte vanilla. Le Nether et l'End, dont le sol naturel
+                                est bien plus bas, sont rendus sur toute leur hauteur.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2><i class="fa-solid fa-map"></i> Carte plein écran</h2>
+                    <p>
+                        La touche <code>M</code> ouvre la carte complète de ce que vous avez exploré.
+                        Clic gauche maintenu pour vous déplacer, molette ou touche de zoom pour zoomer,
+                        clic droit pour ajouter un waypoint à l'endroit visé ou vous recentrer. Le chunk
+                        sous le curseur est surligné et ses coordonnées s'affichent en bas.
+                    </p>
+                    <p>
+                        Au-delà de la <strong>bordure du monde</strong>, plus rien n'est dessiné.
+                    </p>
+
+                    <h2><i class="fa-solid fa-location-dot"></i> Waypoints</h2>
+                    <p>
+                        La touche <code>B</code> ouvre la création : nom, 16 couleurs, 5 formes de marqueur,
+                        coordonnées pré-remplies et dimension cible.
+                    </p>
+                    <ul>
+                        <li>Faisceau coloré sur toute la hauteur, masqué à moins de 20 blocs.</li>
+                        <li>Visible sur la minimap.</li>
+                        <li>Visible sur la boussole avec son icône, son nom et sa distance.</li>
+                        <li><code>U</code> ouvre la liste, pour modifier ou supprimer chaque point.</li>
+                    </ul>
+                    <p>
+                        Un <strong>waypoint de mort</strong> est posé automatiquement à chaque décès.
+                        Il remplace le précédent et disparaît tout seul une fois votre stuff récupéré.
+                    </p>
+
+                    <h2><i class="fa-solid fa-compass"></i> Boussole</h2>
+                    <p>
+                        Une barre avec les points cardinaux, votre angle horizontal de vue exact au-dessus, et chaque waypoint
+                        dans votre champ de vision avec sa distance. Elle se cache tant que <code>Tab</code>
+                        ou la touche de zoom est maintenue.
+                    </p>
+
+                    <h2><i class="fa-solid fa-heart-pulse"></i> Infos HUD</h2>
+                    <p>
+                        Trois blocs d'information indépendants, à activer et placer comme vous voulez :
+                    </p>
+                    <ul>
+                        <li><strong>Armure</strong> : les quatre pièces avec leur durabilité restante, dont
+                            le nombre passe progressivement du vert au rouge. Activé par défaut.</li>
+                        <li><strong>Effets de potions</strong> : icône et durée de chaque effet actif.
+                            Activé par défaut.</li>
+                        <li><strong>Inventaire</strong> : affiche votre inventaire. Désactivé par défaut.</li>
+                    </ul>
+                    <p>
+                        Chaque bloc a ses propres réglages : sens vertical ou horizontal, taille de 0.5 à
+                        1.5, opacité du contenu et opacité du fond.
+                    </p>
+
+                    <h2><i class="fa-solid fa-video"></i> Freecam Legit</h2>
+                    <p>
+                        La touche <code>F4</code> détache la caméra de votre personnage, qui reste
+                        exactement où vous l'avez laissé. Vitesse, inertie et style de vol sont réglables.
+                    </p>
+
+                    <div class="adm adm--warn">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <div>
+                            <b>Pourquoi elle est autorisée</b>
+                            <p>
+                                Contrairement aux Freecam de clients trichés, celle de TVUtils est bridée
+                                par construction : elle est <strong>arrêtée par les blocs</strong>, ne
+                                <strong>génère aucun chunk</strong>, n'autorise <strong>aucune interaction</strong>
+                                (casser, poser, ouvrir un coffre, frapper) et ne s'éloigne jamais de plus de
+                                <strong>60 blocs</strong> de votre corps. Si un bloc se referme sur elle,
+                                l'écran passe au noir. Elle se coupe d'elle-même dès que vous
+                                <strong>prenez des dégâts</strong>, mourez, êtes téléporté ou changez de
+                                dimension. Elle sert à cadrer une build, pas à voir à travers les murs.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2><i class="fa-solid fa-arrows-up-down-left-right"></i> Position des modules</h2>
+                    <p>
+                        Le bouton <strong>Position des modules</strong> ouvre un éditeur où chaque élément
+                        du HUD apparaît sous forme de cadre déplaçable : minimap, boussole, armure,
+                        inventaire et effets de potions. Ils ne peuvent ni sortir de l'écran ni se
+                        chevaucher, et s'accrochent aux axes médians - maintenez <code>Maj</code> pour
+                        désactiver l'accroche. Rien n'est enregistré tant que vous n'avez pas validé.
+                    </p>
+
+                    <h2><i class="fa-solid fa-gear"></i> Où régler tout ça</h2>
+                    <p>
+                        Les paramètres sont accessibles depuis trois endroits : le bouton <strong>TV</strong>
+                        de l'écran titre, le même bouton dans le menu pause, et la fiche du mod dans Mod Menu.
+                        Chaque module a sa page : Minimap, Waypoints, Boussole, Freecam et Infos HUD.
+                    </p>
+                    <p>
+                        Le mod ajoute aussi un bouton <strong>True Vanilla</strong> dans le menu principal
+                        qui connecte directement au serveur avec le pack de ressources activé, un panorama
+                        du spawn, et affiche votre propre pseudo à la troisième personne. Les joueurs équipés
+                        du mod portent un petit badge devant leur pseudo, dans la liste des joueurs comme
+                        au-dessus de leur tête.
+                    </p>
+
+                    <div class="adm adm--warn">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <div>
+                            <b>Mods incompatibles</b>
+                            <p>
+                                TVUtils se désactive tout seul en présence d'un client ou d'un mod qui
+                                contournerait ses limites - Freecam tierce, minimap externe, client de cheat.
+                                Un message s'affiche alors sur l'écran titre. Ce n'est pas une punition :
+                                le mod ne peut simplement plus garantir son cadre fair-play.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="adm adm--tip">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <div>
+                            <b>Faut-il l'installer ?</b>
+                            <p>
+                                Non. TVUtils est un <strong>confort</strong>, jamais une obligation :
+                                aucune fonctionnalité du serveur ne lui est réservée, et aucun avantage de
+                                jeu n'en découle. Voir aussi <a href="#mods">Mods &amp; performances</a>.
                             </p>
                         </div>
                     </div>
@@ -2706,7 +2905,7 @@
                     <p class="wk-lead">
                         Les étoiles résument votre progression sur <strong>l'ensemble</strong> des succès du
                         serveur, vanilla comme personnalisés. Elles s'affichent à côté de votre pseudo, et chaque
-                        palier franchi débloque une récompense — une seule fois, définitivement.
+                        palier franchi débloque une récompense - une seule fois, définitivement.
                     </p>
 
                     <h2><i class="fa-solid fa-layer-group"></i> Ce qui est compté : les catégories</h2>
@@ -2779,7 +2978,7 @@
                         </div>
                         <div class="star-card star-card--max">
                             <div class="star-row"><span class="on">★★★</span></div>
-                            <b>100&nbsp;% — les 7 catégories</b>
+                            <b>100&nbsp;% - les 7 catégories</b>
                             <span class="star-cond">Tout est terminé, sans exception</span>
                             <ul>
                                 <li><strong>+80&nbsp;% d'XP</strong> pendant 24&nbsp;h</li>
