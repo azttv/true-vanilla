@@ -196,6 +196,11 @@
       macos: '<code>~/Library/Application Support/minecraft/mods</code> (Finder → <kbd>Cmd</kbd> + <kbd>Maj</kbd> + <kbd>G</kbd>)',
       linux: '<code>~/.minecraft/mods</code>',
     };
+    const LUNAR_MODS_PATH = {
+      windows: '<code>%userprofile%\\.lunarclient\\profiles\\&lt;votre-profil&gt;\\1.21.8\\mods</code>',
+      macos: '<code>~/.lunarclient/profiles/&lt;votre-profil&gt;/1.21.8/mods</code>',
+      linux: '<code>~/.lunarclient/profiles/&lt;votre-profil&gt;/1.21.8/mods</code>',
+    };
     const RUN_INSTALLER = {
       windows: "Double-cliquez sur le fichier <code>.jar</code> téléchargé (Java requis).",
       macos: "Clic droit sur le fichier <code>.jar</code> → <em>Ouvrir</em> (pour passer l'avertissement de sécurité, Java requis).",
@@ -228,8 +233,29 @@
       let html = `<div class="vc-tuto"><h3 class="vc-title"><i class="fa-solid fa-microphone-lines" style="color:var(--sky-deep);"></i> Installation sur ${MC}</h3>`;
 
       // Clients fermés : pas de mods externes
-      if (launcher === 'lunar' || launcher === 'badlion') {
+      if (launcher === 'badlion') {
         html += note(`<strong>${nameOf(LAUNCHERS, launcher)} n'accepte pas les mods externes</strong> : Simple Voice Chat ne peut pas y être installé. Utilisez le bouton <em>Retour</em> pour choisir un autre launcher - on vous conseille <strong>Prism Launcher</strong> (gratuit, simple, compatible partout).`, true);
+        html += '</div>';
+        return html;
+      }
+
+      // Lunar Client : mods Fabric uniquement, support non garanti
+      if (launcher === 'lunar') {
+        const svcFabric = `<a href="${SVC}&l=fabric" target="_blank" rel="noopener">Simple Voice Chat sur Modrinth</a>`;
+        html += note(`<strong>Attention : Lunar Client n'est pas prévu pour ce mod.</strong> Le launcher est fermé et n'accepte que certains mods <strong>Fabric</strong> : le voice chat peut donc mal fonctionner (micro non détecté, menu vocal absent, plantage au lancement, coupures de son). Si vous rencontrez des erreurs, ce n'est pas le serveur - passez sur <strong>Prism Launcher</strong> (bouton <em>Retour</em>), qui fonctionne à coup sûr.`, true);
+        const lunarSteps = [
+          li('Mettez Lunar Client à jour', `Ouvrez le launcher Lunar Client et laissez-le se mettre à jour. Le support des mods externes n'existe que sur les versions récentes du launcher.`),
+          li(`Sélectionnez la version ${MC}`, `Dans la colonne de gauche du launcher, choisissez la version <strong>${MC}</strong> (profil Fabric si Lunar vous le propose).`),
+          li('Téléchargez Simple Voice Chat en Fabric', `Lunar ne charge que les mods <strong>Fabric</strong> : récupérez la version <strong>Fabric ${MC}</strong> du mod sur ${svcFabric}. Les fichiers Forge, NeoForge et Quilt ne fonctionneront pas.`),
+          li('Ajoutez le mod dans le launcher', `Cliquez sur le bouton en bas à droite du launcher, ouvrez l'onglet <em>Mods</em>, puis glissez-déposez le fichier <code>.jar</code> dans la fenêtre. Vérifiez que la case <em>Enabled</em> est cochée. Vous pouvez aussi utiliser le bouton 📁 pour ouvrir directement le dossier : ${LUNAR_MODS_PATH[os]}.`),
+          li('Testez avant de rejoindre', `Lancez le jeu et vérifiez en solo que Minecraft démarre bien et que le menu vocal répond à la touche <kbd>V</kbd>. Si le jeu plante ou si le mod n'apparaît pas, désactivez les modules Lunar dans les paramètres du profil, ou changez de launcher.`),
+        ];
+        lunarSteps.push(
+          li('Rejoignez True Vanilla', `Connectez-vous à <code>play.true-vanilla.fr</code>. Le serveur détecte le mod automatiquement : un message de connexion du voice chat apparaît en bas à gauche.`),
+          li('Réglez votre micro', `Appuyez sur <kbd>V</kbd> en jeu pour ouvrir le menu vocal : choisissez votre micro et casque, le mode d'activation (activation vocale ou appuyer-pour-parler) et testez le niveau. Les joueurs proches de vous vous entendent, et plus vous êtes loin, moins fort ils vous entendent !`),
+        );
+        html += `<ol class="steps">${lunarSteps.join('')}</ol>`;
+        html += note(`Un souci ? Ouvrez un ticket sur notre <a href="https://discord.gg/HefFTCS4cp" target="_blank" rel="noopener">Discord</a>, on vous aide avec plaisir.`);
         html += '</div>';
         return html;
       }
@@ -334,7 +360,13 @@
           if (state.step === 1) state.os = id;
           else if (state.step === 2) state.launcher = id;
           else if (state.step === 3) state.loader = id;
-          state.step += 1;
+          // Lunar Client n'accepte que Fabric : on saute l'étape du modloader
+          if (state.step === 2 && id === 'lunar') {
+            state.loader = 'fabric';
+            state.step = 4;
+          } else {
+            state.step += 1;
+          }
           render();
         });
       });
@@ -342,6 +374,10 @@
 
     backBtn.addEventListener('click', () => {
       if (state.step <= 1) return;
+      if (state.step === 4 && state.launcher === 'lunar') {
+        state.step = 2; state.launcher = null; state.loader = null;
+        render(); return;
+      }
       state.step -= 1;
       if (state.step === 1) state.os = null;
       if (state.step === 2) state.launcher = null;
